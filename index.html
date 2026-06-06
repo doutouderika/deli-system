@@ -11,7 +11,7 @@ body{font-family:'Hiragino Kaku Gothic Pro','メイリオ',sans-serif;background
 @media(max-width:600px){
   .topbar{padding:8px 10px}.topbar h1{font-size:13px}
   .menu-grid{grid-template-columns:1fr 1fr;gap:10px;padding:12px}
-  .menu-card{padding:14px 8px}.menu-card .icon{font-size:24px;margin-bottom:5px}
+  .menu-card{padding:14px 8px}.menu-card .icon{font-size:24px}
   .menu-card h3{font-size:12px}.menu-card p{font-size:10px}
   .card{padding:10px}.form-row{gap:5px}
   .btn{padding:7px 10px;font-size:12px}.btn-sm{padding:5px 8px;font-size:11px}
@@ -42,7 +42,6 @@ body{font-family:'Hiragino Kaku Gothic Pro','メイリオ',sans-serif;background
 .page{display:none;padding:12px}.page.active{display:block}
 .card{background:#fff;border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
 .card h2{font-size:14px;color:#1a5276;margin-bottom:10px;border-bottom:2px solid #2e86c1;padding-bottom:6px}
-/* tabs */
 .tab-bar{display:flex;gap:2px;margin-bottom:12px;flex-wrap:wrap}
 .tab-btn{padding:6px 16px;border:none;border-radius:5px 5px 0 0;cursor:pointer;font-size:12px;background:#d0dce8;color:#555}
 .tab-btn.active{background:#1a5276;color:#fff}
@@ -80,25 +79,14 @@ textarea{resize:vertical;min-height:60px}
 .photo-grid.p3,.photo-grid.p4{grid-template-columns:1fr 1fr}.photo-grid.p5,.photo-grid.p6{grid-template-columns:1fr 1fr 1fr}
 .photo-slot{border:2px dashed #ccc;border-radius:6px;min-height:100px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:#f9f9f9;cursor:pointer}
 .photo-slot img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
-.photo-slot .photo-label{font-size:11px;color:#aaa;z-index:1}
 .del-photo{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.5);color:#fff;border:none;border-radius:50%;width:20px;height:20px;cursor:pointer;font-size:11px;z-index:2}
 .badge{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:bold}
 .b-a1{background:#1a5276;color:#fff}.b-a2{background:#7d3c98;color:#fff}.b-st{background:#27ae60;color:#fff}
-/* 分類バッジ色 */
 .cls-tag{display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:bold;white-space:nowrap}
-.cls-焼き物{background:#fde8d8;color:#c0392b}
-.cls-揚げ物{background:#fef9e7;color:#d68910}
-.cls-蒸し物{background:#e8f8f5;color:#1e8449}
-.cls-炊き物{background:#eaf4fb;color:#1a5276}
-.cls-副菜{background:#f4ecf7;color:#7d3c98}
-.cls-冷蔵品{background:#d6eaf8;color:#2e86c1}
-.cls-解凍品{background:#d5f5e3;color:#27ae60}
-.cls-その他{background:#f2f3f4;color:#666}
-.cls-包材{background:#fdfefe;color:#555;border:1px solid #ccc}
 </style>
 </head>
 <body>
-<!-- LOGIN -->
+<!-- ===== LOGIN ===== -->
 <div id="loginScreen">
   <div class="lbox">
     <h1>🍱 デリカ生産支援システム</h1>
@@ -108,17 +96,21 @@ textarea{resize:vertical;min-height:60px}
     <button onclick="doLogin()">ログイン</button>
   </div>
 </div>
-<!-- MENU -->
+<!-- ===== MENU ===== -->
 <div id="menuScreen">
-  <div class="topbar"><h1>🍱 デリカ生産支援システム</h1><div class="info" id="menuInfo"></div>
+  <div class="topbar">
+    <h1>🍱 デリカ生産支援システム</h1>
+    <div class="info" id="menuInfo"></div>
     <button onclick="syncAll()" style="background:#27ae60;border:none;color:#fff;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:12px;margin-right:4px">🔄 同期</button>
-    <button onclick="doLogout()">ログアウト</button></div>
+    <button onclick="doLogout()">ログアウト</button>
+  </div>
   <div class="menu-grid" id="menuGrid"></div>
 </div>
-<!-- MAIN -->
+<!-- ===== MAIN ===== -->
 <div id="mainApp">
   <div class="topbar">
-    <h1>🍱 デリカ生産支援システム</h1><div class="info" id="topInfo"></div>
+    <h1>🍱 デリカ生産支援システム</h1>
+    <div class="info" id="topInfo"></div>
     <button onclick="syncAll()" style="background:#27ae60;border:none;color:#fff;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:12px;margin-right:4px">🔄 同期</button>
     <button onclick="doLogout()">ログアウト</button>
   </div>
@@ -132,7 +124,6 @@ textarea{resize:vertical;min-height:60px}
         <button class="tab-btn active" onclick="switchDB00Tab('mat')">原材料</button>
         <button class="tab-btn" onclick="switchDB00Tab('hozai')">包材</button>
       </div>
-      <!-- 原材料タブ -->
       <div class="tab-content active" id="db00TabMat">
         <div class="form-row">
           <div class="ac-wrap"><input type="text" id="db00Search" placeholder="原材料名で検索" oninput="acDB00()" onblur="setTimeout(()=>closeAC('db00AC'),200)"><div class="ac-list" id="db00AC"></div></div>
@@ -144,26 +135,20 @@ textarea{resize:vertical;min-height:60px}
           <tbody></tbody>
         </table></div>
       </div>
-      <!-- 包材タブ -->
       <div class="tab-content" id="db00TabHozai">
         <div class="form-row" style="flex-wrap:wrap">
           <div class="ac-wrap"><input type="text" id="hozaiSearch" placeholder="包材名で検索" oninput="acHozai()" onblur="setTimeout(()=>closeAC('hozaiAC'),200)"><div class="ac-list" id="hozaiAC"></div></div>
-          <select id="hozaiClsFilter" onchange="renderHozaiTable()" style="font-size:12px;padding:4px 8px;border:1px solid #ccc;border-radius:4px">
-            <option value="">全分類</option>
-          </select>
-          <select id="hozaiSupFilter" onchange="renderHozaiTable()" style="font-size:12px;padding:4px 8px;border:1px solid #ccc;border-radius:4px">
-            <option value="">全取引先</option>
-          </select>
+          <select id="hozaiClsFilter" onchange="renderHozaiTable()"></select>
+          <select id="hozaiSupFilter" onchange="renderHozaiTable()"></select>
           <button class="btn btn-primary" id="hozaiAddBtn" onclick="openHozaiModal(null)" style="display:none">＋ 包材追加</button>
           <button class="btn btn-warn btn-sm" id="hozaiClsBtn" onclick="openHozaiMasterModal('cls')" style="display:none">🏷 分類管理</button>
           <button class="btn btn-warn btn-sm" id="hozaiSupBtn" onclick="openHozaiMasterModal('sup')" style="display:none">🏢 取引先管理</button>
         </div>
-        <!-- 並び替えバー -->
         <div style="display:flex;gap:6px;align-items:center;margin-bottom:8px;flex-wrap:wrap">
           <span style="font-size:11px;color:#555">並び替え：</span>
           <button class="btn btn-sm" id="sortBtnCls" onclick="setHozaiSort('cls')" style="background:#d0dce8">分類</button>
           <button class="btn btn-sm" id="sortBtnName" onclick="setHozaiSort('name')" style="background:#d0dce8">名前</button>
-          <button class="btn btn-sm" id="sortBtnSup" onclick="setHozaiSort('supplier')" style="background:#d0dce8">取引先</button>
+          <button class="btn btn-sm" id="sortBtnSupplier" onclick="setHozaiSort('supplier')" style="background:#d0dce8">取引先</button>
           <button class="btn btn-sm" id="sortBtnCost" onclick="setHozaiSort('cost')" style="background:#d0dce8">原価</button>
           <span id="sortDirLabel" style="font-size:11px;color:#888"></span>
         </div>
@@ -187,12 +172,9 @@ textarea{resize:vertical;min-height:60px}
         <button class="btn btn-warn" onclick="printPlan()">🖨 印刷/PDF</button>
         <button class="btn btn-info" onclick="exportPlanExcel()">📊 Excel出力</button>
       </div>
-      <!-- アイテム追加バー -->
       <div style="background:#eaf4fb;padding:8px 10px;border-radius:6px;margin-bottom:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
         <span style="font-size:12px;color:#1a5276;font-weight:bold">📋 表示アイテム追加：</span>
-        <select id="planClsFilter" onchange="filterPlanAddList()" style="font-size:12px;padding:4px 8px;border:1px solid #ccc;border-radius:4px">
-          <option value="">全分類</option><option>丼物</option><option>弁当</option><option>ミニ弁当</option><option>カレー</option><option>海鮮</option><option>のり弁</option><option>その他</option>
-        </select>
+        <select id="planClsFilter" onchange="filterPlanAddList()"></select>
         <div class="ac-wrap"><input type="text" id="planAddSearch" placeholder="弁当名を検索" oninput="filterPlanAddList()" onblur="setTimeout(()=>closeAC('planAddAC'),200)" style="width:170px"><div class="ac-list" id="planAddAC"></div></div>
         <select id="planAddSelect" style="flex:1;min-width:160px;font-size:12px;padding:4px 8px;border:1px solid #ccc;border-radius:4px"></select>
         <button class="btn btn-primary btn-sm" onclick="addPlanItem()">＋ 追加</button>
@@ -217,7 +199,7 @@ textarea{resize:vertical;min-height:60px}
     </div>
   </div>
 
-  <!-- 仕込み表 -->
+  <!-- 材料仕込み表 -->
   <div class="page" id="pageShimei">
     <div class="card">
       <h2>📊 材料仕込み表</h2>
@@ -232,7 +214,7 @@ textarea{resize:vertical;min-height:60px}
     </div>
   </div>
 
-  <!-- DB01 弁当マスタ -->
+  <!-- DB01 -->
   <div class="page" id="pageDB01">
     <div class="card">
       <h2>⚙️ DB01 — 弁当マスタ・マニュアル</h2>
@@ -304,22 +286,11 @@ textarea{resize:vertical;min-height:60px}
     <div class="card">
       <h2>📜 更新履歴 <span style="font-size:11px;color:#888">（直近1ヶ月）</span></h2>
       <div class="form-row">
-        <select id="histTarget" onchange="renderHistory()">
-          <option value="">全て</option>
-          <option value="DB00">DB00 原材料</option>
-          <option value="DB01">DB01 弁当マスタ</option>
-          <option value="発注書">発注書</option>
-        </select>
-        <select id="histAction" onchange="renderHistory()">
-          <option value="">全操作</option>
-          <option value="追加">追加</option>
-          <option value="編集">編集</option>
-          <option value="削除">削除</option>
-        </select>
+        <select id="histTarget" onchange="renderHistory()"><option value="">全て</option><option value="DB00">DB00 原材料</option><option value="DB01">DB01 弁当マスタ</option><option value="発注書">発注書</option></select>
+        <select id="histAction" onchange="renderHistory()"><option value="">全操作</option><option value="追加">追加</option><option value="編集">編集</option><option value="削除">削除</option></select>
         <div class="ac-wrap"><input type="text" id="histSearch" placeholder="内容で検索" oninput="renderHistory()"><div class="ac-list"></div></div>
         <button class="btn btn-danger btn-sm" onclick="clearOldHistory()">🗑 1ヶ月超を削除</button>
       </div>
-      <p style="font-size:11px;color:#888;margin-bottom:8px">※ 1ヶ月超の履歴は自動削除されます</p>
       <div style="overflow-x:auto"><table id="histTable">
         <thead><tr><th>日時</th><th>操作者</th><th>対象</th><th>操作</th><th>内容</th><th>変更前</th></tr></thead>
         <tbody></tbody>
@@ -329,66 +300,63 @@ textarea{resize:vertical;min-height:60px}
 </div>
 
 <!-- ===== MODALS ===== -->
-<!-- DB00 原材料 -->
 <div class="modal-bg" id="db00Modal">
   <div class="modal" style="max-width:720px">
     <h3 id="db00ModalTitle">原材料 登録・編集</h3>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
-      <div><label style="font-size:11px;color:#888">分類</label><br>
-        <select id="d0_cls" style="width:100%;padding:5px 8px;border:1px solid #ccc;border-radius:4px;font-size:12px" data-group="db00form" onkeydown="enterMove(event,'db00form')">
-          <option>焼き物</option><option>揚げ物</option><option>蒸し物</option><option>炊き物</option><option>副菜</option><option>冷蔵品</option><option>解凍品</option><option>その他</option>
-        </select>
-      </div>
-      <div><label style="font-size:11px;color:#888">原材料名</label><br><input type="text" id="d0_name" style="width:100%" data-group="db00form" onkeydown="enterMove(event,'db00form')"></div>
-      <div><label style="font-size:11px;color:#888">メーカー</label><br><input type="text" id="d0_maker" style="width:100%" data-group="db00form" onkeydown="enterMove(event,'db00form')"></div>
-      <div><label style="font-size:11px;color:#888">取引先</label><br><input type="text" id="d0_supplier" style="width:100%" data-group="db00form" onkeydown="enterMove(event,'db00form')"></div>
-      <div><label style="font-size:11px;color:#888">JANコード（13桁）</label><br>
-        <div style="display:flex;gap:4px"><input type="text" id="d0_jan" maxlength="13" style="flex:1" data-group="db00form" oninput="previewBarcode()" onkeydown="enterMove(event,'db00form')"><button class="btn btn-primary btn-sm" onclick="previewBarcode()">表示</button></div>
-        <svg id="bcCanvas" style="max-width:100%;margin-top:4px"></svg>
-      </div>
-      <div><label style="font-size:11px;color:#888">原価（円/単位）</label><br><input type="number" id="d0_cost" style="width:100%" data-group="db00form" onkeydown="enterMove(event,'db00form')"></div>
-      <div><label style="font-size:11px;color:#888">入数</label><br><input type="number" id="d0_iri" style="width:100%" data-group="db00form" onkeydown="enterMove(event,'db00form')"></div>
-      <div><label style="font-size:11px;color:#888">単位</label><br><input type="text" id="d0_unit" style="width:100%" data-group="db00form" onkeydown="enterMove(event,'db00form')"></div>
-      <div><label style="font-size:11px;color:#888">売価①</label><br><input type="text" id="d0_sp1" style="width:100%" placeholder="例：1個あたり 198円" data-group="db00form" onkeydown="enterMove(event,'db00form')"></div>
-      <div><label style="font-size:11px;color:#888">売価②</label><br><input type="text" id="d0_sp2" style="width:100%" placeholder="例：100gあたり 120円" data-group="db00form" onkeydown="enterMove(event,'db00form')"></div>
-      <div><label style="font-size:11px;color:#888">売価③</label><br><input type="text" id="d0_sp3" style="width:100%" data-group="db00form" onkeydown="enterMove(event,'db00form')"></div>
-      <div style="grid-column:1/-1"><label style="font-size:11px;color:#888">備考</label><br><textarea id="d0_note" style="width:100%;min-height:50px" data-group="db00form" onkeydown="enterMove(event,'db00form')"></textarea></div>
+      <div><label style="font-size:11px;color:#888">分類</label><br><select id="d0_cls" style="width:100%;padding:5px 8px;border:1px solid #ccc;border-radius:4px;font-size:12px"><option>焼き物</option><option>揚げ物</option><option>蒸し物</option><option>炊き物</option><option>副菜</option><option>冷蔵品</option><option>解凍品</option><option>その他</option></select></div>
+      <div><label style="font-size:11px;color:#888">原材料名</label><br><input type="text" id="d0_name" style="width:100%"></div>
+      <div><label style="font-size:11px;color:#888">メーカー</label><br><input type="text" id="d0_maker" style="width:100%"></div>
+      <div><label style="font-size:11px;color:#888">取引先</label><br><input type="text" id="d0_supplier" style="width:100%"></div>
+      <div><label style="font-size:11px;color:#888">JANコード</label><br><div style="display:flex;gap:4px"><input type="text" id="d0_jan" maxlength="13" style="flex:1" oninput="previewBarcode()"><button class="btn btn-primary btn-sm" onclick="previewBarcode()">表示</button></div><svg id="bcCanvas" style="max-width:100%;margin-top:4px"></svg></div>
+      <div><label style="font-size:11px;color:#888">原価（円/単位）</label><br><input type="number" id="d0_cost" style="width:100%"></div>
+      <div><label style="font-size:11px;color:#888">入数</label><br><input type="number" id="d0_iri" style="width:100%"></div>
+      <div><label style="font-size:11px;color:#888">単位</label><br><input type="text" id="d0_unit" style="width:100%"></div>
+      <div><label style="font-size:11px;color:#888">売価①</label><br><input type="text" id="d0_sp1" style="width:100%"></div>
+      <div><label style="font-size:11px;color:#888">売価②</label><br><input type="text" id="d0_sp2" style="width:100%"></div>
+      <div><label style="font-size:11px;color:#888">売価③</label><br><input type="text" id="d0_sp3" style="width:100%"></div>
+      <div style="grid-column:1/-1"><label style="font-size:11px;color:#888">備考</label><br><textarea id="d0_note" style="width:100%;min-height:50px"></textarea></div>
     </div>
     <div style="text-align:right"><button class="btn btn-success" onclick="saveDB00()">保存</button><button class="btn" onclick="document.getElementById('db00Modal').classList.remove('open')" style="background:#ccc">閉じる</button></div>
   </div>
 </div>
 
-<!-- 包材モーダル -->
 <div class="modal-bg" id="hozaiModal">
-  <div class="modal">
+  <div class="modal" style="max-width:620px">
     <h3 id="hozaiModalTitle">包材 登録・編集</h3>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
-      <div style="grid-column:1/-1"><label style="font-size:11px;color:#888">包材名</label><br><input type="text" id="hz_name" style="width:100%" data-group="hozaiform" onkeydown="enterMove(event,'hozaiform')"></div>
-      <div><label style="font-size:11px;color:#888">単位</label><br><input type="text" id="hz_unit" style="width:100%" data-group="hozaiform" onkeydown="enterMove(event,'hozaiform')"></div>
-      <div><label style="font-size:11px;color:#888">原価(円)</label><br><input type="number" id="hz_cost" style="width:100%" data-group="hozaiform" onkeydown="enterMove(event,'hozaiform')"></div>
-      <div style="grid-column:1/-1"><label style="font-size:11px;color:#888">備考</label><br><textarea id="hz_note" style="width:100%;min-height:40px" data-group="hozaiform" onkeydown="enterMove(event,'hozaiform')"></textarea></div>
+      <div><label style="font-size:11px;color:#888">分類</label><br><select id="hz_cls" style="width:100%;padding:5px 8px;border:1px solid #ccc;border-radius:4px;font-size:12px"></select></div>
+      <div><label style="font-size:11px;color:#888">取引先</label><br><select id="hz_supplier" style="width:100%;padding:5px 8px;border:1px solid #ccc;border-radius:4px;font-size:12px"></select></div>
+      <div style="grid-column:1/-1"><label style="font-size:11px;color:#888">包材名</label><br><input type="text" id="hz_name" style="width:100%"></div>
+      <div><label style="font-size:11px;color:#888">商品コード</label><br><input type="text" id="hz_code" style="width:100%"></div>
+      <div><label style="font-size:11px;color:#888">JANコード</label><br><input type="text" id="hz_jan" maxlength="13" style="width:100%"></div>
+      <div><label style="font-size:11px;color:#888">単位</label><br><input type="text" id="hz_unit" style="width:100%"></div>
+      <div><label style="font-size:11px;color:#888">原価(円)</label><br><input type="number" id="hz_cost" style="width:100%"></div>
+      <div style="grid-column:1/-1"><label style="font-size:11px;color:#888">備考</label><br><textarea id="hz_note" style="width:100%;min-height:40px"></textarea></div>
     </div>
     <div style="text-align:right"><button class="btn btn-success" onclick="saveHozai()">保存</button><button class="btn" onclick="document.getElementById('hozaiModal').classList.remove('open')" style="background:#ccc">閉じる</button></div>
   </div>
 </div>
 
-<!-- 弁当マスタモーダル -->
+<div class="modal-bg" id="hozaiMasterModal">
+  <div class="modal" style="max-width:420px">
+    <h3 id="hozaiMasterTitle">マスタ管理</h3>
+    <div class="form-row"><input type="text" id="hozaiMasterInput" placeholder="新規追加" style="flex:1"><button class="btn btn-primary" onclick="addHozaiMasterItem()">＋ 追加</button></div>
+    <div id="hozaiMasterList" style="max-height:300px;overflow-y:auto;margin-top:8px"></div>
+    <div style="text-align:right;margin-top:12px"><button class="btn" onclick="document.getElementById('hozaiMasterModal').classList.remove('open')" style="background:#ccc">閉じる</button></div>
+  </div>
+</div>
+
 <div class="modal-bg" id="bentModal">
   <div class="modal" style="max-width:700px">
     <h3 id="bentModalTitle">弁当登録・編集</h3>
     <div class="form-row" style="flex-wrap:wrap;gap:8px">
-      <div><label style="font-size:11px;color:#888;display:block">分類</label>
-        <select id="bm_cls" style="padding:5px 8px;border:1px solid #ccc;border-radius:4px;font-size:12px" data-group="bentform" onkeydown="enterMove(event,'bentform')">
-          <option>丼物</option><option>弁当</option><option>ミニ弁当</option><option>カレー</option><option>海鮮</option><option>のり弁</option><option>その他</option>
-        </select>
-      </div>
-      <div><label style="font-size:11px;color:#888;display:block">呼出番号</label><input type="text" id="bm_callno" style="width:80px" data-group="bentform" onkeydown="enterMove(event,'bentform')"></div>
-      <div style="flex:1;min-width:140px"><label style="font-size:11px;color:#888;display:block">弁当名</label><input type="text" id="bm_name" style="width:100%" data-group="bentform" onkeydown="enterMove(event,'bentform')"></div>
-      <div><label style="font-size:11px;color:#888;display:block">売価(円)</label><input type="number" id="bm_price" style="width:80px" data-group="bentform" onkeydown="enterMove(event,'bentform')"></div>
+      <div><label style="font-size:11px;color:#888;display:block">分類</label><select id="bm_cls" style="padding:5px 8px;border:1px solid #ccc;border-radius:4px;font-size:12px"><option>丼物</option><option>弁当</option><option>ミニ弁当</option><option>カレー</option><option>海鮮</option><option>のり弁</option><option>その他</option></select></div>
+      <div><label style="font-size:11px;color:#888;display:block">呼出番号</label><input type="text" id="bm_callno" style="width:80px"></div>
+      <div style="flex:1;min-width:140px"><label style="font-size:11px;color:#888;display:block">弁当名</label><input type="text" id="bm_name" style="width:100%"></div>
+      <div><label style="font-size:11px;color:#888;display:block">売価(円)</label><input type="number" id="bm_price" style="width:80px"></div>
     </div>
-    <div class="form-row" style="margin-top:6px">
-      <div style="width:100%"><label style="font-size:11px;color:#888;display:block">備考</label><textarea id="bm_note" style="width:100%;min-height:40px" data-group="bentform" onkeydown="enterMove(event,'bentform')"></textarea></div>
-    </div>
+    <div class="form-row" style="margin-top:6px"><div style="width:100%"><label style="font-size:11px;color:#888;display:block">備考</label><textarea id="bm_note" style="width:100%;min-height:40px"></textarea></div></div>
     <p style="font-size:11px;color:#888;margin:8px 0 5px">材料（弁当1個あたりの量）</p>
     <div class="form-row" style="background:#eaf4fb;padding:7px;border-radius:6px;margin-bottom:8px">
       <select id="modalAddMat" style="flex:1"></select>
@@ -405,24 +373,20 @@ textarea{resize:vertical;min-height:60px}
   </div>
 </div>
 
-<!-- マニュアルモーダル -->
 <div class="modal-bg" id="manualModal">
   <div class="modal" style="max-width:740px">
     <h3 id="manualTitle">製造マニュアル</h3>
     <div class="form-row" style="flex-wrap:wrap;gap:10px">
-      <div><label style="display:block;font-size:11px;color:#888;margin-bottom:3px">商品名</label><input type="text" id="mn_name" style="width:160px" readonly data-group="manualform" onkeydown="enterMove(event,'manualform')"></div>
-      <div><label style="display:block;font-size:11px;color:#888;margin-bottom:3px">呼出番号</label><input type="text" id="mn_callno" style="width:80px" readonly data-group="manualform" onkeydown="enterMove(event,'manualform')"></div>
-      <div><label style="display:block;font-size:11px;color:#888;margin-bottom:3px">売価(円)</label><input type="number" id="mn_price" style="width:80px" data-group="manualform" onkeydown="enterMove(event,'manualform')" oninput="calcManualCost()"></div>
-      <div><label style="display:block;font-size:11px;color:#888;margin-bottom:3px">1pあたり個数</label><input type="number" id="mn_pcs" placeholder="個" style="width:70px" data-group="manualform" onkeydown="enterMove(event,'manualform')"></div>
-      <div><label style="display:block;font-size:11px;color:#888;margin-bottom:3px">1pあたり重量(g)</label><input type="number" id="mn_weight" placeholder="g" style="width:70px" data-group="manualform" onkeydown="enterMove(event,'manualform')"></div>
+      <div><label style="display:block;font-size:11px;color:#888;margin-bottom:3px">商品名</label><input type="text" id="mn_name" style="width:160px" readonly></div>
+      <div><label style="display:block;font-size:11px;color:#888;margin-bottom:3px">呼出番号</label><input type="text" id="mn_callno" style="width:80px" readonly></div>
+      <div><label style="display:block;font-size:11px;color:#888;margin-bottom:3px">売価(円)</label><input type="number" id="mn_price" style="width:80px" oninput="calcManualCost()"></div>
+      <div><label style="display:block;font-size:11px;color:#888;margin-bottom:3px">1pあたり個数</label><input type="number" id="mn_pcs" style="width:70px"></div>
+      <div><label style="display:block;font-size:11px;color:#888;margin-bottom:3px">1pあたり重量(g)</label><input type="number" id="mn_weight" style="width:70px"></div>
     </div>
-    <div class="form-row"><div style="flex:1"><label style="display:block;font-size:11px;color:#888;margin-bottom:3px">原材料名（表示用）</label><input type="text" id="mn_rawmat" style="width:100%" data-group="manualform" onkeydown="enterMove(event,'manualform')"></div></div>
-    <div class="form-row"><div style="flex:1"><label style="display:block;font-size:11px;color:#888;margin-bottom:3px">包材名</label><input type="text" id="mn_hozai" style="width:100%" data-group="manualform" onkeydown="enterMove(event,'manualform')"></div></div>
+    <div class="form-row"><div style="flex:1"><label style="display:block;font-size:11px;color:#888;margin-bottom:3px">原材料名（表示用）</label><input type="text" id="mn_rawmat" style="width:100%"></div></div>
+    <div class="form-row"><div style="flex:1"><label style="display:block;font-size:11px;color:#888;margin-bottom:3px">包材名</label><input type="text" id="mn_hozai" style="width:100%"></div></div>
     <div style="margin-bottom:10px">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-        <span style="font-size:12px;font-weight:bold;color:#1a5276">原価明細</span>
-        <button class="btn btn-primary btn-sm" onclick="addCostRow()">＋ 行追加</button>
-      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span style="font-size:12px;font-weight:bold;color:#1a5276">原価明細</span><button class="btn btn-primary btn-sm" onclick="addCostRow()">＋ 行追加</button></div>
       <div style="overflow-x:auto"><table id="costTable">
         <thead><tr><th>区分</th><th>品名</th><th>単価(円/単位)</th><th>単位</th><th>入数/量</th><th>1p原価(円)</th><th></th></tr></thead>
         <tbody id="costBody"></tbody>
@@ -433,17 +397,11 @@ textarea{resize:vertical;min-height:60px}
       </table></div>
     </div>
     <div style="margin-bottom:10px">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-        <span style="font-size:12px;font-weight:bold;color:#1a5276">写真（最大6枚）</span>
-        <button class="btn btn-primary btn-sm" onclick="addPhotoSlot()" id="addPhotoBtn">＋ 写真追加</button>
-      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span style="font-size:12px;font-weight:bold;color:#1a5276">写真（最大6枚）</span><button class="btn btn-primary btn-sm" onclick="addPhotoSlot()" id="addPhotoBtn">＋ 写真追加</button></div>
       <div id="photoGrid"></div>
       <input type="file" id="photoFileInput" accept="image/*" style="display:none" onchange="onPhotoSelected(event)">
     </div>
-    <div style="margin-bottom:10px">
-      <label style="font-size:12px;font-weight:bold;color:#1a5276;display:block;margin-bottom:4px">備考（注意事項・手順など）</label>
-      <textarea id="mn_note" style="width:100%;min-height:80px"></textarea>
-    </div>
+    <div style="margin-bottom:10px"><label style="font-size:12px;font-weight:bold;color:#1a5276;display:block;margin-bottom:4px">備考（注意事項・手順など）</label><textarea id="mn_note" style="width:100%;min-height:80px"></textarea></div>
     <div style="text-align:right;border-top:1px solid #eee;padding-top:10px">
       <button class="btn btn-success" onclick="saveManual()">✅ 保存</button>
       <button class="btn btn-warn" onclick="printManual()">🖨 印刷/PDF</button>
@@ -452,128 +410,81 @@ textarea{resize:vertical;min-height:60px}
   </div>
 </div>
 
-<!-- 材料編集モーダル -->
 <div class="modal-bg" id="matEditModal">
-  <div class="modal">
-    <h3>材料を編集</h3>
+  <div class="modal"><h3>材料を編集</h3>
     <div class="form-row"><label>材料名：</label><input type="text" id="editMatName" style="flex:1"></div>
     <div class="form-row"><label>単位：</label><input type="text" id="editMatUnit" style="width:80px"></div>
     <div style="text-align:right;margin-top:10px"><button class="btn btn-success" onclick="saveMatEdit()">保存</button><button class="btn" onclick="document.getElementById('matEditModal').classList.remove('open')" style="background:#ccc">閉じる</button></div>
   </div>
 </div>
 
-<!-- パスワード変更モーダル -->
 <div class="modal-bg" id="pwEditModal">
-  <div class="modal">
-    <h3>パスワード変更</h3>
+  <div class="modal"><h3>パスワード変更</h3>
     <p id="pwEditName" style="font-size:12px;color:#555;margin-bottom:10px"></p>
     <div class="form-row"><label>新パスワード：</label><input type="text" id="newPwInput" style="flex:1"></div>
     <div style="text-align:right;margin-top:10px"><button class="btn btn-success" onclick="savePWEdit()">変更</button><button class="btn" onclick="document.getElementById('pwEditModal').classList.remove('open')" style="background:#ccc">閉じる</button></div>
   </div>
 </div>
 
+<!-- ここまでがパート1 -->
 <script>
-// ======== GOOGLE APPS SCRIPT API ========
-const GAS_URL = 'https://script.google.com/macros/s/AKfycby0OZzzQJkNFmklEmiEUtcrAUIFCaJaEf0OB4odmdF403gI4yPqTXFDweHJbQPkvF92/exec';
+// ======== GAS API ========
+const GAS_URL='https://script.google.com/macros/s/AKfycby0OZzzQJkNFmklEmiEUtcrAUIFCaJaEf0OB4odmdF403gI4yPqTXFDweHJbQPkvF92/exec';
+const cache={};
 
-// データ取得
-async function gasGet(sheet) {
-  try {
-    const res = await fetch(`${GAS_URL}?action=get&sheet=${sheet}`);
-    const json = await res.json();
-    return json.ok ? json.data : [];
-  } catch(e) { console.error('gasGet error', sheet, e); return null; }
+async function gasGet(sheet){
+  try{
+    const res=await fetch(`${GAS_URL}?action=get&sheet=${sheet}`);
+    const json=await res.json();
+    return json.ok?json.data:null;
+  }catch(e){console.error('gasGet',sheet,e);return null;}
 }
-
-// データ保存
-async function gasSet(sheet, data) {
-  try {
-    const res = await fetch(GAS_URL, {
-      method: 'POST',
-      body: JSON.stringify({ action: 'set', sheet, data }),
-    });
-    const json = await res.json();
+async function gasSet(sheet,data){
+  try{
+    const res=await fetch(GAS_URL,{method:'POST',body:JSON.stringify({action:'set',sheet,data})});
+    const json=await res.json();
     return json.ok;
-  } catch(e) { console.error('gasSet error', sheet, e); return false; }
+  }catch(e){console.error('gasSet',sheet,e);return false;}
 }
-
-// ローカルキャッシュ併用（高速化）
-const cache = {};
-async function loadSheet(key) {
-  if (cache[key] !== undefined) return cache[key];
-  showLoading(true);
-  const data = await gasGet(key);
-  showLoading(false);
-  if (data !== null) { cache[key] = data; ldb(key, data); }
-  else cache[key] = ldb(key, []);
-  return cache[key];
-}
-async function saveSheet(key, data) {
-  cache[key] = data;
-  ldb(key, data); // ローカルにも即保存
-  const ok = await gasSet(key, data);
-  if (!ok) showToast('⚠️ クラウド保存に失敗しました（ローカルには保存済み）', 'warn');
-  else showToast('✅ 保存しました');
-  return ok;
-}
-
-// 全データをクラウドから再読み込み
-async function syncAll() {
-  showLoading(true, '同期中...');
-  const keys = ['db00','db01','materials','hozai','stores','users','plan','history','hozaiCls','hozaiSup','bentos'];
-  for (const k of keys) {
-    const data = await gasGet(k);
-    if (data !== null) { cache[k] = data; ldb(k, data); }
-  }
-  showLoading(false);
-  showToast('🔄 同期完了');
-}
-
-function showLoading(show, msg='読み込み中...') {
-  let el = document.getElementById('loadingBar');
-  if (!el) {
-    el = document.createElement('div');
-    el.id = 'loadingBar';
-    el.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#f39c12;color:#fff;text-align:center;padding:6px;font-size:13px;z-index:9999;display:none';
-    document.body.appendChild(el);
-  }
-  el.textContent = msg;
-  el.style.display = show ? 'block' : 'none';
-}
-
-function showToast(msg, type='ok') {
-  let el = document.getElementById('toast');
-  if (!el) {
-    el = document.createElement('div');
-    el.id = 'toast';
-    el.style.cssText = 'position:fixed;bottom:20px;right:20px;padding:10px 18px;border-radius:8px;font-size:13px;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none';
-    document.body.appendChild(el);
-  }
-  el.textContent = msg;
-  el.style.background = type === 'warn' ? '#e74c3c' : '#27ae60';
-  el.style.color = '#fff';
-  el.style.opacity = '1';
-  clearTimeout(el._t);
-  el._t = setTimeout(() => el.style.opacity = '0', 2500);
-}
-
-let CU=null, editingBentId=null, editingMatId=null, editingPWId=null;
-let editingDB00Id=null, editingHozaiId=null;
-let modalIngs=[], manualPhotos=[], manualCostRows=[], currentManualBentId=null;
-let db00CurrentTab='mat';
 
 const ldb=(k,d)=>{
-  if(cache[k]!==undefined) return cache[k];
+  if(cache[k]!==undefined)return cache[k];
   try{const v=JSON.parse(localStorage.getItem(k));if(v!==null){cache[k]=v;return v;}return d;}catch(e){return d;}
 };
 const sdb=(k,v)=>{
   cache[k]=v;
   localStorage.setItem(k,JSON.stringify(v));
-  // クラウドに非同期保存
   gasSet(k,v).catch(e=>console.warn('cloud save failed',k,e));
 };
 
-// ======== INIT DATA ========
+function showLoading(show,msg='読み込み中...'){
+  let el=document.getElementById('loadingBar');
+  if(!el){el=document.createElement('div');el.id='loadingBar';el.style.cssText='position:fixed;top:0;left:0;right:0;background:#f39c12;color:#fff;text-align:center;padding:6px;font-size:13px;z-index:9999;display:none';document.body.appendChild(el);}
+  el.textContent=msg;el.style.display=show?'block':'none';
+}
+function showToast(msg,type='ok'){
+  let el=document.getElementById('toast');
+  if(!el){el=document.createElement('div');el.id='toast';el.style.cssText='position:fixed;bottom:20px;right:20px;padding:10px 18px;border-radius:8px;font-size:13px;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none';document.body.appendChild(el);}
+  el.textContent=msg;el.style.background=type==='warn'?'#e74c3c':'#27ae60';el.style.color='#fff';el.style.opacity='1';
+  clearTimeout(el._t);el._t=setTimeout(()=>el.style.opacity='0',2500);
+}
+async function syncAll(){
+  showLoading(true,'同期中...');
+  const keys=['db00','bentos','materials','hozai','stores','users','history','hozaiCls','hozaiSup'];
+  for(const k of keys){const d=await gasGet(k);if(d!==null){cache[k]=d;localStorage.setItem(k,JSON.stringify(d));}}
+  showLoading(false);showToast('🔄 同期完了');
+  // 現在のページを再描画
+  const active=document.querySelector('.page.active');
+  if(active)openPage(active.id,document.getElementById('subTitle').textContent);
+}
+
+// ======== STATE ========
+let CU=null,editingBentId=null,editingMatId=null,editingPWId=null;
+let editingDB00Id=null,editingHozaiId=null,editingHozaiMasterType=null;
+let modalIngs=[],manualPhotos=[],manualCostRows=[],currentManualBentId=null;
+let db00CurrentTab='mat',hozaiSortKey='cls',hozaiSortDir=1;
+
+// ======== INIT ========
 function initData(){
   const defUsers=[
     {id:'admin1',name:'管理者1',pass:'1234567',role:'admin1'},
@@ -596,347 +507,121 @@ function initData(){
   const saved=ldb('users',null);
   if(saved){sdb('users',defUsers.map(du=>{const ex=saved.find(s=>s.id===du.id);return ex?{...du,pass:ex.pass}:du}));}
   else sdb('users',defUsers);
-
-  if(!localStorage.getItem('stores'))
-    sdb('stores',['北光','高栄','留辺蘂','斜里','三輪','タイガー','メッセ','小泉','美幌','桜町','本町','駒場','橋北']);
-
-  // 材料マスタ（仕込み計算用）
-  if(!localStorage.getItem('materials'))
-    sdb('materials',[
-      {id:1,name:'ライス（センター）',unit:'g'},{id:2,name:'自家炊飯ライス',unit:'g'},
-      {id:3,name:'こだわりの若鶏唐揚',unit:'個'},{id:4,name:'きんぴらごぼう',unit:'g'},
-      {id:5,name:'卵焼き',unit:'個'},{id:6,name:'ウインナー',unit:'本'},
-      {id:7,name:'銀鮭切身40g',unit:'枚'},{id:8,name:'ポテトサラダ',unit:'g'},
-      {id:9,name:'千切キャベツ',unit:'g'},{id:10,name:'リーフレタス',unit:'g'},
-    ]);
-
-  // DB00 原材料マスタ（PDFより）
-  if(!localStorage.getItem('db00')){
-    const mats=[
-      {cls:'炊き物',name:'ライス（センター）',maker:'センター',supplier:'センター',cost:0.43,iri:1000,unit:'g',note:''},
-      {cls:'炊き物',name:'自家炊飯ライス',maker:'自家炊飯',supplier:'',cost:0.35,iri:1,unit:'g',note:''},
-      {cls:'炊き物',name:'酢飯（センター）',maker:'センター',supplier:'センター',cost:0.288,iri:1000,unit:'g',note:''},
-      {cls:'炊き物',name:'赤飯（小豆）',maker:'センター',supplier:'センター',cost:0.3,iri:1000,unit:'g',note:''},
-      {cls:'揚げ物',name:'こだわりの若鶏唐揚',maker:'トワニ',supplier:'トワニ',cost:18.3,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'チキン竜田揚',maker:'トワニ',supplier:'トワニ',cost:33.1,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'ソフトグリルハンバーグ',maker:'トワニ',supplier:'トワニ',cost:48,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'ふんわりハンバーグ',maker:'トワニ',supplier:'トワニ',cost:56,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'ジャンボチキンカツ',maker:'トワニ',supplier:'トワニ',cost:136,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'ジャンボチキン210',maker:'トワニ',supplier:'トワニ',cost:136,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'ジャンボチキンカツ（大）',maker:'トワニ',supplier:'トワニ',cost:137,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'サクサクヒレカツ',maker:'トワニ',supplier:'トワニ',cost:35.2,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'やわらかとんかつ80g',maker:'トワニ',supplier:'トワニ',cost:77,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'特厚ロースカツ',maker:'日ハム',supplier:'日ハム',cost:160.46,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'さっくりやわらかとんかつ150g',maker:'米久',supplier:'米久',cost:181.44,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'さっくりやわらかとんかつ120g',maker:'',supplier:'',cost:156,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'三元豚のロースカツ',maker:'トワニ',supplier:'トワニ',cost:124,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'三元豚使用極みのひれかつ',maker:'日ハム',supplier:'日ハム',cost:49.7,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'びっくりメンチ',maker:'トワニ',supplier:'トワニ',cost:70.2,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'マルチハンバーグ',maker:'トワニ',supplier:'トワニ',cost:38.51,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'NewクエストハンバーグLサイズ',maker:'トワニ',supplier:'トワニ',cost:106.97,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'ふっくら肉厚メンチカツ',maker:'シュレン',supplier:'シュレン',cost:88.57,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'ジューシー包みメンチカツ',maker:'トワニ',supplier:'トワニ',cost:65.1,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'サックリミニメンチカツ',maker:'シュレン国分',supplier:'シュレン国分',cost:24.7,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'チーズ包みメンチカツ（5種のチーズ入）',maker:'トワニ',supplier:'トワニ',cost:68.8,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'黄金比率のあらびきメンチカツ',maker:'トワニ',supplier:'トワニ',cost:49.1,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'おおわらじメンチカツ',maker:'三菱',supplier:'三菱',cost:107,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'ランチバーグディッシュ',maker:'シュレン国分',supplier:'シュレン国分',cost:70,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'カントリーハンバーグ',maker:'トワニ',supplier:'トワニ',cost:147,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'エビフライCR',maker:'トワニ',supplier:'トワニ',cost:27.6,iri:1,unit:'尾',note:''},
-      {cls:'揚げ物',name:'えびフライ',maker:'トワニ',supplier:'トワニ',cost:23.39,iri:1,unit:'尾',note:''},
-      {cls:'揚げ物',name:'尾付伸ばし海老21/25',maker:'トワニ',supplier:'トワニ',cost:27,iri:1,unit:'尾',note:''},
-      {cls:'揚げ物',name:'尾付伸ばし海老BT M 25尾',maker:'トワニ',supplier:'トワニ',cost:24,iri:1,unit:'尾',note:''},
-      {cls:'揚げ物',name:'華サクえび天ぷら',maker:'トワニ',supplier:'トワニ',cost:28,iri:1,unit:'尾',note:''},
-      {cls:'揚げ物',name:'海老カツ',maker:'日ハム',supplier:'日ハム',cost:30.45,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'アジフライL',maker:'トワニ',supplier:'トワニ',cost:74.76,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'真あじフライS',maker:'トワニ',supplier:'トワニ',cost:33.9,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'白身フライ',maker:'トワニ',supplier:'トワニ',cost:37.4,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'一口白身フライ',maker:'トワニ',supplier:'トワニ',cost:16,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'得用白身フライ',maker:'三菱',supplier:'三菱',cost:25,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'大判鶏むね肉のサクサク揚げ',maker:'トワニ',supplier:'トワニ',cost:165,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'やわらかチキン甘辛揚げ',maker:'日ハム',supplier:'日ハム',cost:189,iri:1,unit:'等分',note:''},
-      {cls:'揚げ物',name:'桜姫チキンカツ（パン粉付け）',maker:'東日本フード',supplier:'東日本フード',cost:190,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'鶏天ぷら40g',maker:'トワニ',supplier:'トワニ',cost:36,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'ホッケフライ',maker:'シュレン国分',supplier:'シュレン国分',cost:92.4,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'ホッケフライ（自店）',maker:'自店製造',supplier:'',cost:80,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'ほたてフライ',maker:'シュレン国分',supplier:'シュレン国分',cost:25.2,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'イカリングフライ',maker:'トワニ',supplier:'トワニ',cost:10.97,iri:50,unit:'個',note:''},
-      {cls:'揚げ物',name:'広島産カキフライ',maker:'トワニ',supplier:'トワニ',cost:25.1,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'境港産紅ずわいがに入りクリームコロッケ',maker:'トワニ',supplier:'トワニ',cost:48.7,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'サクッとクリーミーコロッケ（カニ入り）',maker:'シュレン国分',supplier:'シュレン国分',cost:27.6,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'北海道じゃがいも畑 野菜コロッケ',maker:'トワニ',supplier:'トワニ',cost:32.3,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'北海道じゃがいも畑 かぼちゃコロッケ',maker:'トワニ',supplier:'トワニ',cost:32.3,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'北海道じゃがいも畑 牛肉コロッケ',maker:'トワニ',supplier:'トワニ',cost:32.3,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'豚玉葱串カツ',maker:'トワニ',supplier:'トワニ',cost:32.8,iri:1,unit:'本',note:''},
-      {cls:'揚げ物',name:'パリパリ春巻',maker:'シュレン国分',supplier:'シュレン国分',cost:21.5,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'大きな海鮮かき揚げ',maker:'トワニ',supplier:'トワニ',cost:123,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'さつまいも天',maker:'トワニ',supplier:'トワニ',cost:33.3,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'大きな竜田揚げ',maker:'東日本F',supplier:'東日本F',cost:80,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'鶏とごぼうの甘辛揚げ',maker:'トワニ',supplier:'トワニ',cost:1219.75,iri:1,unit:'セット',note:''},
-      {cls:'揚げ物',name:'チキンステーキ バジル',maker:'マルキタ',supplier:'マルキタ',cost:146.02,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'チキンステーキ 照焼',maker:'マルキタ',supplier:'マルキタ',cost:156,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'チキンステーキ 山賊焼',maker:'マルキタ',supplier:'マルキタ',cost:673.92,iri:6,unit:'枚',note:''},
-      {cls:'揚げ物',name:'３種チーズのササミフライ',maker:'国分',supplier:'国分',cost:50,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'国産チキン南蛮',maker:'プライF',supplier:'プライF',cost:178,iri:1,unit:'枚',note:''},
-      {cls:'揚げ物',name:'豚肉野菜巻フライ',maker:'トワニ',supplier:'トワニ',cost:34.6,iri:1,unit:'個',note:''},
-      {cls:'揚げ物',name:'まるごとスルメイカ唐揚げ',maker:'トワニ',supplier:'トワニ',cost:797.25,iri:1,unit:'kg',note:''},
-      {cls:'揚げ物',name:'店内で漬け込んだ特製ザンギ',maker:'センター',supplier:'センター',cost:33.33,iri:50,unit:'個',note:''},
-      {cls:'焼き物',name:'トラウト切身30g（焼き上げ）',maker:'センター',supplier:'センター',cost:57.32,iri:1,unit:'枚',note:''},
-      {cls:'焼き物',name:'銀鮭切身40g（焼き上げ）',maker:'センター',supplier:'センター',cost:114,iri:1,unit:'枚',note:''},
-      {cls:'焼き物',name:'さば塩焼きハーフ',maker:'センター',supplier:'センター',cost:62.61,iri:1,unit:'枚',note:''},
-      {cls:'焼き物',name:'さば塩焼き',maker:'センター',supplier:'センター',cost:120.3,iri:1,unit:'枚',note:''},
-      {cls:'焼き物',name:'鯖の塩焼き',maker:'センター',supplier:'センター',cost:110,iri:1,unit:'枚',note:''},
-      {cls:'焼き物',name:'鯖の塩焼きハーフ',maker:'センター',supplier:'センター',cost:55,iri:1,unit:'切れ',note:''},
-      {cls:'焼き物',name:'トラウト60g',maker:'センター',supplier:'センター',cost:106.97,iri:1,unit:'枚',note:''},
-      {cls:'焼き物',name:'焼銀ガレイみりん',maker:'センター',supplier:'センター',cost:150,iri:1,unit:'枚',note:''},
-      {cls:'焼き物',name:'銀鮭塩焼き',maker:'センター',supplier:'センター',cost:147,iri:1,unit:'枚',note:''},
-      {cls:'焼き物',name:'炭火焼鳥モモ串',maker:'センター',supplier:'センター',cost:40.5,iri:1,unit:'本',note:''},
-      {cls:'焼き物',name:'炙り焼チャーシュー切り落とし',maker:'東日本F',supplier:'東日本F',cost:1.49,iri:1,unit:'g',note:''},
-      {cls:'焼き物',name:'国産豚トロ炭火焼500g',maker:'トワニ',supplier:'トワニ',cost:1065,iri:1,unit:'p',note:''},
-      {cls:'焼き物',name:'北海道産鮭国稀の酒粕（センター焼成）',maker:'センター',supplier:'センター',cost:205,iri:1,unit:'枚',note:''},
-      {cls:'焼き物',name:'帆立照焼（センター焼成）',maker:'センター',supplier:'センター',cost:79.5,iri:1,unit:'個',note:''},
-      {cls:'蒸し物',name:'本格中華大粒肉シューマイ',maker:'トワニ',supplier:'トワニ',cost:34.5,iri:1,unit:'個',note:''},
-      {cls:'蒸し物',name:'ふっくらやわらか肉団子',maker:'日ハム',supplier:'日ハム',cost:20.16,iri:1,unit:'個',note:''},
-      {cls:'蒸し物',name:'お買得餃子',maker:'トワニ',supplier:'トワニ',cost:7.6,iri:1,unit:'個',note:''},
-      {cls:'冷蔵品',name:'半熟味付け玉子',maker:'トワニ',supplier:'トワニ',cost:59,iri:6,unit:'個',note:''},
-      {cls:'冷蔵品',name:'温泉タマゴ3個P',maker:'ホクリョウ',supplier:'ホクリョウ',cost:30,iri:1,unit:'個',note:''},
-      {cls:'冷蔵品',name:'サラダ気分たまご10kg入',maker:'ホクリョウ',supplier:'ホクリョウ',cost:23,iri:1,unit:'個',note:''},
-      {cls:'解凍品',name:'冷凍厚焼玉子',maker:'トワニ',supplier:'トワニ',cost:33.696,iri:10,unit:'切',note:''},
-      {cls:'解凍品',name:'惣菜亭厚焼き玉子20切',maker:'トワニ',supplier:'トワニ',cost:27.2,iri:1,unit:'切',note:''},
-      {cls:'副菜',name:'きんぴらごぼう',maker:'トワニ',supplier:'トワニ',cost:0.83,iri:1000,unit:'g',note:''},
-      {cls:'副菜',name:'太切り金平ごぼう',maker:'マルキタ',supplier:'マルキタ',cost:1.12,iri:1000,unit:'g',note:''},
-      {cls:'副菜',name:'ポテトサラダ',maker:'トワニ',supplier:'トワニ',cost:0.485,iri:1000,unit:'g',note:''},
-      {cls:'副菜',name:'千切キャベツ',maker:'三菱',supplier:'三菱',cost:0.381,iri:250,unit:'g',note:''},
-      {cls:'副菜',name:'リーフレタス',maker:'三菱',supplier:'三菱',cost:1.06975,iri:200,unit:'g',note:''},
-      {cls:'副菜',name:'万能ねぎ',maker:'三菱',supplier:'三菱',cost:2.3319,iri:100,unit:'g',note:''},
-      {cls:'副菜',name:'白髪ネギ',maker:'三菱',supplier:'三菱',cost:1.63575,iri:240,unit:'g',note:''},
-      {cls:'副菜',name:'青菜のおひたし',maker:'トワニ',supplier:'トワニ',cost:1.43,iri:160,unit:'g',note:''},
-      {cls:'副菜',name:'有機切干大根の煮物（小）70g',maker:'D白老',supplier:'D白老',cost:1.18,iri:1,unit:'g',note:''},
-      {cls:'副菜',name:'弁当用鶏と大根の煮物',maker:'D白老',supplier:'D白老',cost:158,iri:1,unit:'p',note:''},
-      {cls:'副菜',name:'揚げ茄子甘辛',maker:'日ハム',supplier:'日ハム',cost:0.6675,iri:1,unit:'g',note:''},
-      {cls:'副菜',name:'弁当用大根と鶏のうま煮',maker:'D白老',supplier:'D白老',cost:28.705,iri:6,unit:'セット',note:''},
-      {cls:'副菜',name:'弁当用煮物',maker:'アクセス',supplier:'アクセス',cost:47.24,iri:1,unit:'セット',note:''},
-      {cls:'副菜',name:'RPデリカナポリタン',maker:'トワニ',supplier:'トワニ',cost:0.59,iri:500,unit:'g',note:''},
-      {cls:'副菜',name:'弁当用高野豆腐セット',maker:'ダイエットクック',supplier:'ダイエットクック',cost:34.5,iri:1,unit:'セット',note:''},
-      {cls:'副菜',name:'弁当用梅干ししそM玉',maker:'トワニ',supplier:'トワニ',cost:13.57,iri:1,unit:'個',note:''},
-      {cls:'副菜',name:'弁当用おかか',maker:'トワニ',supplier:'トワニ',cost:1.3,iri:500,unit:'g',note:''},
-      {cls:'副菜',name:'ひじきと彩り野菜の豆腐ハンバーグ',maker:'国分',supplier:'国分',cost:58,iri:1,unit:'個',note:''},
-      {cls:'副菜',name:'道産大豆の豆腐ハンバーグ',maker:'国分',supplier:'国分',cost:33,iri:1,unit:'個',note:''},
-      {cls:'副菜',name:'具たくさん春雨中華サラダ小',maker:'ダイエットクック',supplier:'ダイエットクック',cost:14.8,iri:8,unit:'等分',note:''},
-      {cls:'副菜',name:'かぶスライス',maker:'三菱',supplier:'三菱',cost:1.14,iri:500,unit:'g',note:''},
-      {cls:'副菜',name:'冷凍きぬさや',maker:'トワニ',supplier:'トワニ',cost:0.3958,iri:500,unit:'g',note:''},
-      {cls:'副菜',name:'CGC台湾産枝豆',maker:'トワニ',supplier:'トワニ',cost:0.4026,iri:500,unit:'g',note:''},
-      {cls:'副菜',name:'パセリ',maker:'三菱',supplier:'三菱',cost:6.775,iri:30,unit:'g',note:''},
-      {cls:'副菜',name:'ドライパセリ',maker:'',supplier:'',cost:1.2,iri:1,unit:'g',note:''},
-      {cls:'副菜',name:'生姜みそ漬',maker:'大和屋食品',supplier:'大和屋食品',cost:1.06972,iri:500,unit:'g',note:''},
-      {cls:'副菜',name:'天着千切紅生姜',maker:'大和屋食品',supplier:'大和屋食品',cost:0.487,iri:1,unit:'g',note:''},
-      {cls:'副菜',name:'福神漬（天着）',maker:'トワニ',supplier:'トワニ',cost:0.97,iri:500,unit:'g',note:''},
-      {cls:'副菜',name:'ジャンボちくわ',maker:'トワニ',supplier:'トワニ',cost:25,iri:0.5,unit:'本',note:''},
-      {cls:'副菜',name:'たこちゃんウィンナー',maker:'トワニ',supplier:'トワニ',cost:14,iri:1,unit:'本',note:''},
-      {cls:'副菜',name:'皮なしあらびきウィンナー',maker:'センター',supplier:'センター',cost:21,iri:1,unit:'本',note:''},
-      {cls:'副菜',name:'あらびきフランクフルト プレーン',maker:'日ハム',supplier:'日ハム',cost:70,iri:1,unit:'本',note:''},
-      {cls:'副菜',name:'半切りのり',maker:'センター',supplier:'センター',cost:12.25,iri:1,unit:'枚',note:''},
-      {cls:'副菜',name:'刻み海苔',maker:'トワニ',supplier:'トワニ',cost:5.8,iri:100,unit:'g',note:''},
-      {cls:'副菜',name:'きざみのり',maker:'トワニ',supplier:'トワニ',cost:5.8,iri:1,unit:'g',note:''},
-      {cls:'副菜',name:'黒ごま',maker:'トワニ',supplier:'トワニ',cost:0.61,iri:1,unit:'g',note:''},
-      {cls:'副菜',name:'白ごま',maker:'店内',supplier:'',cost:0.61,iri:1,unit:'g',note:''},
-      {cls:'副菜',name:'ごま昆布',maker:'トワニ',supplier:'トワニ',cost:0.675,iri:1,unit:'g',note:''},
-      {cls:'副菜',name:'サラダスティック',maker:'店内',supplier:'',cost:5.9,iri:1,unit:'個',note:''},
-      {cls:'副菜',name:'金時豆',maker:'店内',supplier:'',cost:1.04,iri:1,unit:'g',note:''},
-      {cls:'副菜',name:'レモン',maker:'インストア',supplier:'',cost:4,iri:1,unit:'切',note:''},
-      {cls:'副菜',name:'ミニトマト',maker:'店内',supplier:'',cost:14.3,iri:1,unit:'個',note:''},
-      {cls:'副菜',name:'カントリーウェッジポテト',maker:'トワニ',supplier:'トワニ',cost:0.33161,iri:1000,unit:'g',note:''},
-      {cls:'その他',name:'天ぷら粉',maker:'センター',supplier:'センター',cost:0.259,iri:1,unit:'g',note:''},
-      {cls:'その他',name:'低吸油パン粉',maker:'三菱',supplier:'三菱',cost:0.298455,iri:2000,unit:'g',note:''},
-      {cls:'その他',name:'唐揚粉デリカ',maker:'センター',supplier:'センター',cost:0.36505,iri:400,unit:'g',note:''},
-      {cls:'その他',name:'天重のタレ',maker:'トワニ',supplier:'トワニ',cost:0.75,iri:600,unit:'ml',note:''},
-      {cls:'その他',name:'ハンバーグソースデリシャス',maker:'日本食研',supplier:'日本食研',cost:0.67392,iri:2000,unit:'g',note:''},
-      {cls:'その他',name:'ソースかつ丼のタレ',maker:'日本食研',supplier:'日本食研',cost:0.65,iri:2000,unit:'g',note:''},
-      {cls:'その他',name:'メンチカツのタレ',maker:'三菱',supplier:'三菱',cost:0.5206,iri:300,unit:'g',note:''},
-      {cls:'その他',name:'油淋鶏ソース',maker:'食研',supplier:'食研',cost:0.826,iri:2000,unit:'g',note:''},
-      {cls:'その他',name:'やわらかカルビー丼の具',maker:'トワニ',supplier:'トワニ',cost:154,iri:1,unit:'袋',note:''},
-      {cls:'その他',name:'帯広豚丼の具',maker:'日ハム',supplier:'日ハム',cost:140,iri:1,unit:'p',note:''},
-      {cls:'その他',name:'エビチリソース',maker:'トワニ',supplier:'トワニ',cost:14.7,iri:100,unit:'尾',note:''},
-      {cls:'その他',name:'オニオンリッチカレー',maker:'トワニ',supplier:'トワニ',cost:312,iri:1,unit:'袋',note:''},
-      {cls:'その他',name:'食研カレー1kg',maker:'日本食研',supplier:'日本食研',cost:544,iri:1000,unit:'g',note:''},
-      {cls:'その他',name:'食研カレー（小袋）',maker:'日本食研',supplier:'日本食研',cost:122.54,iri:1,unit:'袋',note:''},
-      {cls:'その他',name:'マヨネーズ',maker:'三菱',supplier:'三菱',cost:0.485,iri:1000,unit:'g',note:''},
-      {cls:'その他',name:'タルタルソース業務用500g',maker:'トワニ',supplier:'トワニ',cost:0.67,iri:500,unit:'g',note:''},
-      {cls:'その他',name:'シェフズタルタル',maker:'トワニ',supplier:'トワニ',cost:0.598,iri:500,unit:'g',note:''},
-      {cls:'その他',name:'ミツカン南蛮あんかけのタレ',maker:'トワニ',supplier:'トワニ',cost:0.5,iri:1,unit:'g',note:''},
-      {cls:'その他',name:'丼のたれ ストレート',maker:'三菱',supplier:'三菱',cost:0.424917,iri:1800,unit:'g',note:''},
-      {cls:'その他',name:'道東アークス焼鳥のたれ2.1kg',maker:'食研',supplier:'食研',cost:0.61,iri:1,unit:'g',note:''},
-      {cls:'その他',name:'塩天丼のたれ570g',maker:'日本食研',supplier:'日本食研',cost:0.94,iri:570,unit:'g',note:''},
-      {cls:'その他',name:'辛子明太子チューブ',maker:'トワニ',supplier:'トワニ',cost:2.12,iri:1,unit:'g',note:''},
-      {cls:'その他',name:'具たっぷりソースゆず醤油1070g',maker:'トワニ',supplier:'トワニ',cost:0.985,iri:1070,unit:'g',note:''},
-      {cls:'その他',name:'焼き込みチーズソース',maker:'日本食研',supplier:'日本食研',cost:1.2,iri:1,unit:'g',note:''},
-      {cls:'その他',name:'とろけるスライスチーズ',maker:'店内',supplier:'',cost:15.4,iri:1,unit:'枚',note:''},
-      {cls:'その他',name:'針生姜',maker:'トワニ',supplier:'トワニ',cost:1.725,iri:1,unit:'g',note:''},
-      {cls:'その他',name:'ポン酢',maker:'トワニ',supplier:'トワニ',cost:10,iri:1,unit:'個',note:''},
-      {cls:'その他',name:'鬼おろし',maker:'トワニ',supplier:'トワニ',cost:0.6,iri:500,unit:'g',note:''},
-    ];
-    const withId=mats.map((m,i)=>({id:i+1,...m,jan:'',sp1:'',sp2:'',sp3:''}));
-    sdb('db00',withId);
-  }
-
-  // 包材マスタ — 分類・取引先マスタ初期化
-  if(!localStorage.getItem('hozaiCls'))
-    sdb('hozaiCls',['弁当','丼','麺','総菜','サラダ']);
-  if(!localStorage.getItem('hozaiSup'))
-    sdb('hozaiSup',['大丸藤井','高速','ユニパック']);
-
-  // 包材マスタ（PDFより・分類・取引先・コード追加）
-  if(!localStorage.getItem('hozai')){
-    const hz=[
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'竹皿膳22-22-1 はけ嵐赤',unit:'枚',cost:16.2,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'竹皿膳22-22-1 嵌合蓋',unit:'枚',cost:11.5,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'箱膳23-16-1H',unit:'枚',cost:14.6,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'箱膳23-16F 蓋',unit:'枚',cost:8.3,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'箱膳23-16-1H 光華',unit:'枚',cost:14.6,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'竹皿膳22-22-1 ボストン茶',unit:'枚',cost:16.2,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'MSD穂高重20-15 黒',unit:'枚',cost:10.4,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'MSD穂高重20-15 側面嵌合蓋',unit:'枚',cost:10.4,note:''},
-      {cls:'丼',supplier:'大丸藤井',code:'',jan:'',name:'BF丸丼18 黒',unit:'枚',cost:8.6,note:''},
-      {cls:'丼',supplier:'大丸藤井',code:'',jan:'',name:'MFP-丸丼18 嵌合蓋',unit:'枚',cost:6.7,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'かさね小判20B 黒',unit:'枚',cost:13.1,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'かさね小判20（OC）蓋',unit:'枚',cost:14.1,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'かさね小判20中皿1 RBS',unit:'枚',cost:11.3,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'モダン26-15-1浅 赤金フチ黒',unit:'枚',cost:11,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'モダン26-15 嵌合蓋',unit:'枚',cost:9.4,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'MSD箱弁26-20-1 ゆうび赤 本体',unit:'枚',cost:17.9,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'MSD箱弁26-20 蓋',unit:'枚',cost:9.2,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'MSD極み重74会津赤',unit:'枚',cost:14.9,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'MSD極み重74嵌合蓋',unit:'枚',cost:10.5,note:''},
-      {cls:'総菜',supplier:'大丸藤井',code:'',jan:'',name:'VK-610 キャメル',unit:'枚',cost:13.34,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'CFアワセバコ21-12 クローBK ミ',unit:'枚',cost:7.6,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'CFアワセバコ21-12 フタ',unit:'枚',cost:7.2,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'CT中皿21-12 金-BK',unit:'枚',cost:9,note:''},
-      {cls:'丼',supplier:'大丸藤井',code:'',jan:'',name:'BFカレー内8-1 デリシャス本体',unit:'枚',cost:26.7,note:''},
-      {cls:'丼',supplier:'大丸藤井',code:'',jan:'',name:'BFカレー内8 嵌合蓋U字穴',unit:'枚',cost:15.5,note:''},
-      {cls:'丼',supplier:'大丸藤井',code:'',jan:'',name:'MFPグラブ丸20 カフェブルー',unit:'枚',cost:17.3,note:''},
-      {cls:'丼',supplier:'大丸藤井',code:'',jan:'',name:'MFPグラブ丸20 蓋',unit:'枚',cost:14.3,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'竹皿膳24-19-1 はけ嵐赤',unit:'枚',cost:15.3,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'竹皿膳24-19-1 嵌合蓋',unit:'枚',cost:10.42,note:''},
-      {cls:'総菜',supplier:'大丸藤井',code:'',jan:'',name:'デリシェフ16-14B',unit:'枚',cost:33.12,note:''},
-      {cls:'総菜',supplier:'大丸藤井',code:'',jan:'',name:'デリシェフ16-14B 蓋',unit:'枚',cost:13.24,note:''},
-      {cls:'総菜',supplier:'大丸藤井',code:'',jan:'',name:'パノラック18-12',unit:'枚',cost:6.62,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'松花堂207',unit:'枚',cost:33,note:''},
-      {cls:'丼',supplier:'大丸藤井',code:'',jan:'',name:'MFPグラブ八角21-21 黒',unit:'枚',cost:19.8,note:''},
-      {cls:'丼',supplier:'大丸藤井',code:'',jan:'',name:'グラブ八角21-21 内嵌合蓋',unit:'枚',cost:15.9,note:''},
-      {cls:'丼',supplier:'大丸藤井',code:'',jan:'',name:'TPオルマ M22-17 紺 本体',unit:'枚',cost:16.9,note:''},
-      {cls:'丼',supplier:'大丸藤井',code:'',jan:'',name:'TPオルマ M22-17 蓋',unit:'枚',cost:13.3,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'CT宝台膳小判 風葉BK 本体',unit:'枚',cost:15.5,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'CT宝台膳小判 蓋',unit:'枚',cost:10.4,note:''},
-      {cls:'総菜',supplier:'大丸藤井',code:'',jan:'',name:'CFランチBOX-2 本体',unit:'枚',cost:9.54,note:''},
-      {cls:'総菜',supplier:'大丸藤井',code:'',jan:'',name:'CFランチBOX-2 蓋',unit:'枚',cost:7.3,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'CT中皿21-12S 赤-BK',unit:'枚',cost:9,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'CTWF-小判23A-32赤黒-BK身L',unit:'枚',cost:16.7,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'CT WF-小判23 重ね蓋',unit:'枚',cost:11.5,note:''},
-      {cls:'総菜',supplier:'大丸藤井',code:'1489786',jan:'',name:'V-惣菜50深 浮草',unit:'枚',cost:7.6,note:''},
-      {cls:'弁当',supplier:'高速',code:'1497913',jan:'',name:'BOX26-18（37）エコ黒',unit:'枚',cost:10.6,note:''},
-      {cls:'弁当',supplier:'高速',code:'1158367',jan:'',name:'T-BOX-26-18内嵌合蓋',unit:'枚',cost:8.9,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'1447943',jan:'',name:'CT活膳19-15 赤-BK 身',unit:'枚',cost:15,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'1447945',jan:'',name:'CT活膳19-15 蓋',unit:'枚',cost:9,note:''},
-      {cls:'丼',supplier:'大丸藤井',code:'',jan:'',name:'TPボレノ M20-16 紺 本体',unit:'枚',cost:14.8,note:''},
-      {cls:'丼',supplier:'大丸藤井',code:'',jan:'',name:'TPボレノ 蓋',unit:'枚',cost:14.8,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'1447943',jan:'',name:'CTガチ重 IK18-13 BK 身',unit:'枚',cost:9,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'1447945',jan:'',name:'CTガチ重 IK18-13 蓋',unit:'枚',cost:6,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'竹皿膳24-19-1 黒',unit:'枚',cost:15.3,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'竹皿膳24-19-1 ボストン茶',unit:'枚',cost:15.3,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'BFハカマ集小判45',unit:'枚',cost:15.6,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'BFハカマ集小判 蓋',unit:'枚',cost:8.6,note:''},
-      {cls:'丼',supplier:'大丸藤井',code:'',jan:'',name:'MSD半月丼20-19 本体',unit:'枚',cost:14.26,note:''},
-      {cls:'丼',supplier:'大丸藤井',code:'',jan:'',name:'半月丼20-19 篏合蓋',unit:'枚',cost:18.5,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'MFPアリオン20-20-1',unit:'枚',cost:14,note:''},
-      {cls:'弁当',supplier:'大丸藤井',code:'',jan:'',name:'T-アリオン20-20嵌合蓋',unit:'枚',cost:10.3,note:''},
-      {cls:'丼',supplier:'大丸藤井',code:'',jan:'',name:'MSDアコード重18-14（37）黒',unit:'枚',cost:6,note:''},
-      {cls:'丼',supplier:'大丸藤井',code:'',jan:'',name:'Tアコード重18-14嵌合蓋エコOPET',unit:'枚',cost:6.8,note:''},
-      {cls:'丼',supplier:'大丸藤井',code:'',jan:'',name:'MSD旬丸丼-18（44）',unit:'枚',cost:7.8,note:''},
-      {cls:'丼',supplier:'大丸藤井',code:'',jan:'',name:'T-旬丸丼-18嵌合蓋',unit:'枚',cost:6.2,note:''},
-    ];
-    sdb('hozai',hz.map((h,i)=>({id:i+1,...h})));
-  }
-
-  // 弁当マスタ（PDFより・常時更新）
-  {
-    const bn=[
-      {cls:'丼物',callno:'3041',name:'得用海老天重',price:350,ings:[],note:''},
-      {cls:'丼物',callno:'1049',name:'ねぎたっぷり油淋鶏重',price:398,ings:[],note:''},
-      {cls:'丼物',callno:'1248',name:'チャーマヨねぎ玉丼',price:398,ings:[],note:''},
-      {cls:'丼物',callno:'1247',name:'とんとん丼',price:498,ings:[],note:''},
-      {cls:'丼物',callno:'1065',name:'海老天重',price:398,ings:[],note:''},
-      {cls:'丼物',callno:'1078',name:'すごうまカルビ丼',price:450,ings:[],note:''},
-      {cls:'丼物',callno:'1017',name:'やわらかチキン竜田南蛮丼',price:398,ings:[],note:''},
-      {cls:'丼物',callno:'1053',name:'鬼おろしとポン酢で食べるヒレカツ丼',price:480,ings:[],note:''},
-      {cls:'丼物',callno:'1045',name:'鶏とごぼうの甘辛丼',price:498,ings:[],note:''},
-      {cls:'丼物',callno:'1094',name:'帯広豚丼',price:450,ings:[],note:''},
-      {cls:'丼物',callno:'1228',name:'炭火やきとり重',price:498,ings:[],note:''},
-      {cls:'丼物',callno:'1233',name:'唐揚マヨ丼',price:398,ings:[],note:''},
-      {cls:'丼物',callno:'1253',name:'大きな海鮮かき揚げ丼',price:498,ings:[],note:''},
-      {cls:'丼物',callno:'5145',name:'イカ丼',price:350,ings:[],note:''},
-      {cls:'丼物',callno:'1126',name:'さっぱり！黒ゆずおろしヒレカツ丼',price:498,ings:[],note:''},
-      {cls:'丼物',callno:'1071',name:'さくさく塩ヒレカツ丼',price:450,ings:[],note:''},
-      {cls:'丼物',callno:'1258',name:'ソースヒレカツ丼',price:430,ings:[],note:''},
-      {cls:'丼物',callno:'1372',name:'がっつり鶏天丼',price:450,ings:[],note:''},
-      {cls:'丼物',callno:'1662',name:'がっつり国産豚トロ炭火焼重',price:498,ings:[],note:''},
-      {cls:'弁当',callno:'1303',name:'おかずいっぱい幕の内弁当',price:628,ings:[],note:''},
-      {cls:'弁当',callno:'1098',name:'銀がれい味醂弁当',price:698,ings:[],note:''},
-      {cls:'弁当',callno:'1130',name:'和風焼き鮭弁当',price:550,ings:[],note:''},
-      {cls:'弁当',callno:'1128',name:'和風焼きさば弁当',price:450,ings:[],note:''},
-      {cls:'弁当',callno:'1132',name:'豚串カツ海苔弁当',price:398,ings:[],note:''},
-      {cls:'弁当',callno:'1121',name:'イカフライ海苔弁当',price:398,ings:[],note:''},
-      {cls:'弁当',callno:'1092',name:'銀鮭のり重弁当',price:550,ings:[],note:''},
-      {cls:'弁当',callno:'1052',name:'国産ジャンボチキンカツ弁当',price:550,ings:[],note:''},
-      {cls:'弁当',callno:'1137',name:'甘辛チキン弁当（大）',price:530,ings:[],note:''},
-      {cls:'弁当',callno:'1112',name:'でか盛り！桜姫鶏の手造りチキンカツ弁当',price:598,ings:[],note:''},
-      {cls:'弁当',callno:'1175',name:'特盛おおわらじメンチカツ弁当',price:650,ings:[],note:''},
-      {cls:'弁当',callno:'1227',name:'でか盛ハンバーグ弁当',price:598,ings:[],note:''},
-      {cls:'弁当',callno:'970',name:'三元豚のロースカツ弁当',price:498,ings:[],note:''},
-      {cls:'弁当',callno:'973',name:'紅ずわいがにクリームコロッケハンバーグ弁当',price:498,ings:[],note:''},
-      {cls:'弁当',callno:'978',name:'満足さば塩焼弁当',price:450,ings:[],note:''},
-      {cls:'弁当',callno:'1011',name:'脂ののった大きなアジフライ弁当',price:398,ings:[],note:''},
-      {cls:'弁当',callno:'1097',name:'オムライスハンバーグ＆カニクリームコロッケ弁当',price:498,ings:[],note:''},
-      {cls:'弁当',callno:'1097',name:'ミックスグリル弁当',price:530,ings:[],note:''},
-      {cls:'弁当',callno:'1089',name:'満足のり弁当弐',price:530,ings:[],note:''},
-      {cls:'弁当',callno:'1323',name:'７品目の海苔弁当',price:498,ings:[],note:''},
-      {cls:'弁当',callno:'1609',name:'えびイカ煮物弁当',price:550,ings:[],note:''},
-      {cls:'弁当',callno:'1116',name:'焼鮭のっけ弁当',price:530,ings:[],note:''},
-      {cls:'弁当',callno:'1158',name:'ハンバーグソーセージ弁当',price:430,ings:[],note:''},
-      {cls:'弁当',callno:'1594',name:'骨無豚スペアリブ弁当',price:550,ings:[],note:''},
-      {cls:'弁当',callno:'1569',name:'おかずのせ弁当',price:498,ings:[],note:''},
-      {cls:'弁当',callno:'1355',name:'中華弁当',price:398,ings:[],note:''},
-      {cls:'弁当',callno:'1083',name:'おかずいっぱい和風弁当',price:598,ings:[],note:''},
-      {cls:'弁当',callno:'1133',name:'彩り鮭弁当',price:598,ings:[],note:''},
-      {cls:'弁当',callno:'1534',name:'銀かれい弁当（小）',price:550,ings:[],note:''},
-      {cls:'弁当',callno:'1571',name:'ミニのり弁当',price:398,ings:[],note:''},
-      {cls:'海鮮',callno:'',name:'豆腐ハンバーグとチキン照焼の彩り弁当',price:498,ings:[],note:''},
-      {cls:'カレー',callno:'1109',name:'オニオンリッチチキンカツカレー',price:430,ings:[],note:''},
-      {cls:'カレー',callno:'1039',name:'旨味こだわりのビーフカレー',price:350,ings:[],note:''},
-      {cls:'カレー',callno:'1075',name:'旨味こだわりのハンバーグカレー',price:450,ings:[],note:''},
-      {cls:'カレー',callno:'1041',name:'こだわりのササミチーズカツカレー',price:450,ings:[],note:''},
-      {cls:'カレー',callno:'1306',name:'焼込みチーズカレー',price:350,ings:[],note:''},
-      {cls:'のり弁',callno:'1050',name:'5種のチーズメンチカツのり弁当',price:398,ings:[],note:''},
-      {cls:'のり弁',callno:'942',name:'かぼちゃコロッケのり弁 350円',price:350,ings:[],note:''},
-      {cls:'ミニ弁当',callno:'1060',name:'ミニ漬込みザンギ弁当 350円',price:350,ings:[],note:''},
-      {cls:'ミニ弁当',callno:'1103',name:'お手軽ミニ天丼 350円',price:350,ings:[],note:''},
-      {cls:'ミニ弁当',callno:'5304',name:'やわらかチキン甘辛ミニ弁当 350円',price:350,ings:[],note:''},
-      {cls:'ミニ弁当',callno:'1119',name:'アジフライミニ弁当 350円',price:350,ings:[],note:''},
-      {cls:'ミニ弁当',callno:'1122',name:'ミニ銀鮭焼弁当 350円',price:350,ings:[],note:''},
-      {cls:'ミニ弁当',callno:'5296',name:'ハンバーグ弁当 350円',price:350,ings:[],note:''},
-      {cls:'ミニ弁当',callno:'1261',name:'明太マヨのり弁当 350円',price:350,ings:[],note:''},
-      {cls:'のり弁',callno:'5263',name:'のり弁（鯖）350円',price:350,ings:[],note:''},
-      {cls:'ミニ弁当',callno:'5102',name:'チキンカツ南蛮弁当 350円',price:350,ings:[],note:''},
-      {cls:'弁当',callno:'',name:'さくさくチキン南蛮弁当',price:550,ings:[],note:''},
-      {cls:'弁当',callno:'',name:'極みヒレカツ弁当',price:498,ings:[],note:''},
-      {cls:'弁当',callno:'',name:'チキンみそカツ弁当',price:450,ings:[],note:''},
-      {cls:'弁当',callno:'1632',name:'唐揚明太子弁当',price:398,ings:[],note:''},
-      {cls:'のり弁',callno:'2501',name:'今日ののり弁（焼鮭弁当）',price:550,ings:[],note:''},
-      {cls:'弁当',callno:'1533',name:'海老天お好み弁当',price:550,ings:[],note:''},
-      {cls:'弁当',callno:'1158',name:'ハンバーグソーセージ弁当',price:430,ings:[],note:''},
-      {cls:'弁当',callno:'1097',name:'ミックスグリル弁当',price:530,ings:[],note:''},
-    ];
-    sdb('bentos',bn.map((b,i)=>({id:i+1,...b})));
-  }
+  if(!localStorage.getItem('stores'))sdb('stores',['北光','高栄','留辺蘂','斜里','三輪','タイガー','メッセ','小泉','美幌','桜町','本町','駒場','橋北']);
+  if(!localStorage.getItem('hozaiCls'))sdb('hozaiCls',['弁当','丼','麺','総菜','サラダ']);
+  if(!localStorage.getItem('hozaiSup'))sdb('hozaiSup',['大丸藤井','高速','ユニパック']);
+  if(!localStorage.getItem('materials'))sdb('materials',[
+    {id:1,name:'ライス（センター）',unit:'g'},{id:2,name:'自家炊飯ライス',unit:'g'},
+    {id:3,name:'こだわりの若鶏唐揚',unit:'個'},{id:4,name:'きんぴらごぼう',unit:'g'},
+    {id:5,name:'惣菜亭厚焼き玉子20切',unit:'切'},{id:6,name:'皮なしあらびきウィンナー',unit:'本'},
+    {id:7,name:'銀鮭切身40g（焼き上げ）',unit:'枚'},{id:8,name:'ポテトサラダ',unit:'g'},
+    {id:9,name:'千切キャベツ',unit:'g'},{id:10,name:'リーフレタス',unit:'g'},
+    {id:11,name:'半熟味付け玉子',unit:'個'},{id:12,name:'ジャンボちくわ',unit:'本'},
+    {id:13,name:'白ごま',unit:'g'},{id:14,name:'黒ごま',unit:'g'},
+    {id:15,name:'天ぷら粉',unit:'g'},{id:16,name:'豚玉葱串カツ',unit:'本'},
+    {id:17,name:'ソースかつ丼のタレ',unit:'g'},{id:18,name:'RPデリカナポリタン',unit:'g'},
+    {id:19,name:'かぶスライス',unit:'g'},{id:20,name:'弁当用おかか',unit:'g'},
+    {id:21,name:'半切りのり',unit:'枚'},{id:22,name:'ふんわりハンバーグ',unit:'個'},
+    {id:23,name:'ハンバーグソースデリシャス',unit:'g'},{id:24,name:'ドライパセリ',unit:'g'},
+    {id:25,name:'万能ねぎ',unit:'g'},{id:26,name:'炙り焼チャーシュー切り落とし',unit:'g'},
+    {id:27,name:'サラダ気分たまご',unit:'個'},{id:28,name:'マヨネーズ',unit:'g'},
+    {id:29,name:'三元豚使用極みのひれかつ',unit:'枚'},{id:30,name:'ミツカン南蛮あんかけのタレ',unit:'g'},
+    {id:31,name:'油淋鶏ソース',unit:'g'},{id:32,name:'大判鶏むね肉のサクサク揚げ',unit:'枚'},
+    {id:33,name:'タルタルソース業務用',unit:'g'},{id:34,name:'尾付伸ばし海老21/25',unit:'尾'},
+    {id:35,name:'天重のタレ',unit:'ml'},{id:36,name:'きざみのり',unit:'g'},
+    {id:37,name:'大きな竜田揚げ',unit:'個'},{id:38,name:'やわらかカルビー丼の具',unit:'袋'},
+    {id:39,name:'帯広豚丼の具',unit:'p'},{id:40,name:'炭火焼鳥モモ串',unit:'本'},
+    {id:41,name:'道東アークス焼鳥のたれ',unit:'g'},{id:42,name:'温泉タマゴ3個P',unit:'個'},
+    {id:43,name:'国産豚トロ炭火焼500g',unit:'p'},{id:44,name:'ジャンボチキン210',unit:'枚'},
+    {id:45,name:'オニオンリッチカレー',unit:'袋'},{id:46,name:'福神漬（天着）',unit:'g'},
+    {id:47,name:'食研カレー1kg',unit:'g'},{id:48,name:'食研カレー（小袋）',unit:'袋'},
+    {id:49,name:'鶏とごぼうの甘辛揚げ',unit:'セット'},{id:50,name:'弁当用梅干ししそM玉',unit:'個'},
+    {id:51,name:'銀鮭塩焼き',unit:'枚'},{id:52,name:'鯖の塩焼き',unit:'枚'},
+    {id:53,name:'鯖の塩焼きハーフ',unit:'枚'},{id:54,name:'焼銀ガレイみりん',unit:'枚'},
+    {id:55,name:'特製ザンギ',unit:'個'},{id:56,name:'チキン竜田揚',unit:'個'},
+    {id:57,name:'尾付伸ばし海老BT M 25尾',unit:'尾'},{id:58,name:'華サクえび天ぷら',unit:'尾'},
+    {id:59,name:'大きな海鮮かき揚げ',unit:'枚'},{id:60,name:'イカ切身',unit:'枚'},
+    {id:61,name:'まるごとスルメイカ唐揚げ',unit:'g'},{id:62,name:'本格中華大粒肉シューマイ',unit:'個'},
+    {id:63,name:'ふっくらやわらか肉団子',unit:'個'},{id:64,name:'パリパリ春巻',unit:'個'},
+    {id:65,name:'エビチリソース',unit:'尾'},{id:66,name:'さつまいも天',unit:'枚'},
+    {id:67,name:'ジャンボチキンカツ',unit:'枚'},{id:68,name:'サクサクヒレカツ',unit:'枚'},
+    {id:69,name:'鬼おろし',unit:'g'},{id:70,name:'ポン酢',unit:'個'},
+    {id:71,name:'辛子明太子チューブ',unit:'g'},{id:72,name:'アジフライL',unit:'枚'},
+    {id:73,name:'真あじフライS',unit:'枚'},{id:74,name:'得用白身フライ',unit:'個'},
+    {id:75,name:'北海道じゃがいも畑かぼちゃコロッケ',unit:'個'},
+    {id:76,name:'北海道じゃがいも畑野菜コロッケ',unit:'個'},
+    {id:77,name:'北海道じゃがいも畑牛肉コロッケ',unit:'個'},
+    {id:78,name:'境港産紅ずわいがにクリームコロッケ',unit:'個'},
+    {id:79,name:'おおわらじメンチカツ',unit:'個'},{id:80,name:'チーズ包みメンチカツ5種',unit:'個'},
+    {id:81,name:'3種チーズのササミフライ',unit:'個'},{id:82,name:'やわらかチキン甘辛揚げ',unit:'等分'},
+    {id:83,name:'桜姫チキンカツ（パン粉付け）',unit:'枚'},{id:84,name:'三元豚のロースカツ',unit:'枚'},
+    {id:85,name:'あらびきフランクフルト プレーン',unit:'本'},{id:86,name:'骨無しスペアリブ（山賊味）',unit:'本'},
+    {id:87,name:'シェフズタルタル',unit:'g'},{id:88,name:'塩天丼のたれ',unit:'g'},
+    {id:89,name:'具たっぷりソースゆず醤油',unit:'g'},{id:90,name:'ミニトマト',unit:'個'},
+    {id:91,name:'レモン',unit:'切'},{id:92,name:'白髪ネギ',unit:'g'},
+    {id:93,name:'弁当用鶏と大根の煮物',unit:'p'},{id:94,name:'揚げ茄子甘辛',unit:'g'},
+    {id:95,name:'青菜のおひたし',unit:'g'},{id:96,name:'有機切干大根の煮物（小）',unit:'g'},
+    {id:97,name:'生姜みそ漬',unit:'g'},{id:98,name:'天着千切紅生姜',unit:'g'},
+    {id:99,name:'焼き込みチーズソース',unit:'g'},{id:100,name:'とろけるスライスチーズ',unit:'枚'},
+    {id:101,name:'ごっつー使えるチキンライス',unit:'等分'},{id:102,name:'とろっと玉子（洋食の味）',unit:'等分'},
+    {id:103,name:'ひじきと彩り野菜の豆腐ハンバーグ',unit:'個'},{id:104,name:'具たくさん春雨中華サラダ小',unit:'等分'},
+    {id:105,name:'サクッとクリーミーコロッケ（カニ入り）',unit:'個'},{id:106,name:'たこちゃんウィンナー',unit:'本'},
+    {id:107,name:'お買得餃子',unit:'個'},{id:108,name:'酢豚ソース',unit:'ml'},
+    {id:109,name:'チキンみそカツ30g',unit:'枚'},{id:110,name:'ソフトグリルハンバーグ',unit:'個'},
+    {id:111,name:'金時豆',unit:'g'},{id:112,name:'ごま昆布',unit:'g'},
+    {id:113,name:'サラダスティック',unit:'個'},{id:114,name:'豚肉野菜巻フライ',unit:'個'},
+    {id:115,name:'一口白身フライ',unit:'枚'},
+  ]);
+  if(!localStorage.getItem('bentos'))sdb('bentos',[
+    {id:1,cls:'丼物',callno:'3041',name:'得用海老天重',price:350,ings:[{matId:35,qty:20},{matId:58,qty:3},{matId:98,qty:5},{matId:36,qty:1}],note:''},
+    {id:2,cls:'丼物',callno:'1049',name:'ねぎたっぷり油淋鶏重',price:398,ings:[{matId:1,qty:180},{matId:32,qty:0.5},{matId:31,qty:30},{matId:25,qty:2}],note:''},
+    {id:3,cls:'丼物',callno:'1248',name:'チャーマヨねぎ玉丼',price:398,ings:[{matId:1,qty:170},{matId:26,qty:50},{matId:27,qty:1},{matId:25,qty:3},{matId:28,qty:10}],note:''},
+    {id:4,cls:'丼物',callno:'1247',name:'とんとん丼',price:498,ings:[{matId:1,qty:180},{matId:26,qty:50},{matId:29,qty:1},{matId:27,qty:1},{matId:17,qty:10},{matId:13,qty:2},{matId:25,qty:3}],note:''},
+    {id:5,cls:'丼物',callno:'1065',name:'海老天重',price:398,ings:[{matId:1,qty:170},{matId:34,qty:3},{matId:35,qty:30},{matId:15,qty:40},{matId:98,qty:10}],note:''},
+    {id:6,cls:'丼物',callno:'1078',name:'すごうまカルビ丼',price:450,ings:[{matId:1,qty:170},{matId:38,qty:1},{matId:98,qty:5}],note:''},
+    {id:7,cls:'丼物',callno:'1017',name:'やわらかチキン竜田南蛮丼',price:398,ings:[{matId:1,qty:170},{matId:37,qty:1},{matId:33,qty:30},{matId:30,qty:20},{matId:24,qty:0.5}],note:''},
+    {id:8,cls:'丼物',callno:'1045',name:'鶏とごぼうの甘辛丼',price:498,ings:[{matId:1,qty:170},{matId:11,qty:0.5},{matId:49,qty:0.1},{matId:25,qty:2},{matId:13,qty:1}],note:''},
+    {id:9,cls:'丼物',callno:'1094',name:'帯広豚丼',price:450,ings:[{matId:1,qty:170},{matId:39,qty:1},{matId:25,qty:3},{matId:98,qty:5}],note:''},
+    {id:10,cls:'丼物',callno:'1228',name:'炭火やきとり重',price:498,ings:[{matId:1,qty:170},{matId:42,qty:1},{matId:36,qty:0.5},{matId:40,qty:3},{matId:25,qty:2},{matId:41,qty:20},{matId:13,qty:1}],note:''},
+    {id:11,cls:'丼物',callno:'1233',name:'唐揚マヨ丼',price:398,ings:[{matId:1,qty:170},{matId:3,qty:4},{matId:28,qty:20},{matId:27,qty:1},{matId:41,qty:20},{matId:10,qty:0.5},{matId:25,qty:2}],note:''},
+    {id:12,cls:'丼物',callno:'1253',name:'大きな海鮮かき揚げ丼',price:498,ings:[{matId:59,qty:1},{matId:1,qty:180},{matId:98,qty:5},{matId:35,qty:20},{matId:36,qty:1}],note:''},
+    {id:13,cls:'丼物',callno:'5145',name:'イカ丼',price:350,ings:[{matId:1,qty:160},{matId:61,qty:100},{matId:35,qty:10},{matId:25,qty:1}],note:''},
+    {id:14,cls:'丼物',callno:'1126',name:'さっぱり黒ゆずおろしヒレカツ丼',price:498,ings:[{matId:1,qty:180},{matId:11,qty:0.5},{matId:9,qty:5},{matId:25,qty:2},{matId:68,qty:3},{matId:89,qty:40}],note:''},
+    {id:15,cls:'丼物',callno:'1071',name:'さくさく塩ヒレカツ丼',price:450,ings:[{matId:68,qty:3},{matId:9,qty:10},{matId:92,qty:3},{matId:25,qty:3},{matId:1,qty:170},{matId:88,qty:30}],note:''},
+    {id:16,cls:'丼物',callno:'1258',name:'ソースヒレカツ丼',price:430,ings:[{matId:1,qty:170},{matId:68,qty:3},{matId:91,qty:1},{matId:9,qty:10},{matId:17,qty:30}],note:''},
+    {id:17,cls:'丼物',callno:'1372',name:'がっつり鶏天丼',price:450,ings:[{matId:1,qty:170},{matId:81,qty:3},{matId:35,qty:20},{matId:25,qty:2},{matId:36,qty:0.5}],note:''},
+    {id:18,cls:'丼物',callno:'1662',name:'がっつり国産豚トロ炭火焼重',price:498,ings:[{matId:1,qty:180},{matId:43,qty:0.166},{matId:25,qty:2}],note:''},
+    {id:19,cls:'丼物',callno:'1053',name:'鬼おろしとポン酢で食べるヒレカツ丼',price:480,ings:[{matId:68,qty:3},{matId:69,qty:46},{matId:25,qty:4},{matId:1,qty:170},{matId:70,qty:1}],note:''},
+    {id:20,cls:'弁当',callno:'1303',name:'おかずいっぱい幕の内弁当',price:628,ings:[{matId:1,qty:170},{matId:7,qty:1},{matId:18,qty:20},{matId:68,qty:0.5},{matId:4,qty:10},{matId:8,qty:10},{matId:19,qty:5},{matId:11,qty:0.5},{matId:34,qty:1},{matId:65,qty:2},{matId:14,qty:0.5}],note:''},
+    {id:21,cls:'弁当',callno:'1098',name:'銀がれい味醂弁当',price:698,ings:[{matId:54,qty:1},{matId:18,qty:10},{matId:5,qty:1},{matId:1,qty:170},{matId:8,qty:10},{matId:19,qty:5},{matId:55,qty:1},{matId:4,qty:10},{matId:6,qty:1},{matId:50,qty:1},{matId:14,qty:0.5}],note:''},
+    {id:22,cls:'弁当',callno:'1130',name:'和風焼き鮭弁当',price:550,ings:[{matId:1,qty:170},{matId:11,qty:0.5},{matId:4,qty:10},{matId:25,qty:0.5},{matId:13,qty:0.5},{matId:95,qty:13.3},{matId:12,qty:0.5},{matId:15,qty:5},{matId:7,qty:1},{matId:14,qty:0.5}],note:''},
+    {id:23,cls:'弁当',callno:'1128',name:'和風焼きさば弁当',price:450,ings:[{matId:1,qty:180},{matId:11,qty:0.5},{matId:4,qty:10},{matId:25,qty:0.5},{matId:13,qty:0.5},{matId:95,qty:13.3},{matId:12,qty:0.5},{matId:15,qty:5},{matId:53,qty:0.5},{matId:14,qty:0.5}],note:''},
+    {id:24,cls:'弁当',callno:'1132',name:'豚串カツ海苔弁当',price:398,ings:[{matId:1,qty:170},{matId:11,qty:0.5},{matId:4,qty:10},{matId:12,qty:0.5},{matId:13,qty:0.5},{matId:15,qty:10},{matId:16,qty:1},{matId:17,qty:10},{matId:18,qty:20},{matId:19,qty:5},{matId:20,qty:3},{matId:21,qty:0.75}],note:''},
+    {id:25,cls:'弁当',callno:'1121',name:'イカフライ海苔弁当',price:398,ings:[{matId:1,qty:170},{matId:11,qty:0.5},{matId:4,qty:10},{matId:12,qty:0.5},{matId:13,qty:0.5},{matId:15,qty:10},{matId:74,qty:1},{matId:17,qty:10},{matId:18,qty:20},{matId:19,qty:5},{matId:20,qty:3},{matId:21,qty:0.75}],note:''},
+    {id:26,cls:'弁当',callno:'1052',name:'国産ジャンボチキンカツ弁当',price:550,ings:[{matId:1,qty:200},{matId:18,qty:20},{matId:9,qty:10},{matId:10,qty:2},{matId:8,qty:10},{matId:67,qty:1},{matId:14,qty:0.5},{matId:17,qty:30}],note:''},
+    {id:27,cls:'弁当',callno:'1137',name:'甘辛チキン弁当（大）',price:530,ings:[{matId:1,qty:170},{matId:9,qty:10},{matId:10,qty:2},{matId:19,qty:5},{matId:8,qty:10},{matId:25,qty:2},{matId:14,qty:0.5},{matId:13,qty:0.5},{matId:82,qty:0.833}],note:''},
+    {id:28,cls:'弁当',callno:'1175',name:'特盛おおわらじメンチカツ弁当',price:650,ings:[{matId:1,qty:380},{matId:79,qty:1},{matId:27,qty:1},{matId:17,qty:40},{matId:9,qty:20},{matId:19,qty:5}],note:''},
+    {id:29,cls:'弁当',callno:'1227',name:'でか盛ハンバーグ弁当',price:598,ings:[{matId:1,qty:300},{matId:22,qty:1.5},{matId:27,qty:1},{matId:23,qty:30},{matId:18,qty:50},{matId:10,qty:5},{matId:24,qty:0.5}],note:''},
+    {id:30,cls:'弁当',callno:'970',name:'三元豚のロースカツ弁当',price:498,ings:[{matId:1,qty:170},{matId:9,qty:10},{matId:10,qty:2},{matId:18,qty:20},{matId:8,qty:15},{matId:84,qty:1},{matId:14,qty:1},{matId:13,qty:1},{matId:17,qty:25}],note:''},
+    {id:31,cls:'のり弁',callno:'1050',name:'5種のチーズメンチカツのり弁当',price:398,ings:[{matId:1,qty:170},{matId:4,qty:10},{matId:21,qty:0.75},{matId:20,qty:5},{matId:80,qty:1},{matId:17,qty:15},{matId:12,qty:0.5},{matId:15,qty:10},{matId:27,qty:1}],note:''},
+    {id:32,cls:'のり弁',callno:'942',name:'かぼちゃコロッケのり弁',price:350,ings:[{matId:1,qty:150},{matId:20,qty:5},{matId:21,qty:0.5},{matId:4,qty:10},{matId:12,qty:0.5},{matId:75,qty:1},{matId:5,qty:1}],note:''},
+    {id:33,cls:'のり弁',callno:'5263',name:'のり弁（鯖）',price:350,ings:[{matId:1,qty:150},{matId:20,qty:5},{matId:21,qty:0.5},{matId:4,qty:10},{matId:52,qty:0.5},{matId:27,qty:1}],note:''},
+    {id:34,cls:'カレー',callno:'1109',name:'オニオンリッチチキンカツカレー',price:430,ings:[{matId:1,qty:170},{matId:45,qty:0.125},{matId:24,qty:0.5},{matId:46,qty:5},{matId:44,qty:0.33}],note:''},
+    {id:35,cls:'カレー',callno:'1039',name:'旨味こだわりのビーフカレー',price:350,ings:[{matId:1,qty:170},{matId:47,qty:0.125},{matId:24,qty:0.5},{matId:46,qty:5}],note:''},
+    {id:36,cls:'カレー',callno:'1075',name:'旨味こだわりのハンバーグカレー',price:450,ings:[{matId:1,qty:170},{matId:47,qty:0.125},{matId:24,qty:0.5},{matId:46,qty:5},{matId:22,qty:1}],note:''},
+    {id:37,cls:'カレー',callno:'1041',name:'こだわりのササミチーズカツカレー',price:450,ings:[{matId:1,qty:170},{matId:47,qty:0.125},{matId:24,qty:0.5},{matId:46,qty:5},{matId:81,qty:1}],note:''},
+    {id:38,cls:'カレー',callno:'1306',name:'焼込みチーズカレー',price:350,ings:[{matId:2,qty:150},{matId:48,qty:0.5},{matId:99,qty:15},{matId:100,qty:1},{matId:24,qty:0.5}],note:''},
+    {id:39,cls:'ミニ弁当',callno:'1060',name:'ミニ漬込みザンギ弁当',price:350,ings:[{matId:1,qty:150},{matId:55,qty:2},{matId:18,qty:10},{matId:19,qty:5}],note:''},
+    {id:40,cls:'ミニ弁当',callno:'1103',name:'お手軽ミニ天丼',price:350,ings:[{matId:1,qty:150},{matId:35,qty:20},{matId:36,qty:0.5},{matId:66,qty:0.5},{matId:12,qty:0.5},{matId:60,qty:0.5}],note:''},
+    {id:41,cls:'ミニ弁当',callno:'5304',name:'やわらかチキン甘辛ミニ弁当',price:350,ings:[{matId:1,qty:150},{matId:82,qty:0.5},{matId:13,qty:1},{matId:25,qty:2}],note:''},
+    {id:42,cls:'ミニ弁当',callno:'1119',name:'アジフライミニ弁当',price:350,ings:[{matId:1,qty:150},{matId:18,qty:10},{matId:6,qty:1},{matId:10,qty:2},{matId:17,qty:10},{matId:13,qty:0.5},{matId:73,qty:1}],note:''},
+    {id:43,cls:'ミニ弁当',callno:'1122',name:'ミニ銀鮭焼弁当',price:350,ings:[{matId:1,qty:150},{matId:12,qty:0.5},{matId:51,qty:0.5},{matId:77,qty:0.5},{matId:21,qty:0.5},{matId:20,qty:3}],note:''},
+    {id:44,cls:'ミニ弁当',callno:'5296',name:'ハンバーグ弁当',price:350,ings:[{matId:1,qty:150},{matId:22,qty:1},{matId:23,qty:30},{matId:24,qty:0.5}],note:''},
+    {id:45,cls:'ミニ弁当',callno:'1261',name:'明太マヨのり弁当',price:350,ings:[{matId:1,qty:150},{matId:71,qty:15},{matId:74,qty:1},{matId:21,qty:0.5},{matId:5,qty:1},{matId:28,qty:10}],note:''},
+    {id:46,cls:'ミニ弁当',callno:'5102',name:'チキンカツ南蛮弁当',price:350,ings:[{matId:1,qty:150},{matId:44,qty:0.333},{matId:9,qty:10},{matId:87,qty:10},{matId:30,qty:20},{matId:91,qty:1},{matId:90,qty:0.5}],note:''},
+  ]);
+  if(!localStorage.getItem('db00'))sdb('db00',[]);
+  if(!localStorage.getItem('hozai'))sdb('hozai',[]);
 }
 
 // ======== LOGIN ========
@@ -952,13 +637,9 @@ async function doLogin(){
   if(!u){alert('IDまたはパスワードが違います');return;}
   CU=u;
   document.getElementById('loginScreen').style.display='none';
-  // クラウドから全データ同期
   showLoading(true,'データを読み込み中...');
-  const keys=['db00','db01','materials','hozai','stores','users','plan','history','hozaiCls','hozaiSup','bentos'];
-  for(const k of keys){
-    const data=await gasGet(k);
-    if(data!==null&&data.length>0){cache[k]=data;ldb(k,data);}
-  }
+  const keys=['db00','bentos','materials','hozai','stores','users','history','hozaiCls','hozaiSup'];
+  for(const k of keys){const d=await gasGet(k);if(d!==null&&(Array.isArray(d)?d.length>0:Object.keys(d).length>0)){cache[k]=d;localStorage.setItem(k,JSON.stringify(d));}}
   showLoading(false);
   showMenuScreen();
 }
@@ -996,7 +677,7 @@ function showMenuScreen(){
     const div=document.createElement('div');
     div.className='menu-card'+(locked?' locked':'');
     div.innerHTML=`<div class="icon">${item.icon}</div><h3>${item.title}</h3><p>${item.desc}</p>`;
-    if(!locked) div.onclick=()=>openPage(item.page,item.title);
+    if(!locked)div.onclick=()=>openPage(item.page,item.title);
     grid.appendChild(div);
   });
 }
@@ -1009,77 +690,70 @@ function openPage(pageId,title){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById(pageId).classList.add('active');
   const isAdmin=CU.role==='admin1'||CU.role==='admin2';
-  const initMap={
+  const map={
     pageDB00:()=>{
-      const isAdmin=CU.role==='admin1'||CU.role==='admin2';
-      document.getElementById('db00AddBtn').style.display=isAdmin?'':'none';
-      document.getElementById('hozaiAddBtn').style.display=isAdmin?'':'none';
-      document.getElementById('hozaiClsBtn').style.display=isAdmin?'':'none';
-      document.getElementById('hozaiSupBtn').style.display=isAdmin?'':'none';
+      ['db00AddBtn','hozaiAddBtn','hozaiClsBtn','hozaiSupBtn'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=isAdmin?'':'none';});
       renderDB00Table();renderHozaiTable();
     },
-    pagePlan:()=>{populateStoreSelect('planStore');setDefaultWeek();renderPlanTable();filterPlanAddList()},
-    pageOrder:()=>{populateStoreSelect('orderStore');setDefaultOrderDate();renderOrderTable()},
-    pageShimei:()=>{populateStoreSelect('shimeiStore');document.getElementById('shimeiDate').value=fmt(new Date());renderShimei()},
-    pageDB01:()=>{renderBentTable();renderMatTable()},
+    pagePlan:()=>{populateStoreSelect('planStore');setDefaultWeek();renderPlanTable();filterPlanAddList();},
+    pageOrder:()=>{populateStoreSelect('orderStore');setDefaultOrderDate();renderOrderTable();},
+    pageShimei:()=>{populateStoreSelect('shimeiStore');document.getElementById('shimeiDate').value=fmt(new Date());renderShimei();},
+    pageDB01:()=>{renderBentTable();renderMatTable();},
+    pageStore:renderStoreTable,
+    pagePW:renderPWTable,
     pageHatchu:()=>{
-      const isAdmin=CU.role==='admin1'||CU.role==='admin2';
-      document.getElementById('hatchuSaveBtn').style.display=isAdmin?'':'none';
+      const el=document.getElementById('hatchuSaveBtn');if(el)el.style.display=isAdmin?'':'none';
       populateStoreSelect('hatchuStore');
       document.getElementById('hatchuDate').value=fmt(new Date());
       renderHatchuTable();
     },
-    pageHistory:renderHistory,
-    pagePW:renderPWTable,
+    pageHistory:()=>{
+      const cutoff=new Date();cutoff.setMonth(cutoff.getMonth()-1);
+      sdb('history',ldb('history',[]).filter(h=>new Date(h.ts)>=cutoff));
+      renderHistory();
+    },
   };
-  if(initMap[pageId]) initMap[pageId]();
+  if(map[pageId])map[pageId]();
 }
 
-// ======== DB00 TABS ========
-function switchDB00Tab(tab){
-  db00CurrentTab=tab;
-  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===(tab==='mat'?0:1)));
-  document.getElementById('db00TabMat').classList.toggle('active',tab==='mat');
-  document.getElementById('db00TabHozai').classList.toggle('active',tab==='hozai');
+// ======== UTILS ========
+const DAYS=['月','火','水','木','金','土','日'];
+function fmt(d){return d.toISOString().split('T')[0]}
+function fmtJP(d){return`${d.getMonth()+1}/${d.getDate()}`}
+function getMon(ds){const d=new Date(ds),day=d.getDay(),diff=day===0?-6:1-day;d.setDate(d.getDate()+diff);return d}
+function setDefaultWeek(){document.getElementById('weekStart').value=fmt(getMon(fmt(new Date())))}
+function setDefaultOrderDate(){document.getElementById('orderDate').value=fmt(new Date())}
+function getWeekDates(){const ws=document.getElementById('weekStart').value;if(!ws)return[];const mon=new Date(ws);return Array.from({length:7},(_,i)=>{const d=new Date(mon);d.setDate(d.getDate()+i);return d})}
+function populateStoreSelect(selId){
+  const stores=ldb('stores',[]);const s=document.getElementById(selId);if(!s)return;
+  s.innerHTML='';stores.forEach(st=>s.innerHTML+=`<option>${st}</option>`);
+  if(CU.role==='store'){const found=stores.indexOf(CU.name);if(found>=0)s.selectedIndex=found;s.disabled=true;}else s.disabled=false;
 }
-
-// ======== AC HELPERS ========
 function showAC(listId,items,onSelect){
-  const list=document.getElementById(listId);list.innerHTML='';
+  const list=document.getElementById(listId);if(!list)return;list.innerHTML='';
   if(!items.length){list.classList.remove('open');return;}
-  items.slice(0,10).forEach(t=>{
-    const d=document.createElement('div');d.className='ac-item';d.textContent=t;
-    d.onmousedown=()=>{onSelect(t);list.classList.remove('open')};list.appendChild(d);
-  });
+  items.slice(0,10).forEach(t=>{const d=document.createElement('div');d.className='ac-item';d.textContent=t;d.onmousedown=()=>{onSelect(t);list.classList.remove('open')};list.appendChild(d);});
   list.classList.add('open');
 }
 function closeAC(id){const el=document.getElementById(id);if(el)el.classList.remove('open')}
+const clsTag=(cls)=>`<span class="cls-tag" style="background:#eaf4fb;color:#1a5276">${cls||''}</span>`;
 
-function acDB00(){const q=document.getElementById('db00Search').value;const items=ldb('db00',[]).map(d=>d.name).filter(n=>n.includes(q));showAC('db00AC',items,v=>{document.getElementById('db00Search').value=v;renderDB00Table()});renderDB00Table()}
-function acHozai(){const q=document.getElementById('hozaiSearch').value;const items=ldb('hozai',[]).map(d=>d.name).filter(n=>n.includes(q));showAC('hozaiAC',items,v=>{document.getElementById('hozaiSearch').value=v;renderHozaiTable()});renderHozaiTable()}
-function acPlan(){const q=document.getElementById('planSearch').value;const items=ldb('bentos',[]).map(b=>b.name).filter(n=>n.includes(q));showAC('planAC',items,v=>{document.getElementById('planSearch').value=v;renderPlanTable()});renderPlanTable()}
-function acOrder(){const q=document.getElementById('orderSearch').value;const items=ldb('bentos',[]).map(b=>b.name).filter(n=>n.includes(q));showAC('orderAC',items,v=>{document.getElementById('orderSearch').value=v;renderOrderTable()});renderOrderTable()}
-function acShimei(){const q=document.getElementById('shimeiSearch').value;const items=ldb('materials',[]).map(m=>m.name).filter(n=>n.includes(q));showAC('shimeiAC',items,v=>{document.getElementById('shimeiSearch').value=v;renderShimei()});renderShimei()}
-function acBent(){const q=document.getElementById('bentSearch').value;const items=ldb('bentos',[]).map(b=>b.name).filter(n=>n.includes(q));showAC('bentAC',items,v=>{document.getElementById('bentSearch').value=v;renderBentTable()});renderBentTable()}
-function acMat(){const q=document.getElementById('matSearch').value;const items=ldb('materials',[]).map(m=>m.name).filter(n=>n.includes(q));showAC('matAC',items,v=>{document.getElementById('matSearch').value=v;renderMatTable()});renderMatTable()}
-function acStore(){const q=document.getElementById('storeSearch').value;const items=ldb('stores',[]).filter(s=>s.includes(q));showAC('storeAC',items,v=>{document.getElementById('storeSearch').value=v;renderStoreTable()});renderStoreTable()}
-function acPW(){const q=document.getElementById('pwSearch').value;const items=ldb('users',[]).map(u=>u.name).filter(n=>n.includes(q));showAC('pwAC',items,v=>{document.getElementById('pwSearch').value=v;renderPWTable()});renderPWTable()}
+function enterMove(e,groupName){
+  if(e.key!=='Enter')return;
+  if(e.target.tagName==='TEXTAREA'&&!e.shiftKey)e.preventDefault();
+  else if(e.target.tagName==='TEXTAREA')return;
+  else e.preventDefault();
+  const all=[...document.querySelectorAll(`[data-group="${groupName}"]`)].filter(el=>!el.disabled&&el.offsetParent!==null);
+  const idx=all.indexOf(e.target);
+  if(idx>=0&&idx<all.length-1){all[idx+1].focus();if(all[idx+1].select)all[idx+1].select();}
+}
 
-// ======== 更新履歴 ========
-function addHistory(target, action, name, detail, before=''){
+// ======== HISTORY ========
+function addHistory(target,action,name,detail,before=''){
   const hist=ldb('history',[]);
-  const now=new Date();
-  hist.unshift({
-    ts:now.toISOString(),
-    user:CU?.name||'',
-    target, action, name,
-    detail: detail||'',
-    before: before||'',
-  });
-  // 1ヶ月超を自動削除
+  hist.unshift({ts:new Date().toISOString(),user:CU?.name||'',target,action,name,detail:detail||'',before:before||''});
   const cutoff=new Date();cutoff.setMonth(cutoff.getMonth()-1);
-  const trimmed=hist.filter(h=>new Date(h.ts)>=cutoff);
-  sdb('history',trimmed);
+  sdb('history',hist.filter(h=>new Date(h.ts)>=cutoff));
 }
 function clearOldHistory(){
   if(!confirm('1ヶ月超の履歴を削除しますか？'))return;
@@ -1092,133 +766,83 @@ function renderHistory(){
   const action=document.getElementById('histAction')?.value||'';
   const q=(document.getElementById('histSearch')?.value||'').trim();
   let hist=ldb('history',[]);
-  if(target) hist=hist.filter(h=>h.target===target);
-  if(action) hist=hist.filter(h=>h.action===action);
-  if(q) hist=hist.filter(h=>(h.name+h.detail+h.before).includes(q));
+  if(target)hist=hist.filter(h=>h.target===target);
+  if(action)hist=hist.filter(h=>h.action===action);
+  if(q)hist=hist.filter(h=>(h.name+h.detail+h.before).includes(q));
   const tb=document.querySelector('#histTable tbody');tb.innerHTML='';
-  const actionColor={追加:'#27ae60',編集:'#2e86c1',削除:'#e74c3c'};
+  const ac={追加:'#27ae60',編集:'#2e86c1',削除:'#e74c3c'};
   hist.forEach(h=>{
     const dt=new Date(h.ts);
-    const dtStr=`${dt.getFullYear()}/${dt.getMonth()+1}/${dt.getDate()} ${String(dt.getHours()).padStart(2,'0')}:${String(dt.getMinutes()).padStart(2,'0')}`;
-    const col=actionColor[h.action]||'#888';
-    tb.innerHTML+=`<tr>
-      <td style="white-space:nowrap;font-size:11px">${dtStr}</td>
-      <td style="white-space:nowrap">${h.user}</td>
-      <td><span class="cls-tag" style="background:#eaf4fb;color:#1a5276">${h.target}</span></td>
-      <td><span style="color:${col};font-weight:bold;font-size:11px">${h.action}</span></td>
-      <td style="text-align:left;font-size:11px;max-width:200px">${h.name}${h.detail?'<br><span style="color:#888">'+h.detail+'</span>':''}</td>
-      <td style="text-align:left;font-size:11px;color:#999;max-width:160px">${h.before||''}</td>
-    </tr>`;
+    const ds=`${dt.getFullYear()}/${dt.getMonth()+1}/${dt.getDate()} ${String(dt.getHours()).padStart(2,'0')}:${String(dt.getMinutes()).padStart(2,'0')}`;
+    tb.innerHTML+=`<tr><td style="white-space:nowrap;font-size:11px">${ds}</td><td>${h.user}</td><td>${clsTag(h.target)}</td><td><span style="color:${ac[h.action]||'#888'};font-weight:bold;font-size:11px">${h.action}</span></td><td style="text-align:left;font-size:11px;max-width:200px">${h.name}${h.detail?'<br><span style="color:#888">'+h.detail+'</span>':''}</td><td style="text-align:left;font-size:11px;color:#999;max-width:160px">${h.before||''}</td></tr>`;
   });
-  if(!hist.length) tb.innerHTML=`<tr><td colspan="6" style="text-align:center;padding:20px;color:#aaa">履歴がありません</td></tr>`;
+  if(!hist.length)tb.innerHTML=`<tr><td colspan="6" style="text-align:center;padding:20px;color:#aaa">履歴がありません</td></tr>`;
 }
 
-// ======== DB00 履歴付き保存・削除 ========
-const clsTag=(cls)=>`<span class="cls-tag cls-${cls||'その他'}">${cls||'その他'}</span>`;
+// ======== DB00 ========
+function acDB00(){const q=document.getElementById('db00Search').value;showAC('db00AC',ldb('db00',[]).map(d=>d.name).filter(n=>n.includes(q)),v=>{document.getElementById('db00Search').value=v;renderDB00Table()});renderDB00Table()}
 function renderDB00Table(){
   const q=(document.getElementById('db00Search')?.value||'').trim();
   const cf=(document.getElementById('db00ClsFilter')?.value||'');
   const isAdmin=CU&&(CU.role==='admin1'||CU.role==='admin2');
-  const data=ldb('db00',[]);
   const tb=document.querySelector('#db00Table tbody');tb.innerHTML='';
-  data.forEach(d=>{
-    if(q&&!d.name.includes(q))return;
-    if(cf&&d.cls!==cf)return;
-    tb.innerHTML+=`<tr>
-      <td>${clsTag(d.cls)}</td>
-      <td style="text-align:left;min-width:120px">${d.name}</td>
-      <td>${d.maker||''}</td><td>${d.supplier||''}</td>
-      <td style="font-family:monospace;font-size:11px">${d.jan||''}</td>
-      <td style="text-align:right">${d.cost||''}</td><td>${d.iri||''}</td><td>${d.unit||''}</td>
-      <td style="font-size:11px">${d.sp1||''}</td><td style="font-size:11px">${d.sp2||''}</td><td style="font-size:11px">${d.sp3||''}</td>
-      <td style="font-size:11px;text-align:left;max-width:120px">${d.note||''}</td>
-      <td>${isAdmin?`<button class="btn btn-primary btn-sm" onclick="openDB00Modal(${d.id})">編集</button><button class="btn btn-danger btn-sm" onclick="deleteDB00(${d.id})">削除</button>`:''}</td>
-    </tr>`;
+  ldb('db00',[]).forEach(d=>{
+    if(q&&!d.name.includes(q))return;if(cf&&d.cls!==cf)return;
+    tb.innerHTML+=`<tr><td>${clsTag(d.cls)}</td><td style="text-align:left;min-width:120px">${d.name}</td><td>${d.maker||''}</td><td>${d.supplier||''}</td><td style="font-family:monospace;font-size:11px">${d.jan||''}</td><td style="text-align:right">${d.cost||''}</td><td>${d.iri||''}</td><td>${d.unit||''}</td><td style="font-size:11px">${d.sp1||''}</td><td style="font-size:11px">${d.sp2||''}</td><td style="font-size:11px">${d.sp3||''}</td><td style="font-size:11px;text-align:left;max-width:120px">${d.note||''}</td><td>${isAdmin?`<button class="btn btn-primary btn-sm" onclick="openDB00Modal(${d.id})">編集</button><button class="btn btn-danger btn-sm" onclick="deleteDB00(${d.id})">削除</button>`:''}</td></tr>`;
   });
 }
 function openDB00Modal(id){
-  editingDB00Id=id;
-  const d=id?ldb('db00',[]).find(x=>x.id===id):{};
+  editingDB00Id=id;const d=id?ldb('db00',[]).find(x=>x.id===id):{};
   document.getElementById('db00ModalTitle').textContent=id?'原材料 編集':'原材料 新規登録';
   document.getElementById('d0_cls').value=d?.cls||'その他';
-  ['name','maker','supplier','jan','cost','iri','unit','sp1','sp2','sp3','note'].forEach(f=>{
-    const el=document.getElementById(`d0_${f}`);if(el)el.value=d&&d[f]!=null?d[f]:'';
-  });
-  document.getElementById('bcCanvas').innerHTML='';
-  if(d?.jan) previewBarcode();
+  ['name','maker','supplier','jan','cost','iri','unit','sp1','sp2','sp3','note'].forEach(f=>{const el=document.getElementById(`d0_${f}`);if(el)el.value=d&&d[f]!=null?d[f]:'';});
+  document.getElementById('bcCanvas').innerHTML='';if(d?.jan)previewBarcode();
   document.getElementById('db00Modal').classList.add('open');
 }
 function previewBarcode(){
-  const jan=document.getElementById('d0_jan').value.trim();
-  const svg=document.getElementById('bcCanvas');
-  if(jan.length===13){try{JsBarcode(svg,jan,{format:'EAN13',width:2,height:50,displayValue:true,fontSize:12})}catch(e){svg.innerHTML=''}}
-  else svg.innerHTML='';
+  const jan=document.getElementById('d0_jan').value.trim();const svg=document.getElementById('bcCanvas');
+  if(jan.length===13){try{JsBarcode(svg,jan,{format:'EAN13',width:2,height:50,displayValue:true,fontSize:12})}catch(e){svg.innerHTML=''}}else svg.innerHTML='';
 }
 function saveDB00(){
-  const name=document.getElementById('d0_name').value.trim();
-  if(!name){alert('原材料名を入力してください');return;}
+  const name=document.getElementById('d0_name').value.trim();if(!name){alert('原材料名を入力してください');return;}
   const data=ldb('db00',[]);
-  const obj={
-    id:editingDB00Id||(data.length?Math.max(...data.map(x=>x.id))+1:1),
-    cls:document.getElementById('d0_cls').value,name,
-    maker:document.getElementById('d0_maker').value,
-    supplier:document.getElementById('d0_supplier').value,
-    jan:document.getElementById('d0_jan').value,
-    cost:parseFloat(document.getElementById('d0_cost').value)||0,
-    iri:parseFloat(document.getElementById('d0_iri').value)||0,
-    unit:document.getElementById('d0_unit').value,
-    sp1:document.getElementById('d0_sp1').value,sp2:document.getElementById('d0_sp2').value,
-    sp3:document.getElementById('d0_sp3').value,note:document.getElementById('d0_note').value,
-  };
-  if(editingDB00Id){
-    const i=data.findIndex(x=>x.id===editingDB00Id);
-    const before=data[i];
-    if(i>=0)data[i]=obj;
-    addHistory('DB00','編集',name,`分類:${obj.cls} 原価:${obj.cost}円`,`旧名称:${before.name} 旧原価:${before.cost}円`);
-  } else {
-    data.push(obj);
-    addHistory('DB00','追加',name,`分類:${obj.cls} 原価:${obj.cost}円`);
-  }
+  const obj={id:editingDB00Id||(data.length?Math.max(...data.map(x=>x.id))+1:1),cls:document.getElementById('d0_cls').value,name,maker:document.getElementById('d0_maker').value,supplier:document.getElementById('d0_supplier').value,jan:document.getElementById('d0_jan').value,cost:parseFloat(document.getElementById('d0_cost').value)||0,iri:parseFloat(document.getElementById('d0_iri').value)||0,unit:document.getElementById('d0_unit').value,sp1:document.getElementById('d0_sp1').value,sp2:document.getElementById('d0_sp2').value,sp3:document.getElementById('d0_sp3').value,note:document.getElementById('d0_note').value};
+  if(editingDB00Id){const i=data.findIndex(x=>x.id===editingDB00Id);const before=data[i];if(i>=0)data[i]=obj;addHistory('DB00','編集',name,`分類:${obj.cls} 原価:${obj.cost}円`,`旧:${before.name} ${before.cost}円`);}
+  else{data.push(obj);addHistory('DB00','追加',name,`分類:${obj.cls} 原価:${obj.cost}円`);}
   sdb('db00',data);document.getElementById('db00Modal').classList.remove('open');renderDB00Table();
 }
 function deleteDB00(id){
   if(!confirm('削除しますか？'))return;
-  const item=ldb('db00',[]).find(x=>x.id===id);
-  if(item) addHistory('DB00','削除',item.name,`分類:${item.cls} 原価:${item.cost}円`);
+  const item=ldb('db00',[]).find(x=>x.id===id);if(item)addHistory('DB00','削除',item.name,`分類:${item.cls}`);
   sdb('db00',ldb('db00',[]).filter(x=>x.id!==id));renderDB00Table();
+}
+function switchDB00Tab(tab){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===(tab==='mat'?0:1)));
+  document.getElementById('db00TabMat').classList.toggle('active',tab==='mat');
+  document.getElementById('db00TabHozai').classList.toggle('active',tab==='hozai');
 }
 
 // ======== 包材 ========
-let hozaiSortKey='cls', hozaiSortDir=1;
-let editingHozaiMasterType=null; // 'cls' or 'sup'
-
+let editingHozaiMasterType2=null;
 function buildHozaiFilters(){
-  const clsSel=document.getElementById('hozaiClsFilter');
-  const supSel=document.getElementById('hozaiSupFilter');
-  const curCls=clsSel?.value||'';const curSup=supSel?.value||'';
-  if(clsSel){
-    clsSel.innerHTML='<option value="">全分類</option>';
-    ldb('hozaiCls',[]).forEach(c=>clsSel.innerHTML+=`<option${curCls===c?' selected':''}>${c}</option>`);
-  }
-  if(supSel){
-    supSel.innerHTML='<option value="">全取引先</option>';
-    ldb('hozaiSup',[]).forEach(s=>supSel.innerHTML+=`<option${curSup===s?' selected':''}>${s}</option>`);
-  }
+  const cf=document.getElementById('hozaiClsFilter');const sf=document.getElementById('hozaiSupFilter');
+  if(cf){const cur=cf.value;cf.innerHTML='<option value="">全分類</option>';ldb('hozaiCls',[]).forEach(c=>cf.innerHTML+=`<option${cur===c?' selected':''}>${c}</option>`);}
+  if(sf){const cur=sf.value;sf.innerHTML='<option value="">全取引先</option>';ldb('hozaiSup',[]).forEach(s=>sf.innerHTML+=`<option${cur===s?' selected':''}>${s}</option>`);}
 }
 function buildHozaiModalSelects(){
-  const clsSel=document.getElementById('hz_cls');
-  const supSel=document.getElementById('hz_supplier');
-  if(clsSel){clsSel.innerHTML='<option value="">未設定</option>';ldb('hozaiCls',[]).forEach(c=>clsSel.innerHTML+=`<option>${c}</option>`);}
-  if(supSel){supSel.innerHTML='<option value="">未設定</option>';ldb('hozaiSup',[]).forEach(s=>supSel.innerHTML+=`<option>${s}</option>`);}
+  const cs=document.getElementById('hz_cls');const ss=document.getElementById('hz_supplier');
+  if(cs){cs.innerHTML='<option value="">未設定</option>';ldb('hozaiCls',[]).forEach(c=>cs.innerHTML+=`<option>${c}</option>`);}
+  if(ss){ss.innerHTML='<option value="">未設定</option>';ldb('hozaiSup',[]).forEach(s=>ss.innerHTML+=`<option>${s}</option>`);}
 }
 function setHozaiSort(key){
-  if(hozaiSortKey===key) hozaiSortDir*=-1; else{hozaiSortKey=key;hozaiSortDir=1;}
-  document.querySelectorAll('[id^=sortBtn]').forEach(b=>b.style.background='#d0dce8');
+  if(hozaiSortKey===key)hozaiSortDir*=-1;else{hozaiSortKey=key;hozaiSortDir=1;}
+  document.querySelectorAll('[id^=sortBtn]').forEach(b=>{b.style.background='#d0dce8';b.style.color='';});
   const btn=document.getElementById('sortBtn'+key.charAt(0).toUpperCase()+key.slice(1));
-  if(btn) btn.style.background='#2e86c1', btn.style.color='#fff';
-  document.getElementById('sortDirLabel').textContent=hozaiSortDir===1?'▲ 昇順':'▼ 降順';
+  if(btn){btn.style.background='#2e86c1';btn.style.color='#fff';}
+  const lbl=document.getElementById('sortDirLabel');if(lbl)lbl.textContent=hozaiSortDir===1?'▲ 昇順':'▼ 降順';
   renderHozaiTable();
 }
+function acHozai(){const q=document.getElementById('hozaiSearch').value;showAC('hozaiAC',ldb('hozai',[]).map(d=>d.name).filter(n=>n.includes(q)),v=>{document.getElementById('hozaiSearch').value=v;renderHozaiTable()});renderHozaiTable()}
 function renderHozaiTable(){
   buildHozaiFilters();
   const q=(document.getElementById('hozaiSearch')?.value||'').trim();
@@ -1226,679 +850,325 @@ function renderHozaiTable(){
   const sf=(document.getElementById('hozaiSupFilter')?.value||'');
   const isAdmin=CU&&(CU.role==='admin1'||CU.role==='admin2');
   let data=[...ldb('hozai',[])];
-  if(q) data=data.filter(d=>d.name.includes(q));
-  if(cf) data=data.filter(d=>d.cls===cf);
-  if(sf) data=data.filter(d=>d.supplier===sf);
-  // 並び替え
-  data.sort((a,b)=>{
-    const av=String(a[hozaiSortKey]||''), bv=String(b[hozaiSortKey]||'');
-    return av.localeCompare(bv,'ja')*hozaiSortDir;
-  });
+  if(q)data=data.filter(d=>d.name.includes(q));
+  if(cf)data=data.filter(d=>d.cls===cf);
+  if(sf)data=data.filter(d=>d.supplier===sf);
+  data.sort((a,b)=>String(a[hozaiSortKey]||'').localeCompare(String(b[hozaiSortKey]||''),'ja')*hozaiSortDir);
   const tb=document.querySelector('#hozaiTable tbody');tb.innerHTML='';
-  // 分類ごとにグループ表示
   let lastCls='';
   data.forEach(d=>{
-    if(hozaiSortKey==='cls'&&d.cls!==lastCls){
-      lastCls=d.cls;
-      tb.innerHTML+=`<tr><td colspan="9" style="background:#1a5276;color:#fff;font-size:11px;font-weight:bold;padding:4px 8px">📦 ${d.cls||'未分類'}</td></tr>`;
-    }
-    tb.innerHTML+=`<tr>
-      <td><span class="cls-tag cls-弁当" style="background:#eaf4fb;color:#1a5276">${d.cls||''}</span></td>
-      <td style="text-align:left;min-width:160px">${d.name}</td>
-      <td>${d.supplier||''}</td>
-      <td style="font-family:monospace;font-size:11px">${d.code||''}</td>
-      <td style="font-family:monospace;font-size:11px">${d.jan||''}</td>
-      <td>${d.unit||''}</td>
-      <td style="text-align:right">${d.cost||''}</td>
-      <td style="font-size:11px;text-align:left;max-width:100px">${d.note||''}</td>
-      <td>${isAdmin?`<button class="btn btn-primary btn-sm" onclick="openHozaiModal(${d.id})">編集</button><button class="btn btn-danger btn-sm" onclick="deleteHozai(${d.id})">削除</button>`:''}</td>
-    </tr>`;
+    if(hozaiSortKey==='cls'&&d.cls!==lastCls){lastCls=d.cls;tb.innerHTML+=`<tr><td colspan="9" style="background:#1a5276;color:#fff;font-size:11px;font-weight:bold;padding:4px 8px">📦 ${d.cls||'未分類'}</td></tr>`;}
+    tb.innerHTML+=`<tr><td>${clsTag(d.cls)}</td><td style="text-align:left;min-width:160px">${d.name}</td><td>${d.supplier||''}</td><td style="font-family:monospace;font-size:11px">${d.code||''}</td><td style="font-family:monospace;font-size:11px">${d.jan||''}</td><td>${d.unit||''}</td><td style="text-align:right">${d.cost||''}</td><td style="font-size:11px;text-align:left;max-width:100px">${d.note||''}</td><td>${isAdmin?`<button class="btn btn-primary btn-sm" onclick="openHozaiModal(${d.id})">編集</button><button class="btn btn-danger btn-sm" onclick="deleteHozai(${d.id})">削除</button>`:''}</td></tr>`;
   });
 }
 function openHozaiModal(id){
-  editingHozaiId=id;
-  const d=id?ldb('hozai',[]).find(x=>x.id===id):{};
+  editingHozaiId=id;const d=id?ldb('hozai',[]).find(x=>x.id===id):{};
   document.getElementById('hozaiModalTitle').textContent=id?'包材 編集':'包材 新規登録';
   buildHozaiModalSelects();
-  document.getElementById('hz_cls').value=d?.cls||'';
-  document.getElementById('hz_supplier').value=d?.supplier||'';
-  document.getElementById('hz_name').value=d?.name||'';
-  document.getElementById('hz_code').value=d?.code||'';
-  document.getElementById('hz_jan').value=d?.jan||'';
-  document.getElementById('hz_unit').value=d?.unit||'枚';
-  document.getElementById('hz_cost').value=d?.cost||'';
-  document.getElementById('hz_note').value=d?.note||'';
+  document.getElementById('hz_cls').value=d?.cls||'';document.getElementById('hz_supplier').value=d?.supplier||'';
+  document.getElementById('hz_name').value=d?.name||'';document.getElementById('hz_code').value=d?.code||'';
+  document.getElementById('hz_jan').value=d?.jan||'';document.getElementById('hz_unit').value=d?.unit||'枚';
+  document.getElementById('hz_cost').value=d?.cost||'';document.getElementById('hz_note').value=d?.note||'';
   document.getElementById('hozaiModal').classList.add('open');
 }
 function saveHozai(){
-  const name=document.getElementById('hz_name').value.trim();
-  if(!name){alert('包材名を入力してください');return;}
+  const name=document.getElementById('hz_name').value.trim();if(!name){alert('包材名を入力してください');return;}
   const data=ldb('hozai',[]);
-  const obj={
-    id:editingHozaiId||(data.length?Math.max(...data.map(x=>x.id))+1:1),
-    cls:document.getElementById('hz_cls').value,
-    supplier:document.getElementById('hz_supplier').value,
-    name,
-    code:document.getElementById('hz_code').value,
-    jan:document.getElementById('hz_jan').value,
-    unit:document.getElementById('hz_unit').value,
-    cost:parseFloat(document.getElementById('hz_cost').value)||0,
-    note:document.getElementById('hz_note').value,
-  };
-  if(editingHozaiId){const i=data.findIndex(x=>x.id===editingHozaiId);if(i>=0)data[i]=obj;}
-  else data.push(obj);
+  const obj={id:editingHozaiId||(data.length?Math.max(...data.map(x=>x.id))+1:1),cls:document.getElementById('hz_cls').value,supplier:document.getElementById('hz_supplier').value,name,code:document.getElementById('hz_code').value,jan:document.getElementById('hz_jan').value,unit:document.getElementById('hz_unit').value,cost:parseFloat(document.getElementById('hz_cost').value)||0,note:document.getElementById('hz_note').value};
+  if(editingHozaiId){const i=data.findIndex(x=>x.id===editingHozaiId);if(i>=0)data[i]=obj;}else data.push(obj);
   sdb('hozai',data);document.getElementById('hozaiModal').classList.remove('open');renderHozaiTable();
 }
 function deleteHozai(id){if(!confirm('削除しますか？'))return;sdb('hozai',ldb('hozai',[]).filter(x=>x.id!==id));renderHozaiTable()}
-
-// 分類・取引先マスタ管理
 function openHozaiMasterModal(type){
   editingHozaiMasterType=type;
-  document.getElementById('hozaiMasterTitle').textContent=type==='cls'?'📦 分類マスタ管理':'🏢 取引先マスタ管理';
-  document.getElementById('hozaiMasterInput').value='';
-  renderHozaiMasterList();
+  document.getElementById('hozaiMasterTitle').textContent=type==='cls'?'📦 分類マスタ管理':'🏢 取引先管理';
+  document.getElementById('hozaiMasterInput').value='';renderHozaiMasterList();
   document.getElementById('hozaiMasterModal').classList.add('open');
 }
 function renderHozaiMasterList(){
-  const type=editingHozaiMasterType;
-  const key=type==='cls'?'hozaiCls':'hozaiSup';
-  const items=ldb(key,[]);
+  const key=editingHozaiMasterType==='cls'?'hozaiCls':'hozaiSup';
   const div=document.getElementById('hozaiMasterList');div.innerHTML='';
-  items.forEach((item,i)=>{
-    div.innerHTML+=`<div style="display:flex;align-items:center;gap:6px;padding:5px 6px;border:1px solid #eee;border-radius:5px;margin-bottom:4px;background:#fafafa">
-      <span style="flex:1;font-size:12px">${item}</span>
-      <button class="btn btn-danger btn-sm" onclick="deleteHozaiMasterItem(${i})">削除</button>
-    </div>`;
-  });
-  if(!items.length) div.innerHTML='<p style="color:#aaa;font-size:12px">登録がありません</p>';
+  ldb(key,[]).forEach((item,i)=>{div.innerHTML+=`<div style="display:flex;align-items:center;gap:6px;padding:5px 6px;border:1px solid #eee;border-radius:5px;margin-bottom:4px;background:#fafafa"><span style="flex:1;font-size:12px">${item}</span><button class="btn btn-danger btn-sm" onclick="deleteHozaiMasterItem(${i})">削除</button></div>`;});
+  if(!ldb(key,[]).length)div.innerHTML='<p style="color:#aaa;font-size:12px">登録がありません</p>';
 }
 function addHozaiMasterItem(){
-  const val=document.getElementById('hozaiMasterInput').value.trim();
-  if(!val) return;
+  const val=document.getElementById('hozaiMasterInput').value.trim();if(!val)return;
   const key=editingHozaiMasterType==='cls'?'hozaiCls':'hozaiSup';
-  const items=ldb(key,[]);
-  if(items.includes(val)){alert('すでに登録されています');return;}
-  items.push(val);sdb(key,items);
-  document.getElementById('hozaiMasterInput').value='';
-  renderHozaiMasterList();buildHozaiFilters();buildHozaiModalSelects();
+  const items=ldb(key,[]);if(items.includes(val)){alert('すでに登録されています');return;}
+  items.push(val);sdb(key,items);document.getElementById('hozaiMasterInput').value='';renderHozaiMasterList();buildHozaiFilters();buildHozaiModalSelects();
 }
 function deleteHozaiMasterItem(i){
   if(!confirm('削除しますか？'))return;
   const key=editingHozaiMasterType==='cls'?'hozaiCls':'hozaiSup';
-  const items=ldb(key,[]);items.splice(i,1);sdb(key,items);
-  renderHozaiMasterList();buildHozaiFilters();buildHozaiModalSelects();
+  const items=ldb(key,[]);items.splice(i,1);sdb(key,items);renderHozaiMasterList();buildHozaiFilters();buildHozaiModalSelects();
 }
 
-// ======== DATE / STORE ========
-const DAYS=['月','火','水','木','金','土','日'];
-function fmt(d){return d.toISOString().split('T')[0]}
-function fmtJP(d){return`${d.getMonth()+1}/${d.getDate()}`}
-function getMon(ds){const d=new Date(ds),day=d.getDay(),diff=day===0?-6:1-day;d.setDate(d.getDate()+diff);return d}
-function setDefaultWeek(){document.getElementById('weekStart').value=fmt(getMon(fmt(new Date())))}
-function setDefaultOrderDate(){document.getElementById('orderDate').value=fmt(new Date())}
-function getWeekDates(){const ws=document.getElementById('weekStart').value;if(!ws)return[];const mon=new Date(ws);return Array.from({length:7},(_,i)=>{const d=new Date(mon);d.setDate(d.getDate()+i);return d})}
-function populateStoreSelect(selId){
-  const stores=ldb('stores',[]);const s=document.getElementById(selId);s.innerHTML='';
-  stores.forEach(st=>s.innerHTML+=`<option>${st}</option>`);
-  if(CU.role==='store'){const found=stores.indexOf(CU.name);if(found>=0)s.selectedIndex=found;s.disabled=true;}
-  else s.disabled=false;
-}
-function addStore(){const n=document.getElementById('storeNameInput').value.trim();if(!n)return;const s=ldb('stores',[]);s.push(n);sdb('stores',s);document.getElementById('storeNameInput').value='';renderStoreTable()}
-function deleteStore(i){if(!confirm('削除しますか？'))return;const s=ldb('stores',[]);s.splice(i,1);sdb('stores',s);renderStoreTable()}
+// ======== STORE ========
+function acStore(){const q=document.getElementById('storeSearch').value;showAC('storeAC',ldb('stores',[]).filter(s=>s.includes(q)),v=>{document.getElementById('storeSearch').value=v;renderStoreTable()});renderStoreTable()}
+function addStore(){const n=document.getElementById('storeNameInput').value.trim();if(!n)return;const s=ldb('stores',[]);s.push(n);sdb('stores',s);document.getElementById('storeNameInput').value='';renderStoreTable();}
+function deleteStore(i){if(!confirm('削除しますか？'))return;const s=ldb('stores',[]);s.splice(i,1);sdb('stores',s);renderStoreTable();}
 function renderStoreTable(){
-  const q=(document.getElementById('storeSearch')?.value||'').trim();
-  const stores=ldb('stores',[]);const tb=document.querySelector('#storeTable tbody');tb.innerHTML='';
-  stores.forEach((s,i)=>{if(q&&!s.includes(q))return;tb.innerHTML+=`<tr><td>${i+1}</td><td>${s}</td><td><button class="btn btn-danger btn-sm" onclick="deleteStore(${i})">削除</button></td></tr>`})
+  const q=(document.getElementById('storeSearch')?.value||'').trim();const stores=ldb('stores',[]);
+  const tb=document.querySelector('#storeTable tbody');tb.innerHTML='';
+  stores.forEach((s,i)=>{if(q&&!s.includes(q))return;tb.innerHTML+=`<tr><td>${i+1}</td><td>${s}</td><td><button class="btn btn-danger btn-sm" onclick="deleteStore(${i})">削除</button></td></tr>`;});
 }
 
-// ======== PLAN ITEMS (表示アイテム管理) ========
-function getPlanKey(){
-  const store=document.getElementById('planStore')?.value||'';
-  const ws=document.getElementById('weekStart')?.value||'';
-  return `planItems_${store}_${ws}`;
-}
-function getPlanItems(){
-  const key=getPlanKey();
-  const saved=ldb(key,null);
-  if(saved) return saved;
-  // 未設定の場合は全弁当IDリストをデフォルトに
-  const ids=ldb('bentos',[]).map(b=>b.id);
-  sdb(key,ids);return ids;
-}
+// ======== PLAN ========
+function getPlanKey(){return`planItems_${document.getElementById('planStore')?.value||''}_${document.getElementById('weekStart')?.value||''}`}
+function getPlanItems(){const saved=ldb(getPlanKey(),null);if(saved)return saved;const ids=ldb('bentos',[]).map(b=>b.id);sdb(getPlanKey(),ids);return ids;}
+function acPlan(){const q=document.getElementById('planSearch').value;showAC('planAC',ldb('bentos',[]).map(b=>b.name).filter(n=>n.includes(q)),v=>{document.getElementById('planSearch').value=v;renderPlanTable()});renderPlanTable()}
 function filterPlanAddList(){
-  const cls=document.getElementById('planClsFilter').value;
-  const q=document.getElementById('planAddSearch').value.trim();
+  const cf=document.getElementById('planClsFilter')?.value||'';
+  const q=document.getElementById('planAddSearch')?.value||'';
+  const sel=document.getElementById('planAddSelect');if(!sel)return;
+  const clsEl=document.getElementById('planClsFilter');
+  if(clsEl&&!clsEl.options.length){clsEl.innerHTML='<option value="">全分類</option><option>丼物</option><option>弁当</option><option>ミニ弁当</option><option>カレー</option><option>海鮮</option><option>のり弁</option><option>その他</option>';}
   const currentIds=getPlanItems();
-  const bentos=ldb('bentos',[]).filter(b=>{
-    if(cls&&b.cls!==cls)return false;
-    if(q&&!b.name.includes(q))return false;
-    return true;
-  });
-  // autocomplete
-  showAC('planAddAC',bentos.map(b=>b.name),v=>{
-    document.getElementById('planAddSearch').value=v;filterPlanAddList();
-  });
-  const sel=document.getElementById('planAddSelect');sel.innerHTML='';
-  bentos.forEach(b=>{
-    const inList=currentIds.includes(b.id);
-    sel.innerHTML+=`<option value="${b.id}"${inList?' style="color:#aaa"':''}>${inList?'✓ ':''} [${b.cls}] ${b.name} ¥${(b.price||0).toLocaleString()}</option>`;
-  });
+  const bentos=ldb('bentos',[]).filter(b=>{if(cf&&b.cls!==cf)return false;if(q&&!b.name.includes(q))return false;return true;});
+  showAC('planAddAC',bentos.map(b=>b.name),v=>{document.getElementById('planAddSearch').value=v;filterPlanAddList();});
+  sel.innerHTML='';bentos.forEach(b=>{const inList=currentIds.includes(b.id);sel.innerHTML+=`<option value="${b.id}"${inList?' style="color:#aaa"':''}>${inList?'✓ ':''} [${b.cls}] ${b.name} ¥${(b.price||0).toLocaleString()}</option>`;});
 }
-function addPlanItem(){
-  const sel=document.getElementById('planAddSelect');
-  const id=parseInt(sel.value);if(!id)return;
-  const items=getPlanItems();
-  if(!items.includes(id)){items.push(id);sdb(getPlanKey(),items);renderPlanTable();filterPlanAddList();}
-  else{alert('すでに追加されています');}
-}
-function resetPlanItems(){
-  if(!confirm('表示リストを全件に戻しますか？'))return;
-  const ids=ldb('bentos',[]).map(b=>b.id);
-  sdb(getPlanKey(),ids);renderPlanTable();filterPlanAddList();
-}
-function removePlanItem(bentId){
-  const items=getPlanItems().filter(id=>id!==bentId);
-  sdb(getPlanKey(),items);renderPlanTable();filterPlanAddList();
-}
-
-// ======== PLAN TABLE ========
+function addPlanItem(){const sel=document.getElementById('planAddSelect');const id=parseInt(sel.value);if(!id)return;const items=getPlanItems();if(!items.includes(id)){items.push(id);sdb(getPlanKey(),items);renderPlanTable();filterPlanAddList();}else alert('すでに追加されています');}
+function resetPlanItems(){if(!confirm('表示リストを全件に戻しますか？'))return;const ids=ldb('bentos',[]).map(b=>b.id);sdb(getPlanKey(),ids);renderPlanTable();filterPlanAddList();}
+function removePlanItem(bentId){const items=getPlanItems().filter(id=>id!==bentId);sdb(getPlanKey(),items);renderPlanTable();filterPlanAddList();}
 function renderPlanTable(){
   const q=(document.getElementById('planSearch')?.value||'').trim();
-  const allBentos=ldb('bentos',[]);
-  const planIds=getPlanItems();
-  // planIdsの順序を保持してフィルタ
+  const allBentos=ldb('bentos',[]);const planIds=getPlanItems();
   const bentos=planIds.map(id=>allBentos.find(b=>b.id===id)).filter(b=>b&&(!q||b.name.includes(q)));
-  const dates=getWeekDates();
-  const store=document.getElementById('planStore')?.value||'';
-  const ws=document.getElementById('weekStart').value;
+  const dates=getWeekDates();const store=document.getElementById('planStore')?.value||'';const ws=document.getElementById('weekStart').value;
   const saved=ldb(`plan_${store}_${ws}`,{});
-  let html=`<table style="border-collapse:collapse"><thead><tr>
-    <th style="min-width:110px;background:#1a5276;color:#fff;border:1px solid #ccc;text-align:left">弁当名</th>`;
+  let html=`<table style="border-collapse:collapse"><thead><tr><th style="min-width:110px;background:#1a5276;color:#fff;border:1px solid #ccc;text-align:left">弁当名</th>`;
   dates.forEach((d,i)=>html+=`<th style="min-width:66px;background:#1a5276;color:#fff;border:1px solid #ccc;text-align:center">${DAYS[i]}<br><span style="font-size:10px;font-weight:normal">${fmtJP(d)}</span></th>`);
   html+=`<th style="background:#1a5276;color:#fff;border:1px solid #ccc;min-width:36px">削除</th></tr></thead><tbody>`;
   bentos.forEach((b,ri)=>{
-    const bg=ri%2===0?'#fff':'#f4f8fb';
-    const name=b.name,mid=Math.ceil(name.length/2);
+    const bg=ri%2===0?'#fff':'#f4f8fb';const name=b.name,mid=Math.ceil(name.length/2);
     const nameHtml=name.length>7?name.slice(0,mid)+'<br>'+name.slice(mid):name;
     html+=`<tr style="background:${bg}"><td style="border:1px solid #ccc;padding:4px 6px;font-size:12px;line-height:1.5;white-space:nowrap">${nameHtml}</td>`;
-    dates.forEach((_,i)=>{
-      const val=saved[`${b.id}_${i}`]||'';
-      html+=`<td style="border:1px solid #ccc;padding:3px;text-align:center">
-        <input type="number" min="0" value="${val}" id="pln_${b.id}_${i}" onchange="autoPlan()"
-          onkeydown="planEnter(event,${ri},${i},${bentos.length})"
-          style="width:56px;padding:3px;border:1px solid #aaa;border-radius:3px;text-align:center;font-size:13px">
-      </td>`;
-    });
-    html+=`<td style="border:1px solid #ccc;text-align:center"><button class="btn btn-danger btn-sm" onclick="removePlanItem(${b.id})" title="表示から除く">✕</button></td>`;
-    html+=`</tr>`;
+    dates.forEach((_,i)=>{const val=saved[`${b.id}_${i}`]||'';html+=`<td style="border:1px solid #ccc;padding:3px;text-align:center"><input type="number" min="0" value="${val}" id="pln_${b.id}_${i}" onchange="autoPlan()" onkeydown="planEnter(event,${ri},${i},${bentos.length})" style="width:56px;padding:3px;border:1px solid #aaa;border-radius:3px;text-align:center;font-size:13px"></td>`;});
+    html+=`<td style="border:1px solid #ccc;text-align:center"><button class="btn btn-danger btn-sm" onclick="removePlanItem(${b.id})">✕</button></td></tr>`;
   });
-  if(!bentos.length) html+=`<tr><td colspan="9" style="text-align:center;padding:16px;color:#aaa">弁当が選択されていません。上の「追加」ボタンから追加してください。</td></tr>`;
-  html+=`</tbody></table>`;
-  document.getElementById('planTableWrap').innerHTML=html;
+  if(!bentos.length)html+=`<tr><td colspan="9" style="text-align:center;padding:16px;color:#aaa">弁当が選択されていません</td></tr>`;
+  html+=`</tbody></table>`;document.getElementById('planTableWrap').innerHTML=html;
 }
-function getPlanData(){const bentos=ldb('bentos',[]);const data={};bentos.forEach(b=>{for(let i=0;i<7;i++){const el=document.getElementById(`pln_${b.id}_${i}`);if(el&&el.value)data[`${b.id}_${i}`]=parseInt(el.value)||0}});return data}
-function savePlanData(){const store=document.getElementById('planStore').value;const ws=document.getElementById('weekStart').value;sdb(`plan_${store}_${ws}`,getPlanData());alert('保存しました')}
-function autoPlan(){const store=document.getElementById('planStore').value;const ws=document.getElementById('weekStart').value;sdb(`plan_${store}_${ws}`,getPlanData())}
-function planEnter(e,rowIdx,colIdx,totalRows){
+function getPlanData(){const bentos=ldb('bentos',[]);const data={};bentos.forEach(b=>{for(let i=0;i<7;i++){const el=document.getElementById(`pln_${b.id}_${i}`);if(el&&el.value)data[`${b.id}_${i}`]=parseInt(el.value)||0;}});return data;}
+function savePlanData(){const store=document.getElementById('planStore').value;const ws=document.getElementById('weekStart').value;sdb(`plan_${store}_${ws}`,getPlanData());alert('保存しました');}
+function autoPlan(){const store=document.getElementById('planStore').value;const ws=document.getElementById('weekStart').value;sdb(`plan_${store}_${ws}`,getPlanData());}
+function planEnter(e,rowIdx,colIdx){
   if(e.key!=='Enter')return;e.preventDefault();
   const bentos=ldb('bentos',[]);const q=(document.getElementById('planSearch')?.value||'').trim();
-  const filtered=bentos.filter(b=>!q||b.name.includes(q));
+  const filtered=getPlanItems().map(id=>bentos.find(b=>b.id===id)).filter(b=>b&&(!q||b.name.includes(q)));
   const nextRow=rowIdx+1;
-  if(nextRow<filtered.length){const el=document.getElementById(`pln_${filtered[nextRow].id}_${colIdx}`);if(el){el.focus();el.select()}}
-  else{const nextCol=colIdx+1;if(nextCol<7){const el=document.getElementById(`pln_${filtered[0].id}_${nextCol}`);if(el){el.focus();el.select()}}}
+  if(nextRow<filtered.length){const el=document.getElementById(`pln_${filtered[nextRow].id}_${colIdx}`);if(el){el.focus();el.select();}}
+  else{const nextCol=colIdx+1;if(nextCol<7){const el=document.getElementById(`pln_${filtered[0].id}_${nextCol}`);if(el){el.focus();el.select();}}}
 }
 
 // ======== ORDER ========
+function acOrder(){const q=document.getElementById('orderSearch').value;showAC('orderAC',ldb('bentos',[]).map(b=>b.name).filter(n=>n.includes(q)),v=>{document.getElementById('orderSearch').value=v;renderOrderTable()});renderOrderTable()}
 function renderOrderTable(){
-  const store=document.getElementById('orderStore').value;const dateStr=document.getElementById('orderDate').value;
-  const q=(document.getElementById('orderSearch')?.value||'').trim();
-  if(!store||!dateStr){document.getElementById('orderContent').innerHTML='<p style="color:#aaa">店舗と日付を選択してください</p>';return}
+  const store=document.getElementById('orderStore').value;const dateStr=document.getElementById('orderDate').value;const q=(document.getElementById('orderSearch')?.value||'').trim();
+  if(!store||!dateStr){document.getElementById('orderContent').innerHTML='<p style="color:#aaa">店舗と日付を選択してください</p>';return;}
   const mon=getMon(dateStr);const ws=fmt(mon);const dayIdx=(new Date(dateStr).getDay()+6)%7;
   const saved=ldb(`plan_${store}_${ws}`,{});const bentos=ldb('bentos',[]);const dateObj=new Date(dateStr);
   let rows='';let total=0;
-  bentos.forEach(b=>{
-    if(q&&!b.name.includes(q))return;
-    const qty=parseInt(saved[`${b.id}_${dayIdx}`])||0;if(!qty)return;total+=qty;
-    rows+=`<tr><td>${b.callno||''}</td><td style="text-align:left;padding-left:8px">${b.name}</td><td><b>${qty.toLocaleString()}</b></td><td style="text-align:right">¥${(b.price||0).toLocaleString()}</td></tr>`;
-  });
+  bentos.forEach(b=>{if(q&&!b.name.includes(q))return;const qty=parseInt(saved[`${b.id}_${dayIdx}`])||0;if(!qty)return;total+=qty;rows+=`<tr><td>${b.callno||''}</td><td style="text-align:left;padding-left:8px">${b.name}</td><td><b>${qty.toLocaleString()}</b></td><td style="text-align:right">¥${(b.price||0).toLocaleString()}</td></tr>`;});
   let html=`<div style="font-size:12px;color:#555;margin-bottom:10px">${store}店 ／ ${dateObj.getFullYear()}年${dateObj.getMonth()+1}月${dateObj.getDate()}日（${DAYS[dayIdx]}）</div>`;
-  if(!rows){html+='<p style="color:#aaa">この日の製造指示がありません</p>';document.getElementById('orderContent').innerHTML=html;return}
-  html+=`<div style="overflow-x:auto"><table style="min-width:360px"><thead><tr><th>呼出番号</th><th>弁当名</th><th>製造数</th><th>売価</th></tr></thead>
-    <tbody>${rows}</tbody>
-    <tfoot><tr><td colspan="2" style="text-align:right;font-weight:bold;background:#f0f4f8">合計</td><td style="font-weight:bold">${total.toLocaleString()}</td><td></td></tr></tfoot>
-  </table></div>`;
+  if(!rows){html+='<p style="color:#aaa">この日の製造指示がありません</p>';document.getElementById('orderContent').innerHTML=html;return;}
+  html+=`<div style="overflow-x:auto"><table style="min-width:360px"><thead><tr><th>呼出番号</th><th>弁当名</th><th>製造数</th><th>売価</th></tr></thead><tbody>${rows}</tbody><tfoot><tr><td colspan="2" style="text-align:right;font-weight:bold;background:#f0f4f8">合計</td><td style="font-weight:bold">${total.toLocaleString()}</td><td></td></tr></tfoot></table></div>`;
   document.getElementById('orderContent').innerHTML=html;
 }
 
 // ======== SHIMEI ========
+function acShimei(){const q=document.getElementById('shimeiSearch').value;showAC('shimeiAC',ldb('materials',[]).map(m=>m.name).filter(n=>n.includes(q)),v=>{document.getElementById('shimeiSearch').value=v;renderShimei()});renderShimei()}
 function renderShimei(){
-  const store=document.getElementById('shimeiStore').value;const dateStr=document.getElementById('shimeiDate').value;
-  const q=(document.getElementById('shimeiSearch')?.value||'').trim();
-  if(!store||!dateStr){document.getElementById('shimeiContent').innerHTML='<p style="color:#aaa">店舗と日付を選択してください</p>';return}
+  const store=document.getElementById('shimeiStore').value;const dateStr=document.getElementById('shimeiDate').value;const q=(document.getElementById('shimeiSearch')?.value||'').trim();
+  if(!store||!dateStr){document.getElementById('shimeiContent').innerHTML='<p style="color:#aaa">店舗と日付を選択してください</p>';return;}
   const mon=getMon(dateStr);const ws=fmt(mon);const dayIdx=(new Date(dateStr).getDay()+6)%7;
   const saved=ldb(`plan_${store}_${ws}`,{});const bentos=ldb('bentos',[]);const mats=ldb('materials',[]);
-  const matTotals={};
-  bentos.forEach(b=>{const qty=parseInt(saved[`${b.id}_${dayIdx}`])||0;if(qty>0)b.ings.forEach(ing=>matTotals[ing.matId]=(matTotals[ing.matId]||0)+ing.qty*qty)});
+  const matTotals={};bentos.forEach(b=>{const qty=parseInt(saved[`${b.id}_${dayIdx}`])||0;if(qty>0)b.ings.forEach(ing=>matTotals[ing.matId]=(matTotals[ing.matId]||0)+ing.qty*qty);});
   const dateObj=new Date(dateStr);
   let html=`<div style="font-size:12px;color:#555;margin-bottom:10px">${store}店 ／ ${dateObj.getFullYear()}年${dateObj.getMonth()+1}月${dateObj.getDate()}日（${DAYS[dayIdx]}）</div>`;
-  if(!Object.keys(matTotals).length){html+='<p style="color:#aaa">この日の仕込みデータがありません</p>';document.getElementById('shimeiContent').innerHTML=html;return}
+  if(!Object.keys(matTotals).length){html+='<p style="color:#aaa">この日の仕込みデータがありません</p>';document.getElementById('shimeiContent').innerHTML=html;return;}
   html+=`<table style="max-width:400px"><thead><tr><th>材料名</th><th>必要量</th><th>単位</th></tr></thead><tbody>`;
-  let shown=0;
-  Object.entries(matTotals).forEach(([mid,total])=>{
-    const mat=mats.find(m=>m.id==mid);
-    if(mat&&(!q||mat.name.includes(q))){html+=`<tr><td style="text-align:left;padding-left:8px">${mat.name}</td><td><b>${total.toLocaleString()}</b></td><td>${mat.unit}</td></tr>`;shown++}
-  });
-  if(!shown) html+=`<tr><td colspan="3" style="color:#aaa">該当する材料がありません</td></tr>`;
-  html+=`</tbody></table>`;
-  document.getElementById('shimeiContent').innerHTML=html;
+  let shown=0;Object.entries(matTotals).forEach(([mid,total])=>{const mat=mats.find(m=>m.id==mid);if(mat&&(!q||mat.name.includes(q))){html+=`<tr><td style="text-align:left;padding-left:8px">${mat.name}</td><td><b>${total.toLocaleString()}</b></td><td>${mat.unit}</td></tr>`;shown++;}});
+  if(!shown)html+=`<tr><td colspan="3" style="color:#aaa">該当する材料がありません</td></tr>`;
+  html+=`</tbody></table>`;document.getElementById('shimeiContent').innerHTML=html;
 }
 
-// ======== BENTO MASTER ========
+// ======== DB01 BENTO ========
 function bentIdSeq(){const b=ldb('bentos',[]);return b.length?Math.max(...b.map(x=>x.id))+1:1}
+function acBent(){const q=document.getElementById('bentSearch').value;showAC('bentAC',ldb('bentos',[]).map(b=>b.name).filter(n=>n.includes(q)),v=>{document.getElementById('bentSearch').value=v;renderBentTable()});renderBentTable()}
 function openBentModal(id){
-  editingBentId=id;
-  const bent=id?ldb('bentos',[]).find(b=>b.id===id):null;
+  editingBentId=id;const bent=id?ldb('bentos',[]).find(b=>b.id===id):null;
   document.getElementById('bentModalTitle').textContent=bent?`弁当編集：${bent.name}`:'新規弁当追加';
-  document.getElementById('bm_cls').value=bent?.cls||'弁当';
-  document.getElementById('bm_callno').value=bent?.callno||'';
+  document.getElementById('bm_cls').value=bent?.cls||'弁当';document.getElementById('bm_callno').value=bent?.callno||'';
   document.getElementById('bm_name').value=bent?.name||document.getElementById('bentName').value||'';
-  document.getElementById('bm_price').value=bent?.price||'';
-  document.getElementById('bm_note').value=bent?.note||'';
+  document.getElementById('bm_price').value=bent?.price||'';document.getElementById('bm_note').value=bent?.note||'';
   modalIngs=bent?bent.ings.map(i=>({...i})):[];
-  document.getElementById('modalMatSearch').value='';
-  populateModalMatSelect();renderModalIngList();
+  document.getElementById('modalMatSearch').value='';populateModalMatSelect();renderModalIngList();
   document.getElementById('bentModal').classList.add('open');
 }
 function closeBentModal(){document.getElementById('bentModal').classList.remove('open')}
-function populateModalMatSelect(){const sel=document.getElementById('modalAddMat');sel.innerHTML='';ldb('materials',[]).forEach(m=>sel.innerHTML+=`<option value="${m.id}">${m.name}（${m.unit}）</option>`)}
-function modalAddIng(){
-  const matId=parseInt(document.getElementById('modalAddMat').value);
-  const qty=parseFloat(document.getElementById('modalAddQty').value)||0;
-  if(!matId||qty<=0){alert('材料と量を入力してください');return}
-  const ex=modalIngs.find(i=>i.matId===matId);if(ex)ex.qty=qty;else modalIngs.push({matId,qty});
-  document.getElementById('modalAddQty').value='';renderModalIngList();
-}
-function modalDeleteIng(matId){modalIngs=modalIngs.filter(i=>i.matId!==matId);renderModalIngList()}
-function modalEditIngQty(matId,v){const i=modalIngs.find(x=>x.matId===matId);if(i)i.qty=parseFloat(v)||0}
+function populateModalMatSelect(){const sel=document.getElementById('modalAddMat');sel.innerHTML='';ldb('materials',[]).forEach(m=>sel.innerHTML+=`<option value="${m.id}">${m.name}（${m.unit}）</option>`);}
+function modalAddIng(){const matId=parseInt(document.getElementById('modalAddMat').value);const qty=parseFloat(document.getElementById('modalAddQty').value)||0;if(!matId||qty<=0){alert('材料と量を入力してください');return;}const ex=modalIngs.find(i=>i.matId===matId);if(ex)ex.qty=qty;else modalIngs.push({matId,qty});document.getElementById('modalAddQty').value='';renderModalIngList();}
+function modalDeleteIng(matId){modalIngs=modalIngs.filter(i=>i.matId!==matId);renderModalIngList();}
+function modalEditIngQty(matId,v){const i=modalIngs.find(x=>x.matId===matId);if(i)i.qty=parseFloat(v)||0;}
 function renderModalIngList(){
-  const q=(document.getElementById('modalMatSearch')?.value||'').trim();
-  const mats=ldb('materials',[]);let html='';let shown=0;
-  modalIngs.forEach(ing=>{
-    const mat=mats.find(m=>m.id===ing.matId);if(!mat)return;if(q&&!mat.name.includes(q))return;shown++;
-    html+=`<div class="ing-row"><span class="ing-name">📦 ${mat.name}</span>
-      <input type="number" min="0" step="0.1" value="${ing.qty}" style="width:64px;border:1px solid #aaa;border-radius:3px;padding:2px 4px;text-align:right" data-group="ingform" onkeydown="enterMove(event,'ingform')" onchange="modalEditIngQty(${mat.id},this.value)">
-      <span style="font-size:11px;color:#888;width:28px">${mat.unit}</span>
-      <button class="btn btn-danger btn-sm" onclick="modalDeleteIng(${mat.id})">削除</button></div>`;
-  });
+  const q=(document.getElementById('modalMatSearch')?.value||'').trim();const mats=ldb('materials',[]);let html='';let shown=0;
+  modalIngs.forEach(ing=>{const mat=mats.find(m=>m.id===ing.matId);if(!mat)return;if(q&&!mat.name.includes(q))return;shown++;html+=`<div class="ing-row"><span class="ing-name">📦 ${mat.name}</span><input type="number" min="0" step="0.1" value="${ing.qty}" style="width:64px;border:1px solid #aaa;border-radius:3px;padding:2px 4px;text-align:right" onchange="modalEditIngQty(${mat.id},this.value)"><span style="font-size:11px;color:#888;width:28px">${mat.unit}</span><button class="btn btn-danger btn-sm" onclick="modalDeleteIng(${mat.id})">削除</button></div>`;});
   if(!shown&&modalIngs.length&&q)html='<p style="color:#aaa;font-size:12px">該当なし</p>';
   if(!modalIngs.length)html='<p style="color:#aaa;font-size:12px">材料が追加されていません</p>';
   document.getElementById('bentIngList').innerHTML=html;
 }
 function saveBent(){
   const bentos=ldb('bentos',[]);const ings=modalIngs.filter(i=>i.qty>0);
-  const cls=document.getElementById('bm_cls').value;
-  const callno=document.getElementById('bm_callno').value.trim();
-  const name=document.getElementById('bm_name').value.trim();
-  const price=parseFloat(document.getElementById('bm_price').value)||0;
-  const note=document.getElementById('bm_note').value;
-  if(!name){alert('弁当名を入力してください');return}
-  if(editingBentId){const b=bentos.find(x=>x.id===editingBentId);if(b){b.cls=cls;b.callno=callno;b.name=name;b.price=price;b.ings=ings;b.note=note}}
-  else{bentos.push({id:bentIdSeq(),cls,callno,name,price,ings,note});document.getElementById('bentName').value=''}
+  const cls=document.getElementById('bm_cls').value;const callno=document.getElementById('bm_callno').value.trim();
+  const name=document.getElementById('bm_name').value.trim();const price=parseFloat(document.getElementById('bm_price').value)||0;const note=document.getElementById('bm_note').value;
+  if(!name){alert('弁当名を入力してください');return;}
+  if(editingBentId){const b=bentos.find(x=>x.id===editingBentId);if(b){const before=`旧:${b.name} ${b.price}円`;b.cls=cls;b.callno=callno;b.name=name;b.price=price;b.ings=ings;b.note=note;addHistory('DB01','編集',name,`分類:${cls} 売価:${price}円`,before);}}
+  else{bentos.push({id:bentIdSeq(),cls,callno,name,price,ings,note});document.getElementById('bentName').value='';addHistory('DB01','追加',name,`分類:${cls} 売価:${price}円 呼出:${callno}`);}
   sdb('bentos',bentos);closeBentModal();renderBentTable();
 }
-function deleteBent(id){if(!confirm('削除しますか？'))return;sdb('bentos',ldb('bentos',[]).filter(b=>b.id!==id));renderBentTable()}
+function deleteBent(id){
+  if(!confirm('削除しますか？'))return;const item=ldb('bentos',[]).find(b=>b.id===id);
+  if(item)addHistory('DB01','削除',item.name,`分類:${item.cls} 売価:${item.price}円`);
+  sdb('bentos',ldb('bentos',[]).filter(b=>b.id!==id));renderBentTable();
+}
 function renderBentTable(){
-  const q=(document.getElementById('bentSearch')?.value||'').trim();
-  const cf=(document.getElementById('bentClsFilter')?.value||'');
-  const bentos=ldb('bentos',[]);const tb=document.querySelector('#bentTable tbody');tb.innerHTML='';
-  bentos.forEach(b=>{
+  const q=(document.getElementById('bentSearch')?.value||'').trim();const cf=(document.getElementById('bentClsFilter')?.value||'');
+  const tb=document.querySelector('#bentTable tbody');tb.innerHTML='';
+  ldb('bentos',[]).forEach(b=>{
     if(q&&!b.name.includes(q))return;if(cf&&b.cls!==cf)return;
-    tb.innerHTML+=`<tr><td>${clsTag(b.cls)}</td><td>${b.callno||''}</td>
-      <td style="text-align:left">${b.name}</td>
-      <td style="text-align:right">¥${(b.price||0).toLocaleString()}</td>
-      <td>${b.ings.length}</td>
-      <td style="font-size:11px;text-align:left;max-width:120px">${b.note||''}</td>
-      <td>
-        <button class="btn btn-primary btn-sm" onclick="openBentModal(${b.id})">編集</button>
-        <button class="btn btn-info btn-sm" onclick="openManualFromList(${b.id})">📖</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteBent(${b.id})">削除</button>
-      </td></tr>`;
+    tb.innerHTML+=`<tr><td>${clsTag(b.cls)}</td><td>${b.callno||''}</td><td style="text-align:left">${b.name}</td><td style="text-align:right">¥${(b.price||0).toLocaleString()}</td><td>${b.ings.length}</td><td style="font-size:11px;text-align:left;max-width:120px">${b.note||''}</td><td><button class="btn btn-primary btn-sm" onclick="openBentModal(${b.id})">編集</button><button class="btn btn-info btn-sm" onclick="openManualFromList(${b.id})">📖</button><button class="btn btn-danger btn-sm" onclick="deleteBent(${b.id})">削除</button></td></tr>`;
   });
 }
 
 // ======== MATERIALS ========
 function matIdSeq(){const m=ldb('materials',[]);return m.length?Math.max(...m.map(x=>x.id))+1:1}
-function addMaterial(){
-  const n=document.getElementById('matName').value.trim();const u=document.getElementById('matUnit').value.trim();
-  if(!n||!u){alert('材料名と単位を入力してください');return}
-  const mats=ldb('materials',[]);mats.push({id:matIdSeq(),name:n,unit:u});sdb('materials',mats);
-  document.getElementById('matName').value='';document.getElementById('matUnit').value='';renderMatTable();
-}
-function deleteMat(id){if(!confirm('削除?'))return;sdb('materials',ldb('materials',[]).filter(m=>m.id!==id));renderMatTable()}
-function openMatEdit(id){
-  const mat=ldb('materials',[]).find(m=>m.id===id);if(!mat)return;
-  editingMatId=id;document.getElementById('editMatName').value=mat.name;document.getElementById('editMatUnit').value=mat.unit;
-  document.getElementById('matEditModal').classList.add('open');
-}
-function saveMatEdit(){
-  const n=document.getElementById('editMatName').value.trim();const u=document.getElementById('editMatUnit').value.trim();
-  if(!n||!u){alert('入力してください');return}
-  const mats=ldb('materials',[]);const m=mats.find(x=>x.id===editingMatId);if(m){m.name=n;m.unit=u}
-  sdb('materials',mats);document.getElementById('matEditModal').classList.remove('open');renderMatTable();
-}
+function acMat(){const q=document.getElementById('matSearch').value;showAC('matAC',ldb('materials',[]).map(m=>m.name).filter(n=>n.includes(q)),v=>{document.getElementById('matSearch').value=v;renderMatTable()});renderMatTable()}
+function addMaterial(){const n=document.getElementById('matName').value.trim();const u=document.getElementById('matUnit').value.trim();if(!n||!u){alert('材料名と単位を入力してください');return;}const mats=ldb('materials',[]);mats.push({id:matIdSeq(),name:n,unit:u});sdb('materials',mats);document.getElementById('matName').value='';document.getElementById('matUnit').value='';renderMatTable();}
+function deleteMat(id){if(!confirm('削除?'))return;sdb('materials',ldb('materials',[]).filter(m=>m.id!==id));renderMatTable();}
+function openMatEdit(id){const mat=ldb('materials',[]).find(m=>m.id===id);if(!mat)return;editingMatId=id;document.getElementById('editMatName').value=mat.name;document.getElementById('editMatUnit').value=mat.unit;document.getElementById('matEditModal').classList.add('open');}
+function saveMatEdit(){const n=document.getElementById('editMatName').value.trim();const u=document.getElementById('editMatUnit').value.trim();if(!n||!u){alert('入力してください');return;}const mats=ldb('materials',[]);const m=mats.find(x=>x.id===editingMatId);if(m){m.name=n;m.unit=u;}sdb('materials',mats);document.getElementById('matEditModal').classList.remove('open');renderMatTable();}
 function renderMatTable(){
-  const q=(document.getElementById('matSearch')?.value||'').trim();const mats=ldb('materials',[]);
-  const tb=document.querySelector('#matTable tbody');tb.innerHTML='';
-  mats.forEach(m=>{
-    if(q&&!m.name.includes(q))return;
-    tb.innerHTML+=`<tr><td>${m.id}</td><td style="text-align:left">${m.name}</td><td>${m.unit}</td>
-      <td><button class="btn btn-primary btn-sm" onclick="openMatEdit(${m.id})">編集</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteMat(${m.id})">削除</button></td></tr>`;
-  });
+  const q=(document.getElementById('matSearch')?.value||'').trim();const tb=document.querySelector('#matTable tbody');tb.innerHTML='';
+  ldb('materials',[]).forEach(m=>{if(q&&!m.name.includes(q))return;tb.innerHTML+=`<tr><td>${m.id}</td><td style="text-align:left">${m.name}</td><td>${m.unit}</td><td><button class="btn btn-primary btn-sm" onclick="openMatEdit(${m.id})">編集</button><button class="btn btn-danger btn-sm" onclick="deleteMat(${m.id})">削除</button></td></tr>`;});
 }
 
 // ======== MANUAL ========
-function openManualFromList(bentId){
-  editingBentId=bentId;openManualModal();
-}
+function openManualFromList(bentId){editingBentId=bentId;openManualModal();}
 function openManualModal(){
   const bentId=editingBentId;const bent=bentId?ldb('bentos',[]).find(b=>b.id===bentId):null;
   currentManualBentId=bentId;const saved=bentId?ldb(`manual_${bentId}`,{}):{};
   document.getElementById('manualTitle').textContent=`製造マニュアル：${bent?.name||''}`;
-  document.getElementById('mn_name').value=bent?.name||'';
-  document.getElementById('mn_callno').value=bent?.callno||'';
-  document.getElementById('mn_price').value=saved.price??bent?.price??'';
-  document.getElementById('mn_pcs').value=saved.pcs||'';document.getElementById('mn_weight').value=saved.weight||'';
-  document.getElementById('mn_rawmat').value=saved.rawmat||'';document.getElementById('mn_hozai').value=saved.hozai||'';
-  document.getElementById('mn_note').value=saved.note||'';
-  manualPhotos=saved.photos?[...saved.photos]:[];
-  manualCostRows=saved.costRows?JSON.parse(JSON.stringify(saved.costRows)):[];
-  renderCostTable();renderPhotoGrid();calcManualCost();
-  document.getElementById('manualModal').classList.add('open');
+  document.getElementById('mn_name').value=bent?.name||'';document.getElementById('mn_callno').value=bent?.callno||'';
+  document.getElementById('mn_price').value=saved.price??bent?.price??'';document.getElementById('mn_pcs').value=saved.pcs||'';
+  document.getElementById('mn_weight').value=saved.weight||'';document.getElementById('mn_rawmat').value=saved.rawmat||'';
+  document.getElementById('mn_hozai').value=saved.hozai||'';document.getElementById('mn_note').value=saved.note||'';
+  manualPhotos=saved.photos?[...saved.photos]:[];manualCostRows=saved.costRows?JSON.parse(JSON.stringify(saved.costRows)):[];
+  renderCostTable();renderPhotoGrid();calcManualCost();document.getElementById('manualModal').classList.add('open');
 }
-function addCostRow(){manualCostRows.push({type:'原材料',name:'',unit_cost:0,unit:'個',qty:1});renderCostTable();calcManualCost()}
-function deleteCostRow(i){manualCostRows.splice(i,1);renderCostTable();calcManualCost()}
+function addCostRow(){manualCostRows.push({type:'原材料',name:'',unit_cost:0,unit:'個',qty:1});renderCostTable();calcManualCost();}
+function deleteCostRow(i){manualCostRows.splice(i,1);renderCostTable();calcManualCost();}
 function renderCostTable(){
   const tb=document.getElementById('costBody');tb.innerHTML='';
-  manualCostRows.forEach((r,i)=>{
-    tb.innerHTML+=`<tr>
-      <td><select onchange="manualCostRows[${i}].type=this.value" style="width:64px;font-size:11px" data-group="costform" onkeydown="enterMove(event,'costform')">
-        ${['原材料','包材','その他'].map(t=>`<option${r.type===t?' selected':''}>${t}</option>`).join('')}</select></td>
-      <td><input type="text" value="${r.name}" style="width:90px;font-size:11px" data-group="costform" onkeydown="enterMove(event,'costform')" onchange="manualCostRows[${i}].name=this.value"></td>
-      <td><input type="number" value="${r.unit_cost}" style="width:64px;font-size:11px" data-group="costform" onkeydown="enterMove(event,'costform')" onchange="manualCostRows[${i}].unit_cost=parseFloat(this.value)||0;calcManualCost()"></td>
-      <td><input type="text" value="${r.unit}" style="width:40px;font-size:11px" data-group="costform" onkeydown="enterMove(event,'costform')" onchange="manualCostRows[${i}].unit=this.value"></td>
-      <td><input type="number" value="${r.qty}" style="width:56px;font-size:11px" data-group="costform" onkeydown="enterMove(event,'costform')" onchange="manualCostRows[${i}].qty=parseFloat(this.value)||0;calcManualCost()"></td>
-      <td id="cr_${i}" style="font-size:12px;font-weight:bold">${((r.unit_cost||0)*(r.qty||0)).toFixed(0)}円</td>
-      <td><button class="btn btn-danger btn-sm" onclick="deleteCostRow(${i})">✕</button></td>
-    </tr>`;
-  });
+  manualCostRows.forEach((r,i)=>{tb.innerHTML+=`<tr><td><select onchange="manualCostRows[${i}].type=this.value" style="width:64px;font-size:11px">${['原材料','包材','その他'].map(t=>`<option${r.type===t?' selected':''}>${t}</option>`).join('')}</select></td><td><input type="text" value="${r.name}" style="width:90px;font-size:11px" onchange="manualCostRows[${i}].name=this.value"></td><td><input type="number" value="${r.unit_cost}" style="width:64px;font-size:11px" onchange="manualCostRows[${i}].unit_cost=parseFloat(this.value)||0;calcManualCost()"></td><td><input type="text" value="${r.unit}" style="width:40px;font-size:11px" onchange="manualCostRows[${i}].unit=this.value"></td><td><input type="number" value="${r.qty}" style="width:56px;font-size:11px" onchange="manualCostRows[${i}].qty=parseFloat(this.value)||0;calcManualCost()"></td><td id="cr_${i}" style="font-size:12px;font-weight:bold">${((r.unit_cost||0)*(r.qty||0)).toFixed(0)}円</td><td><button class="btn btn-danger btn-sm" onclick="deleteCostRow(${i})">✕</button></td></tr>`;});
 }
 function calcManualCost(){
   const total=manualCostRows.reduce((s,r)=>s+(r.unit_cost||0)*(r.qty||0),0);
   document.getElementById('costTotal').textContent=total.toFixed(0)+'円';
   const price=parseFloat(document.getElementById('mn_price').value)||0;
   document.getElementById('neiritu').textContent=price>0?((price-total)/price*100).toFixed(1)+'%':'—';
-  manualCostRows.forEach((r,i)=>{const el=document.getElementById(`cr_${i}`);if(el)el.textContent=((r.unit_cost||0)*(r.qty||0)).toFixed(0)+'円'});
+  manualCostRows.forEach((r,i)=>{const el=document.getElementById(`cr_${i}`);if(el)el.textContent=((r.unit_cost||0)*(r.qty||0)).toFixed(0)+'円';});
 }
 function renderPhotoGrid(){
   const n=manualPhotos.length;document.getElementById('addPhotoBtn').style.display=n>=6?'none':'';
   const grid=document.getElementById('photoGrid');
-  if(n===0){grid.innerHTML='<p style="color:#aaa;font-size:12px">写真が追加されていません</p>';return}
+  if(n===0){grid.innerHTML='<p style="color:#aaa;font-size:12px">写真が追加されていません</p>';return;}
   const cls=['','p1','p2','p3','p4','p5','p6'][n]||'p6';
   let html=`<div class="photo-grid ${cls}">`;
-  manualPhotos.forEach((src,i)=>{
-    html+=`<div class="photo-slot" style="min-height:${n<=2?'220px':n<=4?'160px':'120px'}"><img src="${src}"><button class="del-photo" onclick="removePhoto(${i})">✕</button></div>`;
-  });
+  manualPhotos.forEach((src,i)=>{html+=`<div class="photo-slot" style="min-height:${n<=2?'220px':n<=4?'160px':'120px'}"><img src="${src}"><button class="del-photo" onclick="removePhoto(${i})">✕</button></div>`;});
   html+='</div>';grid.innerHTML=html;
 }
-function addPhotoSlot(){if(manualPhotos.length>=6)return;document.getElementById('photoFileInput').click()}
-function onPhotoSelected(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=ev=>{manualPhotos.push(ev.target.result);renderPhotoGrid()};reader.readAsDataURL(file);e.target.value=''}
-function removePhoto(i){manualPhotos.splice(i,1);renderPhotoGrid()}
+function addPhotoSlot(){if(manualPhotos.length>=6)return;document.getElementById('photoFileInput').click();}
+function onPhotoSelected(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=ev=>{manualPhotos.push(ev.target.result);renderPhotoGrid();};reader.readAsDataURL(file);e.target.value='';}
+function removePhoto(i){manualPhotos.splice(i,1);renderPhotoGrid();}
 function saveManual(){
-  const id=currentManualBentId;if(!id){alert('弁当IDが不明です');return}
-  sdb(`manual_${id}`,{price:parseFloat(document.getElementById('mn_price').value)||0,
-    pcs:document.getElementById('mn_pcs').value,weight:document.getElementById('mn_weight').value,
-    rawmat:document.getElementById('mn_rawmat').value,hozai:document.getElementById('mn_hozai').value,
-    note:document.getElementById('mn_note').value,costRows:manualCostRows,photos:manualPhotos});
-  alert('マニュアルを保存しました');
-}
-
-// ======== ENTER MOVE ========
-function enterMove(e,groupName){
-  if(e.key!=='Enter')return;
-  if(e.target.tagName==='TEXTAREA'&&!e.shiftKey)e.preventDefault();
-  else if(e.target.tagName==='TEXTAREA')return;
-  else e.preventDefault();
-  const all=[...document.querySelectorAll(`[data-group="${groupName}"]`)].filter(el=>!el.disabled&&el.offsetParent!==null);
-  const idx=all.indexOf(e.target);
-  if(idx>=0&&idx<all.length-1){all[idx+1].focus();if(all[idx+1].select)all[idx+1].select()}
+  const id=currentManualBentId;if(!id){alert('弁当IDが不明です');return;}
+  sdb(`manual_${id}`,{price:parseFloat(document.getElementById('mn_price').value)||0,pcs:document.getElementById('mn_pcs').value,weight:document.getElementById('mn_weight').value,rawmat:document.getElementById('mn_rawmat').value,hozai:document.getElementById('mn_hozai').value,note:document.getElementById('mn_note').value,costRows:manualCostRows,photos:manualPhotos});
+  showToast('✅ マニュアルを保存しました');
 }
 
 // ======== PASSWORD ========
+function acPW(){const q=document.getElementById('pwSearch').value;showAC('pwAC',ldb('users',[]).map(u=>u.name).filter(n=>n.includes(q)),v=>{document.getElementById('pwSearch').value=v;renderPWTable()});renderPWTable()}
 function renderPWTable(){
-  if(CU?.role!=='admin1')return;
-  const q=(document.getElementById('pwSearch')?.value||'').trim();
-  const users=ldb('users',[]);const tb=document.querySelector('#pwTable tbody');tb.innerHTML='';
-  users.forEach(u=>{
-    if(q&&!u.name.includes(q))return;
-    const badge=u.role==='admin1'?'<span class="badge b-a1">管理者1</span>':u.role==='admin2'?'<span class="badge b-a2">管理者2/3</span>':'<span class="badge b-st">店舗</span>';
-    tb.innerHTML+=`<tr><td>${badge}</td><td>${u.name}</td><td>${u.id}</td><td style="font-family:monospace">${u.pass}</td>
-      <td><button class="btn btn-primary btn-sm" onclick="openPWEdit('${u.id}')">変更</button></td></tr>`;
-  });
+  if(CU?.role!=='admin1')return;const q=(document.getElementById('pwSearch')?.value||'').trim();
+  const tb=document.querySelector('#pwTable tbody');tb.innerHTML='';
+  ldb('users',[]).forEach(u=>{if(q&&!u.name.includes(q))return;const badge=u.role==='admin1'?'<span class="badge b-a1">管理者1</span>':u.role==='admin2'?'<span class="badge b-a2">管理者2/3</span>':'<span class="badge b-st">店舗</span>';tb.innerHTML+=`<tr><td>${badge}</td><td>${u.name}</td><td>${u.id}</td><td style="font-family:monospace">${u.pass}</td><td><button class="btn btn-primary btn-sm" onclick="openPWEdit('${u.id}')">変更</button></td></tr>`;});
 }
-function openPWEdit(uid){const u=ldb('users',[]).find(x=>x.id===uid);if(!u)return;editingPWId=uid;document.getElementById('pwEditName').textContent=`対象：${u.name}（現在：${u.pass}）`;document.getElementById('newPwInput').value='';document.getElementById('pwEditModal').classList.add('open')}
-function savePWEdit(){const np=document.getElementById('newPwInput').value.trim();if(!np||np.length<4){alert('4文字以上のパスワードを入力してください');return}const users=ldb('users',[]);const u=users.find(x=>x.id===editingPWId);if(u)u.pass=np;sdb('users',users);document.getElementById('pwEditModal').classList.remove('open');renderPWTable();alert('変更しました')}
+function openPWEdit(uid){const u=ldb('users',[]).find(x=>x.id===uid);if(!u)return;editingPWId=uid;document.getElementById('pwEditName').textContent=`対象：${u.name}（現在：${u.pass}）`;document.getElementById('newPwInput').value='';document.getElementById('pwEditModal').classList.add('open');}
+function savePWEdit(){const np=document.getElementById('newPwInput').value.trim();if(!np||np.length<4){alert('4文字以上のパスワードを入力してください');return;}const users=ldb('users',[]);const u=users.find(x=>x.id===editingPWId);if(u)u.pass=np;sdb('users',users);document.getElementById('pwEditModal').classList.remove('open');renderPWTable();alert('変更しました');}
 
 // ======== 発注書 ========
-function acHatchu(){
-  const q=document.getElementById('hatchuSearch').value;
-  const items=ldb('db00',[]).map(d=>d.name).filter(n=>n.includes(q));
-  showAC('hatchuAC',items,v=>{document.getElementById('hatchuSearch').value=v;renderHatchuTable()});
-  renderHatchuTable();
-}
-function getHatchuKey(){
-  const store=document.getElementById('hatchuStore')?.value||'';
-  const date=document.getElementById('hatchuDate')?.value||'';
-  return `hatchu_${store}_${date}`;
-}
+function acHatchu(){const q=document.getElementById('hatchuSearch').value;showAC('hatchuAC',ldb('db00',[]).map(d=>d.name).filter(n=>n.includes(q)),v=>{document.getElementById('hatchuSearch').value=v;renderHatchuTable()});renderHatchuTable();}
+function getHatchuKey(){return`hatchu_${document.getElementById('hatchuStore')?.value||''}_${document.getElementById('hatchuDate')?.value||''}`}
 function renderHatchuTable(){
-  const isAdmin=CU.role==='admin1'||CU.role==='admin2';
-  const q=(document.getElementById('hatchuSearch')?.value||'').trim();
-  const store=document.getElementById('hatchuStore')?.value||'';
-  const date=document.getElementById('hatchuDate')?.value||'';
+  const isAdmin=CU.role==='admin1'||CU.role==='admin2';const q=(document.getElementById('hatchuSearch')?.value||'').trim();
+  const store=document.getElementById('hatchuStore')?.value||'';const date=document.getElementById('hatchuDate')?.value||'';
   if(!store||!date){document.getElementById('hatchuContent').innerHTML='<p style="color:#aaa;padding:12px">店舗と発注日を選択してください</p>';return;}
-  const saved=ldb(getHatchuKey(),{});
-  const items=ldb('db00',[]).filter(d=>!q||d.name.includes(q));
-  let html=`<table style="border-collapse:collapse;width:100%;min-width:600px"><thead>
-    <tr><th style="text-align:left;min-width:140px">原材料名</th><th>分類</th><th>取引先</th><th>単位</th><th>原価(円)</th><th style="min-width:80px">発注数量</th><th>合計金額</th></tr>
-  </thead><tbody>`;
-  items.forEach((d,ri)=>{
-    const qty=saved[d.id]||'';
-    const total=qty&&d.cost?(qty*d.cost).toLocaleString(undefined,{maximumFractionDigits:0}):'';
-    html+=`<tr style="background:${ri%2===0?'#fff':'#f8f9fa'}">
-      <td style="text-align:left;padding:4px 6px">${d.name}</td>
-      <td><span class="cls-tag cls-${d.cls||'その他'}">${d.cls||''}</span></td>
-      <td style="font-size:11px">${d.supplier||''}</td>
-      <td>${d.unit||''}</td>
-      <td style="text-align:right">${d.cost||''}</td>
-      <td style="padding:3px;text-align:center">
-        ${isAdmin
-          ? `<input type="number" min="0" value="${qty}" id="htc_${d.id}"
-              onchange="autoSaveHatchu()"
-              onkeydown="hatchuEnter(event,${ri})"
-              style="width:72px;padding:3px;border:1px solid #aaa;border-radius:3px;text-align:center;font-size:13px">`
-          : `<span>${qty||''}</span>`}
-      </td>
-      <td style="text-align:right;font-size:12px" id="htcT_${d.id}">${total?total+'円':''}</td>
-    </tr>`;
-  });
-  html+=`</tbody></table>`;
-  document.getElementById('hatchuContent').innerHTML=html;
-}
-function getHatchuData(){
-  const items=ldb('db00',[]);const data={};
-  items.forEach(d=>{const el=document.getElementById(`htc_${d.id}`);if(el&&el.value)data[d.id]=parseFloat(el.value)||0;});
-  return data;
+  const saved=ldb(getHatchuKey(),{});const items=ldb('db00',[]).filter(d=>!q||d.name.includes(q));
+  let html=`<table style="border-collapse:collapse;width:100%;min-width:600px"><thead><tr><th style="text-align:left;min-width:140px">原材料名</th><th>分類</th><th>取引先</th><th>単位</th><th>原価(円)</th><th style="min-width:80px">発注数量</th><th>合計金額</th></tr></thead><tbody>`;
+  items.forEach((d,ri)=>{const qty=saved[d.id]||'';const total=qty&&d.cost?(qty*d.cost).toLocaleString(undefined,{maximumFractionDigits:0}):'';html+=`<tr style="background:${ri%2===0?'#fff':'#f8f9fa'}"><td style="text-align:left;padding:4px 6px">${d.name}</td><td>${clsTag(d.cls)}</td><td style="font-size:11px">${d.supplier||''}</td><td>${d.unit||''}</td><td style="text-align:right">${d.cost||''}</td><td style="padding:3px;text-align:center">${isAdmin?`<input type="number" min="0" value="${qty}" id="htc_${d.id}" onchange="autoSaveHatchu()" onkeydown="hatchuEnter(event,${ri})" style="width:72px;padding:3px;border:1px solid #aaa;border-radius:3px;text-align:center;font-size:13px">`:`<span>${qty||''}</span>`}</td><td style="text-align:right;font-size:12px" id="htcT_${d.id}">${total?total+'円':''}</td></tr>`;});
+  html+=`</tbody></table>`;document.getElementById('hatchuContent').innerHTML=html;
 }
 function autoSaveHatchu(){
-  sdb(getHatchuKey(),getHatchuData());
-  // 合計更新
-  const saved=getHatchuData();
-  const items=ldb('db00',[]);
-  items.forEach(d=>{
-    const el=document.getElementById(`htcT_${d.id}`);
-    if(el){const qty=saved[d.id]||0;el.textContent=qty&&d.cost?(qty*d.cost).toLocaleString(undefined,{maximumFractionDigits:0})+'円':'';}
-  });
+  const data={};ldb('db00',[]).forEach(d=>{const el=document.getElementById(`htc_${d.id}`);if(el&&el.value)data[d.id]=parseFloat(el.value)||0;});
+  sdb(getHatchuKey(),data);
+  ldb('db00',[]).forEach(d=>{const el=document.getElementById(`htcT_${d.id}`);const qty=data[d.id]||0;if(el)el.textContent=qty&&d.cost?(qty*d.cost).toLocaleString(undefined,{maximumFractionDigits:0})+'円':'';});
 }
 function saveHatchu(){
-  const store=document.getElementById('hatchuStore').value;
-  const date=document.getElementById('hatchuDate').value;
-  const data=getHatchuData();
+  const store=document.getElementById('hatchuStore').value;const date=document.getElementById('hatchuDate').value;
+  const data={};ldb('db00',[]).forEach(d=>{const el=document.getElementById(`htc_${d.id}`);if(el&&el.value)data[d.id]=parseFloat(el.value)||0;});
   sdb(getHatchuKey(),data);
-  // 発注内訳を履歴へ
-  const items=ldb('db00',[]).filter(d=>data[d.id]>0);
-  const detail=items.map(d=>`${d.name}×${data[d.id]}${d.unit}`).join('、');
+  const items=ldb('db00',[]).filter(d=>data[d.id]>0);const detail=items.map(d=>`${d.name}×${data[d.id]}${d.unit}`).join('、');
   addHistory('発注書','追加',`${store} ${date}`,detail.slice(0,100)+(detail.length>100?'…':''));
-  alert('保存しました');
+  showToast('✅ 保存しました');
 }
 function hatchuEnter(e,rowIdx){
   if(e.key!=='Enter')return;e.preventDefault();
-  const items=ldb('db00',[]).filter(d=>{
-    const q=(document.getElementById('hatchuSearch')?.value||'').trim();
-    return !q||d.name.includes(q);
-  });
-  const next=items[rowIdx+1];
-  if(next){const el=document.getElementById(`htc_${next.id}`);if(el){el.focus();el.select();}}
-}
-function printHatchu(){
-  const store=document.getElementById('hatchuStore').value;
-  const date=document.getElementById('hatchuDate').value;
-  const saved=ldb(getHatchuKey(),{});
-  const items=ldb('db00',[]).filter(d=>saved[d.id]>0);
-  let rows='';let total=0;
-  items.forEach(d=>{
-    const qty=saved[d.id]||0;const sub=qty*d.cost;total+=sub;
-    rows+=`<tr><td style="text-align:left">${d.name}</td><td>${d.cls||''}</td><td>${d.supplier||''}</td><td>${d.unit||''}</td><td style="text-align:right">${d.cost||''}</td><td style="text-align:center">${qty}</td><td style="text-align:right">${sub.toLocaleString(undefined,{maximumFractionDigits:0})}円</td></tr>`;
-  });
-  pop(`<h2>発注書　${store}店　${date}</h2>
-  <table><thead><tr><th>商品名</th><th>分類</th><th>取引先</th><th>単位</th><th>原価</th><th>数量</th><th>合計</th></tr></thead>
-  <tbody>${rows}</tbody>
-  <tfoot><tr><td colspan="6" style="text-align:right;font-weight:bold">合計金額</td><td style="text-align:right;font-weight:bold">${total.toLocaleString(undefined,{maximumFractionDigits:0})}円</td></tr></tfoot></table>`);
-}
-function exportHatchuExcel(){
-  const store=document.getElementById('hatchuStore').value;
-  const date=document.getElementById('hatchuDate').value;
-  const saved=ldb(getHatchuKey(),{});
-  const items=ldb('db00',[]).filter(d=>saved[d.id]>0);
-  const header=['商品名','分類','取引先','単位','原価(円)','発注数量','合計金額'];
-  const rows=items.map(d=>[d.name,d.cls||'',d.supplier||'',d.unit||'',d.cost||0,saved[d.id]||0,((saved[d.id]||0)*(d.cost||0)).toFixed(0)]);
-  csvDL(`発注書_${store}_${date}.csv`,[header,...rows]);
+  const items=ldb('db00',[]).filter(d=>{const q=(document.getElementById('hatchuSearch')?.value||'').trim();return !q||d.name.includes(q);});
+  const next=items[rowIdx+1];if(next){const el=document.getElementById(`htc_${next.id}`);if(el){el.focus();el.select();}}
 }
 
-// ======== 発注書 履歴付き保存 ========
-function pop(body){const win=window.open('','_blank');win.document.write(`<html><head><meta charset="UTF-8"><style>body{font-family:'メイリオ',sans-serif;font-size:11px;padding:10px}table{border-collapse:collapse;width:100%;margin-bottom:10px}th,td{border:1px solid #999;padding:4px 6px}th{background:#1a5276;color:#fff}h2{font-size:14px;margin-bottom:8px}h3{font-size:12px}</style></head><body>${body}<script>window.onload=()=>{window.print();window.close()}<\/script></body></html>`);win.document.close()}
-function printPlan(){
-  const store=document.getElementById('planStore').value;const ws=document.getElementById('weekStart').value;
-  const dates=getWeekDates();const bentos=ldb('bentos',[]);const saved=ldb(`plan_${store}_${ws}`,{});
-  let rows='';bentos.forEach(b=>{let cells=`<td style="text-align:left">${b.name}</td>`;dates.forEach((_,i)=>cells+=`<td style="text-align:center">${saved[`${b.id}_${i}`]||''}</td>`);rows+=`<tr>${cells}</tr>`});
-  pop(`<h2>弁当製造計画　${store}店　${ws}週</h2><table><thead><tr><th>弁当名</th>${DAYS.map((d,i)=>`<th>${d}<br>${fmtJP(dates[i])}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>`);
-}
-function printOrder(){
-  const store=document.getElementById('orderStore').value;const dateStr=document.getElementById('orderDate').value;
-  const mon=getMon(dateStr);const ws=fmt(mon);const dayIdx=(new Date(dateStr).getDay()+6)%7;
-  const saved=ldb(`plan_${store}_${ws}`,{});const bentos=ldb('bentos',[]);const dateObj=new Date(dateStr);
-  let rows='';let total=0;
-  bentos.forEach(b=>{const qty=parseInt(saved[`${b.id}_${dayIdx}`])||0;if(!qty)return;total+=qty;rows+=`<tr><td>${b.callno||''}</td><td style="text-align:left">${b.name}</td><td style="text-align:center">${qty.toLocaleString()}</td><td style="text-align:right">¥${(b.price||0).toLocaleString()}</td></tr>`});
-  pop(`<h2>弁当製造指示書　${store}店　${dateObj.getFullYear()}年${dateObj.getMonth()+1}月${dateObj.getDate()}日（${DAYS[dayIdx]}）</h2>
-  <table><thead><tr><th>呼出</th><th>弁当名</th><th>製造数</th><th>売価</th></tr></thead><tbody>${rows}</tbody>
-  <tfoot><tr><td colspan="2" style="text-align:right;font-weight:bold">合計</td><td style="text-align:center">${total.toLocaleString()}</td><td></td></tr></tfoot></table>`);
-}
-function printShimei(){
-  const store=document.getElementById('shimeiStore').value;const dateStr=document.getElementById('shimeiDate').value;
-  const mon=getMon(dateStr);const ws=fmt(mon);const dayIdx=(new Date(dateStr).getDay()+6)%7;
-  const saved=ldb(`plan_${store}_${ws}`,{});const bentos=ldb('bentos',[]);const mats=ldb('materials',[]);const dateObj=new Date(dateStr);
-  const matTotals={};bentos.forEach(b=>{const qty=parseInt(saved[`${b.id}_${dayIdx}`])||0;if(qty>0)b.ings.forEach(ing=>matTotals[ing.matId]=(matTotals[ing.matId]||0)+ing.qty*qty)});
-  let rows='';Object.entries(matTotals).forEach(([mid,total])=>{const mat=mats.find(m=>m.id==mid);if(mat)rows+=`<tr><td style="text-align:left">${mat.name}</td><td style="text-align:right">${total.toLocaleString()}</td><td>${mat.unit}</td></tr>`});
-  pop(`<h2>材料仕込み表　${store}店　${dateObj.getFullYear()}年${dateObj.getMonth()+1}月${dateObj.getDate()}日（${DAYS[dayIdx]}）</h2>
-  <table><thead><tr><th>材料名</th><th>必要量</th><th>単位</th></tr></thead><tbody>${rows}</tbody></table>`);
-}
-function printManual(){
-  const id=currentManualBentId;const bent=ldb('bentos',[]).find(b=>b.id===id)||{};
-  const price=parseFloat(document.getElementById('mn_price').value)||0;
-  const total=manualCostRows.reduce((s,r)=>s+(r.unit_cost||0)*(r.qty||0),0);
-  const neiritu=price>0?((price-total)/price*100).toFixed(1)+'%':'—';
-  const costRows=manualCostRows.map(r=>`<tr><td>${r.type}</td><td>${r.name}</td><td>${r.unit_cost}</td><td>${r.unit}</td><td>${r.qty}</td><td>${((r.unit_cost||0)*(r.qty||0)).toFixed(0)}円</td></tr>`).join('');
-  const photosHtml=manualPhotos.map(src=>`<img src="${src}" style="max-width:200px;max-height:160px;margin:4px;border-radius:4px">`).join('');
-  pop(`<h2>製造マニュアル：${bent.name||''}</h2>
-  <table style="margin-bottom:10px"><tbody>
-    <tr><th>呼出番号</th><td>${bent.callno||''}</td><th>売価</th><td>${price}円</td></tr>
-    <tr><th>1pあたり個数</th><td>${document.getElementById('mn_pcs').value}個</td><th>重量</th><td>${document.getElementById('mn_weight').value}g</td></tr>
-    <tr><th>原材料名</th><td colspan="3">${document.getElementById('mn_rawmat').value}</td></tr>
-    <tr><th>包材</th><td colspan="3">${document.getElementById('mn_hozai').value}</td></tr>
-  </tbody></table>
-  <h3>原価明細</h3><table><thead><tr><th>区分</th><th>品名</th><th>単価</th><th>単位</th><th>入数/量</th><th>1p原価</th></tr></thead>
-  <tbody>${costRows}</tbody>
-  <tfoot><tr><td colspan="5" style="text-align:right;font-weight:bold">原価合計</td><td>${total.toFixed(0)}円</td></tr>
-  <tr><td colspan="5" style="text-align:right;font-weight:bold">値入率</td><td>${neiritu}</td></tr></tfoot></table>
-  <h3>写真</h3><div>${photosHtml}</div>
-  <h3>備考・手順</h3><pre style="white-space:pre-wrap;font-size:11px;border:1px solid #ddd;padding:8px;border-radius:4px">${document.getElementById('mn_note').value}</pre>`);
-}
+// ======== PRINT / CSV ========
+function pop(body){const win=window.open('','_blank');win.document.write(`<html><head><meta charset="UTF-8"><style>body{font-family:'メイリオ',sans-serif;font-size:11px;padding:10px}table{border-collapse:collapse;width:100%;margin-bottom:10px}th,td{border:1px solid #999;padding:4px 6px}th{background:#1a5276;color:#fff}h2{font-size:14px;margin-bottom:8px}</style></head><body>${body}<script>window.onload=()=>{window.print();window.close()}<\/script></body></html>`);win.document.close();}
+function printPlan(){const store=document.getElementById('planStore').value;const ws=document.getElementById('weekStart').value;const dates=getWeekDates();const bentos=ldb('bentos',[]);const saved=ldb(`plan_${store}_${ws}`,{});let rows='';bentos.forEach(b=>{let cells=`<td style="text-align:left">${b.name}</td>`;dates.forEach((_,i)=>cells+=`<td style="text-align:center">${saved[`${b.id}_${i}`]||''}</td>`);rows+=`<tr>${cells}</tr>`;});pop(`<h2>弁当製造計画　${store}店　${ws}週</h2><table><thead><tr><th>弁当名</th>${DAYS.map((d,i)=>`<th>${d}<br>${fmtJP(dates[i])}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>`);}
+function printOrder(){const store=document.getElementById('orderStore').value;const dateStr=document.getElementById('orderDate').value;const mon=getMon(dateStr);const ws=fmt(mon);const dayIdx=(new Date(dateStr).getDay()+6)%7;const saved=ldb(`plan_${store}_${ws}`,{});const bentos=ldb('bentos',[]);const dateObj=new Date(dateStr);let rows='';let total=0;bentos.forEach(b=>{const qty=parseInt(saved[`${b.id}_${dayIdx}`])||0;if(!qty)return;total+=qty;rows+=`<tr><td>${b.callno||''}</td><td style="text-align:left">${b.name}</td><td style="text-align:center">${qty.toLocaleString()}</td><td style="text-align:right">¥${(b.price||0).toLocaleString()}</td></tr>`;});pop(`<h2>弁当製造指示書　${store}店　${dateObj.getFullYear()}年${dateObj.getMonth()+1}月${dateObj.getDate()}日（${DAYS[dayIdx]}）</h2><table><thead><tr><th>呼出</th><th>弁当名</th><th>製造数</th><th>売価</th></tr></thead><tbody>${rows}</tbody><tfoot><tr><td colspan="2" style="text-align:right;font-weight:bold">合計</td><td style="text-align:center">${total.toLocaleString()}</td><td></td></tr></tfoot></table>`);}
+function printShimei(){const store=document.getElementById('shimeiStore').value;const dateStr=document.getElementById('shimeiDate').value;const mon=getMon(dateStr);const ws=fmt(mon);const dayIdx=(new Date(dateStr).getDay()+6)%7;const saved=ldb(`plan_${store}_${ws}`,{});const bentos=ldb('bentos',[]);const mats=ldb('materials',[]);const dateObj=new Date(dateStr);const matTotals={};bentos.forEach(b=>{const qty=parseInt(saved[`${b.id}_${dayIdx}`])||0;if(qty>0)b.ings.forEach(ing=>matTotals[ing.matId]=(matTotals[ing.matId]||0)+ing.qty*qty);});let rows='';Object.entries(matTotals).forEach(([mid,total])=>{const mat=mats.find(m=>m.id==mid);if(mat)rows+=`<tr><td style="text-align:left">${mat.name}</td><td style="text-align:right">${total.toLocaleString()}</td><td>${mat.unit}</td></tr>`;});pop(`<h2>材料仕込み表　${store}店　${dateObj.getFullYear()}年${dateObj.getMonth()+1}月${dateObj.getDate()}日（${DAYS[dayIdx]}）</h2><table><thead><tr><th>材料名</th><th>必要量</th><th>単位</th></tr></thead><tbody>${rows}</tbody></table>`);}
+function printHatchu(){const store=document.getElementById('hatchuStore').value;const date=document.getElementById('hatchuDate').value;const saved=ldb(getHatchuKey(),{});const items=ldb('db00',[]).filter(d=>saved[d.id]>0);let rows='';let total=0;items.forEach(d=>{const qty=saved[d.id]||0;const sub=qty*d.cost;total+=sub;rows+=`<tr><td style="text-align:left">${d.name}</td><td>${d.cls||''}</td><td>${d.supplier||''}</td><td>${d.unit||''}</td><td style="text-align:right">${d.cost||''}</td><td style="text-align:center">${qty}</td><td style="text-align:right">${sub.toLocaleString(undefined,{maximumFractionDigits:0})}円</td></tr>`;});pop(`<h2>発注書　${store}店　${date}</h2><table><thead><tr><th>商品名</th><th>分類</th><th>取引先</th><th>単位</th><th>原価</th><th>数量</th><th>合計</th></tr></thead><tbody>${rows}</tbody><tfoot><tr><td colspan="6" style="text-align:right;font-weight:bold">合計金額</td><td style="text-align:right;font-weight:bold">${total.toLocaleString(undefined,{maximumFractionDigits:0})}円</td></tr></tfoot></table>`);}
+function printManual(){const id=currentManualBentId;const bent=ldb('bentos',[]).find(b=>b.id===id)||{};const price=parseFloat(document.getElementById('mn_price').value)||0;const total=manualCostRows.reduce((s,r)=>s+(r.unit_cost||0)*(r.qty||0),0);const neiritu=price>0?((price-total)/price*100).toFixed(1)+'%':'—';const costRows=manualCostRows.map(r=>`<tr><td>${r.type}</td><td>${r.name}</td><td>${r.unit_cost}</td><td>${r.unit}</td><td>${r.qty}</td><td>${((r.unit_cost||0)*(r.qty||0)).toFixed(0)}円</td></tr>`).join('');const photosHtml=manualPhotos.map(src=>`<img src="${src}" style="max-width:200px;max-height:160px;margin:4px;border-radius:4px">`).join('');pop(`<h2>製造マニュアル：${bent.name||''}</h2><table style="margin-bottom:10px"><tbody><tr><th>呼出番号</th><td>${bent.callno||''}</td><th>売価</th><td>${price}円</td></tr><tr><th>原材料名</th><td colspan="3">${document.getElementById('mn_rawmat').value}</td></tr><tr><th>包材</th><td colspan="3">${document.getElementById('mn_hozai').value}</td></tr></tbody></table><h3>原価明細</h3><table><thead><tr><th>区分</th><th>品名</th><th>単価</th><th>単位</th><th>入数/量</th><th>1p原価</th></tr></thead><tbody>${costRows}</tbody><tfoot><tr><td colspan="5" style="text-align:right;font-weight:bold">原価合計</td><td>${total.toFixed(0)}円</td></tr><tr><td colspan="5" style="text-align:right;font-weight:bold">値入率</td><td>${neiritu}</td></tr></tfoot></table><h3>写真</h3><div>${photosHtml}</div><h3>備考・手順</h3><pre style="white-space:pre-wrap;font-size:11px;border:1px solid #ddd;padding:8px">${document.getElementById('mn_note').value}</pre>`);}
+function csvDL(name,rows){const bom='\uFEFF';const csv=bom+rows.map(r=>r.map(c=>`"${String(c??'').replace(/"/g,'""')}"`).join(',')).join('\n');const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download=name;a.click();}
+function exportPlanExcel(){const store=document.getElementById('planStore').value;const ws=document.getElementById('weekStart').value;const dates=getWeekDates();const bentos=ldb('bentos',[]);const saved=ldb(`plan_${store}_${ws}`,{});const header=['弁当名',...DAYS.map((d,i)=>d+fmtJP(dates[i]))];const rows=bentos.map(b=>[b.name,...Array.from({length:7},(_,i)=>saved[`${b.id}_${i}`]||0)]);csvDL(`製造計画_${store}_${ws}.csv`,[header,...rows]);}
+function exportOrderExcel(){const store=document.getElementById('orderStore').value;const dateStr=document.getElementById('orderDate').value;const mon=getMon(dateStr);const ws=fmt(mon);const dayIdx=(new Date(dateStr).getDay()+6)%7;const saved=ldb(`plan_${store}_${ws}`,{});const bentos=ldb('bentos',[]);const header=['呼出番号','弁当名','製造数','売価'];const rows=bentos.filter(b=>parseInt(saved[`${b.id}_${dayIdx}`])||0).map(b=>[b.callno||'',b.name,saved[`${b.id}_${dayIdx}`]||0,b.price||0]);csvDL(`製造指示書_${store}_${dateStr}.csv`,[header,...rows]);}
+function exportShimeiExcel(){const store=document.getElementById('shimeiStore').value;const dateStr=document.getElementById('shimeiDate').value;const mon=getMon(dateStr);const ws=fmt(mon);const dayIdx=(new Date(dateStr).getDay()+6)%7;const saved=ldb(`plan_${store}_${ws}`,{});const bentos=ldb('bentos',[]);const mats=ldb('materials',[]);const matTotals={};bentos.forEach(b=>{const qty=parseInt(saved[`${b.id}_${dayIdx}`])||0;if(qty>0)b.ings.forEach(ing=>matTotals[ing.matId]=(matTotals[ing.matId]||0)+ing.qty*qty);});const header=['材料名','必要量','単位'];const rows=Object.entries(matTotals).map(([mid,total])=>{const mat=mats.find(m=>m.id==mid);return mat?[mat.name,total,mat.unit]:null;}).filter(Boolean);csvDL(`仕込み表_${store}_${dateStr}.csv`,[header,...rows]);}
+function exportHatchuExcel(){const store=document.getElementById('hatchuStore').value;const date=document.getElementById('hatchuDate').value;const saved=ldb(getHatchuKey(),{});const items=ldb('db00',[]).filter(d=>saved[d.id]>0);const header=['商品名','分類','取引先','単位','原価(円)','発注数量','合計金額'];const rows=items.map(d=>[d.name,d.cls||'',d.supplier||'',d.unit||'',d.cost||0,saved[d.id]||0,((saved[d.id]||0)*(d.cost||0)).toFixed(0)]);csvDL(`発注書_${store}_${date}.csv`,[header,...rows]);}
 
-// ======== EXCEL (CSV) ========
-function csvDL(name,rows){const bom='\uFEFF';const csv=bom+rows.map(r=>r.map(c=>`"${String(c??'').replace(/"/g,'""')}"`).join(',')).join('\n');const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download=name;a.click()}
-function exportPlanExcel(){
-  const store=document.getElementById('planStore').value;const ws=document.getElementById('weekStart').value;
-  const dates=getWeekDates();const bentos=ldb('bentos',[]);const saved=ldb(`plan_${store}_${ws}`,{});
-  const header=['弁当名',...DAYS.map((d,i)=>d+fmtJP(dates[i]))];
-  const rows=bentos.map(b=>[b.name,...Array.from({length:7},(_,i)=>saved[`${b.id}_${i}`]||0)]);
-  csvDL(`製造計画_${store}_${ws}.csv`,[header,...rows]);
-}
-function exportOrderExcel(){
-  const store=document.getElementById('orderStore').value;const dateStr=document.getElementById('orderDate').value;
-  const mon=getMon(dateStr);const ws=fmt(mon);const dayIdx=(new Date(dateStr).getDay()+6)%7;
-  const saved=ldb(`plan_${store}_${ws}`,{});const bentos=ldb('bentos',[]);
-  const header=['呼出番号','弁当名','製造数','売価'];
-  const rows=bentos.filter(b=>parseInt(saved[`${b.id}_${dayIdx}`])||0).map(b=>[b.callno||'',b.name,saved[`${b.id}_${dayIdx}`]||0,b.price||0]);
-  csvDL(`製造指示書_${store}_${dateStr}.csv`,[header,...rows]);
-}
-function exportShimeiExcel(){
-  const store=document.getElementById('shimeiStore').value;const dateStr=document.getElementById('shimeiDate').value;
-  const mon=getMon(dateStr);const ws=fmt(mon);const dayIdx=(new Date(dateStr).getDay()+6)%7;
-  const saved=ldb(`plan_${store}_${ws}`,{});const bentos=ldb('bentos',[]);const mats=ldb('materials',[]);
-  const matTotals={};bentos.forEach(b=>{const qty=parseInt(saved[`${b.id}_${dayIdx}`])||0;if(qty>0)b.ings.forEach(ing=>matTotals[ing.matId]=(matTotals[ing.matId]||0)+ing.qty*qty)});
-  const header=['材料名','必要量','単位'];
-  const rows=Object.entries(matTotals).map(([mid,total])=>{const mat=mats.find(m=>m.id==mid);return mat?[mat.name,total,mat.unit]:null}).filter(Boolean);
-  csvDL(`仕込み表_${store}_${dateStr}.csv`,[header,...rows]);
-}
-
+// ======== START ========
 async function initAndStart(){
-  initData(); // ローカル初期化
-  buildLoginSelect();
-  // クラウドにusersがなければ初回アップロード
+  initData();buildLoginSelect();
   showLoading(true,'初期化中...');
-  try {
-    const cloudUsers = await gasGet('users');
+  try{
+    const cloudUsers=await gasGet('users');
     if(!cloudUsers||cloudUsers.length===0){
-      // 初回：ローカルデータをクラウドへ
-      const keys=['db00','db01','materials','hozai','stores','users','hozaiCls','hozaiSup','bentos'];
-      for(const k of keys){
-        const local=ldb(k,[]);
-        if(local&&local.length>0) await gasSet(k,local);
-      }
+      const keys=['db00','bentos','materials','hozai','stores','users','hozaiCls','hozaiSup'];
+      for(const k of keys){const local=ldb(k,[]);if(local&&local.length>0)await gasSet(k,local);}
       showToast('✅ 初回データをクラウドに保存しました');
-    } else {
-      // 既存：クラウドからロード
-      const keys=['users'];
-      for(const k of keys){
-        const data=await gasGet(k);
-        if(data&&data.length>0){cache[k]=data;ldb(k,data);}
-      }
+    }else{
+      const d=await gasGet('users');if(d&&d.length>0){cache['users']=d;localStorage.setItem('users',JSON.stringify(d));}
       buildLoginSelect();
     }
-  } catch(e){ console.warn('init cloud error', e); }
+  }catch(e){console.warn('init error',e);}
   showLoading(false);
 }
-
 initAndStart();
 </script>
 </body>
